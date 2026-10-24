@@ -87,7 +87,6 @@ kiwi-timer-plugins/
 │   └── RELEASING.md       # versioning, packaging, release checklist
 ├── scripts/package.mjs    # validate manifests + build installable zips
 ├── CHANGELOG.md
-├── ROADMAP.md
 └── package.json
 ```
 

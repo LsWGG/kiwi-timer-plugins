@@ -78,7 +78,6 @@ kiwi-timer-plugins/
 │   └── RELEASING.md       # 版本、打包与发布清单
 ├── scripts/package.mjs    # 校验 manifest 并生成可安装 zip
 ├── CHANGELOG.md
-├── ROADMAP.md
 └── package.json
 ```
 
