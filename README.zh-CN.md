@@ -51,7 +51,7 @@
 
 ## 环境要求
 
-- Kiwi `0.2.0` 或更新版本，并支持组件插件（`kind: "component"`）。
+- Kiwi `1.0.0` 或更新版本，并支持组件插件（`kind: "component"`）。
 - 支持 manifest `pinnable` 字段的 Kiwi 构建；旧版本会忽略该字段，仅保留插入用法。
 - 仅在本地重新打包时需要 Node.js 18+ 与 `zip`。
 

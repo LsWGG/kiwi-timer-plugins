@@ -58,7 +58,7 @@ flooded.
 
 ## Requirements
 
-- Kiwi `0.2.0` or newer with **component plugin** support (`kind: "component"`).
+- Kiwi `1.0.0` or newer with **component plugin** support (`kind: "component"`).
 - A Kiwi build that understands the manifest `pinnable` field. Older builds simply
   ignore the field and keep the block insert-only.
 - `zip` and Node.js 18+ only if you want to rebuild the packages locally.
