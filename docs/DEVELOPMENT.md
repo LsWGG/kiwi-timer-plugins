@@ -1,6 +1,6 @@
 # 开发说明
 
-本文描述本仓库两个计时器插件的实现契约、状态模型与本地验证方式。上游完整规范见
+本文描述本仓库组件插件的实现契约、状态模型与本地验证方式。现有两个计时器是首批插件，后续插件沿用同一契约；上游完整规范见
 Kiwi 仓库的 [`docs/PLUGIN_SPEC.md`](https://github.com/LsWGG/Kiwi/blob/main/docs/PLUGIN_SPEC.md)。
 
 ## 1. 环境与命令
@@ -23,7 +23,7 @@ plugins/pomodoro/
   style.css      # 区块样式，颜色使用 --kiwi-* 变量
   README.md      # 用户安装说明
 plugins/countdown/  # 同上
-scripts/package.mjs # 校验与打包
+scripts/package.mjs # 校验与打包（自动发现 plugins/ 下的新目录）
 ```
 
 ## 3. manifest 契约
@@ -48,7 +48,7 @@ scripts/package.mjs # 校验与打包
 | `type` | 区块类型，最终标识为 `<key>:<type>` |
 | `label` / `icon` / `description` / `category` | 斜杠菜单展示信息 |
 | `default_props` | 首次插入时的 props；必须是可 JSON 序列化的对象 |
-| `pinnable` | 本仓库固定为 `true`，允许置顶为全局浮窗 |
+| `pinnable` | 允许置顶为全局浮窗；当前两个计时器固定为 `true`，后续插件按区块决定 |
 
 `pinnable` 是宿主能力，插件代码无需为浮窗做适配：浮窗使用同一套组件与 props，
 `updateProps` 仍是唯一交互入口。浮窗状态保存在浮窗自己的 props（localStorage）中，
@@ -156,7 +156,7 @@ export function setup(host) {
 
 - `manifest_version === 1`、`kind === "component"`、`key` 匹配 `^[a-z0-9][a-z0-9-]{1,63}$`
 - `version` 为语义化版本，`blocks` 非空且 `type` 不重复
-- 本仓库要求每个区块 `pinnable === true`
+- `pinnable` 若声明必须是布尔值；当前 `pomodoro` / `countdown` 必须为 `true`
 - 必需文件存在；入口 ≤ 2 MB，样式 ≤ 512 KB
 - zip 内文件位于**根目录**，不嵌套目录
 

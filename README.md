@@ -1,8 +1,13 @@
-<h1 align="center">Kiwi Timer Plugins</h1>
+<h1 align="center">Kiwi Component Plugins</h1>
 
 <p align="center">
-  Two focus timers for Kiwi, packaged as installable component plugins.<br />
+  A maintained collection of component plugins for Kiwi.<br />
+  Currently two focus timers — more plugins are on the way.<br />
   <a href="README.zh-CN.md">简体中文</a> · <strong>English</strong>
+</p>
+
+<p align="center">
+  <img src="docs/assets/screenshots/floating-timers.png" alt="Pomodoro and countdown pinned as global floating windows in Kiwi" width="920" />
 </p>
 
 <p align="center">
@@ -14,13 +19,21 @@
 
 ---
 
-Kiwi Timer Plugins keeps the two reference timers from Kiwi's plugin examples in a
-standalone repository so they can be versioned, reviewed, and released independently.
+Kiwi component plugins add interactive blocks to Kiwi's editor. A plugin is a zip
+containing a manifest and a single-file browser ESM; Kiwi loads it only after the user
+imports and enables it. This repository is the long-term home for component plugins
+maintained outside the main Kiwi repository, with shared validation, packaging,
+versioning, release notes, and documentation.
 
-Both blocks declare `pinnable: true`. In Kiwi that means a timer can be placed in a
-global floating window from the plugin card, the preview dialog, the editor toolbar,
-or the `Ctrl / ⌘ + K` command palette — **without creating or inserting a note first**.
-The timer keeps running across routes and page reloads while the window stays open.
+It currently ships **Pomodoro** and **Countdown**. Both blocks declare `pinnable: true`,
+so they can be placed in a global floating window from the plugin card, the preview
+dialog, the editor toolbar, or the `Ctrl / ⌘ + K` command palette — **without creating
+or inserting a note first**. The timer keeps running across routes and page reloads
+while the window stays open.
+
+More plugins will be added under `plugins/` using the same contract. Pinning is
+per-block, not per-repository: embedded blocks such as column cards can stay
+insert-only.
 
 ## Plugins
 
@@ -33,6 +46,15 @@ Both timers persist their running state with an absolute `endsAt` timestamp, so 
 the note or refreshing the page does not restart them. They only write props on state
 changes (start / pause / reset / finish), not every second, so Kiwi's autosave is not
 flooded.
+
+## Interface
+
+<table>
+  <tr>
+    <td width="50%"><img src="docs/assets/screenshots/pomodoro-block.png" alt="Pomodoro component preview" /><br /><sub>Pomodoro: focus / break cycle with adjustable durations</sub></td>
+    <td width="50%"><img src="docs/assets/screenshots/countdown-block.png" alt="Countdown component preview" /><br /><sub>Countdown: presets and ±1 minute tuning</sub></td>
+  </tr>
+</table>
 
 ## Requirements
 
@@ -60,6 +82,7 @@ kiwi-timer-plugins/
 │   ├── pomodoro/          # plugin.json, index.js, style.css, README.md
 │   └── countdown/
 ├── docs/
+│   ├── assets/screenshots/
 │   ├── DEVELOPMENT.md     # runtime contract and implementation notes
 │   └── RELEASING.md       # versioning, packaging, release checklist
 ├── scripts/package.mjs    # validate manifests + build installable zips
@@ -78,12 +101,15 @@ npm run validate   # check manifest fields and file limits
 npm run package    # build dist/pomodoro-1.1.0.zip and dist/countdown-1.1.0.zip
 ```
 
-Package rules enforced by the script and by Kiwi:
+The packaging script discovers every directory under `plugins/`, so a new plugin is
+just a new `plugin.json` + `index.js` (plus optional `style.css` / `README.md`). Package
+rules enforced by the script and by Kiwi:
 
 - `plugin.json`, `index.js`, `style.css`, and `README.md` sit at the zip root.
 - Entry script ≤ 2 MB, style ≤ 512 KB, whole package ≤ 5 MB.
 - `key` matches `^[a-z0-9][a-z0-9-]{1,63}$` and stays stable after installation.
-- Every block in this repository keeps `pinnable: true`.
+- The two timer blocks keep `pinnable: true`, and the validation script enforces it for
+  `pomodoro` / `countdown`; new plugins opt in per block.
 
 See [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md) for the host contract, prop persistence,
 theme variables, and pinning behavior. The upstream specification is
@@ -91,7 +117,9 @@ theme variables, and pinning behavior. The upstream specification is
 
 ## Versioning
 
-Semantic versioning (see [CHANGELOG.md](CHANGELOG.md)):
+Each plugin keeps its own manifest version; the root `package.json`, Git tag, and
+GitHub release track the repository release. Semantic versioning (see
+[CHANGELOG.md](CHANGELOG.md)):
 
 - **Major** — a change that breaks saved `default_props` or the block contract.
 - **Minor** — new user-visible capability (for example, adding `pinnable`).

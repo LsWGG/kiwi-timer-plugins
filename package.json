@@ -2,7 +2,7 @@
   "name": "kiwi-timer-plugins",
   "version": "1.1.0",
   "private": true,
-  "description": "Focus timers for Kiwi: a Pomodoro block and a countdown block, both pinnable as global floating windows.",
+  "description": "A maintained collection of component plugins for Kiwi, currently with Pomodoro and countdown timers that can be pinned as global floating windows.",
   "type": "module",
   "scripts": {
     "package": "node scripts/package.mjs",

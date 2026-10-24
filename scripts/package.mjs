@@ -19,6 +19,8 @@ const distDir = path.join(root, 'dist')
 const checkOnly = process.argv.includes('--check')
 const REQUIRED_FILES = ['plugin.json', 'index.js']
 const OPTIONAL_FILES = ['style.css', 'README.md']
+// 当前两个计时器以跨页面使用为核心场景；后续新增插件可按区块自行决定是否置顶。
+const PINNABLE_REQUIRED_KEYS = new Set(['pomodoro', 'countdown'])
 const MAX_SCRIPT_BYTES = 2 * 1024 * 1024
 const MAX_STYLE_BYTES = 512 * 1024
 const SEMVER = /^\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?$/
@@ -68,9 +70,12 @@ async function validatePlugin(dir) {
       fail(`${manifest.key}: duplicate or missing block type "${block.type}"`)
     }
     blockTypes.add(block.type)
-    if (block.pinnable !== true) {
-      // Both plugins in this repository exist for cross-page use; keep the
-      // contract explicit so packaging never silently drops the feature.
+    if (block.pinnable !== undefined && typeof block.pinnable !== 'boolean') {
+      fail(`${manifest.key}:${block.type}: pinnable must be a boolean`)
+    }
+    if (PINNABLE_REQUIRED_KEYS.has(manifest.key) && block.pinnable !== true) {
+      // The two timers exist for cross-page use; keep the contract explicit so
+      // packaging never silently drops the feature. Other plugins may opt out.
       fail(`${manifest.key}:${block.type}: pinnable must be true`)
     }
   }

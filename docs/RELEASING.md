@@ -1,7 +1,7 @@
 # 发布流程
 
-本文是 Kiwi 计时器插件的版本发布清单。目标：manifest、`package.json`、CHANGELOG、
-Git tag 与发布包版本始终一致。
+本文是 Kiwi 组件插件仓库的版本发布清单。目标是让 manifest、`package.json`、CHANGELOG、
+Git tag 与发布包保持一致；每个插件可以在 manifest 中维护自己的版本。
 
 ## 1. 版本策略
 
@@ -12,14 +12,15 @@ Git tag 与发布包版本始终一致。
 - **修订版本**：向下兼容的问题修复。
 
 `key`（`pomodoro` / `countdown`）安装后不可修改；功能变化只能通过 `version` 表达。
+仓库根 `package.json` 与 Git tag 表示本次仓库发布；一次发布包含多个插件时，各插件
+manifest 可以有不同的版本，zip 文件名始终使用各自的 manifest 版本。
 
 ## 2. 发布前检查
 
 1. 确认工作区干净，功能已在 Kiwi 中手工验收（见第 3 节）。
-2. 同步版本号，四处必须一致：
-   - `plugins/pomodoro/plugin.json` → `version`
-   - `plugins/countdown/plugin.json` → `version`
-   - `package.json` → `version`
+2. 同步版本号：
+   - 本次发布涉及的 `plugins/<key>/plugin.json` → `version`
+   - `package.json` → 仓库发布版本（通常取本次主插件版本）
    - `CHANGELOG.md` → 新版本小节
 3. 更新 README 中出现的版本号与兼容性说明（如行为有变化）。
 4. 校验并打包：

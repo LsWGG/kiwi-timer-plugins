@@ -1,17 +1,34 @@
-<h1 align="center">Kiwi 计时器插件</h1>
+<h1 align="center">Kiwi 组件插件</h1>
 
 <p align="center">
-  为 Kiwi 提供的番茄钟与倒计时组件插件，可独立安装、置顶为全局浮窗并长期维护。<br />
+  面向 Kiwi 的组件插件集合。<br />
+  目前提供番茄钟与倒计时，后续持续扩展新插件。<br />
   <strong>简体中文</strong> · <a href="README.md">English</a>
+</p>
+
+<p align="center">
+  <img src="docs/assets/screenshots/floating-timers.png" alt="番茄钟与倒计时置顶为 Kiwi 全局浮窗" width="920" />
+</p>
+
+<p align="center">
+  <img alt="Kiwi 组件插件" src="https://img.shields.io/badge/Kiwi-component%20plugin-6f72dc" />
+  <img alt="版本" src="https://img.shields.io/badge/version-1.1.0-0ea5e9" />
+  <img alt="可置顶" src="https://img.shields.io/badge/pinnable-global%20floating%20window-f59e0b" />
+  <img alt="许可" src="https://img.shields.io/badge/license-all%20rights%20reserved-64748b" />
 </p>
 
 ---
 
-本仓库把 Kiwi 示例中的两个计时器拆分为独立项目，便于版本管理、评审与单独发布。
+组件插件为 Kiwi 编辑器增加可交互区块。插件以 zip 交付，包内包含 manifest 与单文件
+浏览器 ESM；只有用户主动导入并启用后，Kiwi 才会在浏览器中加载执行。本仓库是这些
+组件插件的长期维护入口，统一提供校验、打包、版本、发布记录与文档。
 
-两个区块都声明了 `pinnable: true`。在 Kiwi 中可以从插件卡片、预览弹窗、编辑器区块
-工具条或 `Ctrl / ⌘ + K` 命令面板直接置顶为全局浮窗，**不需要先创建或插入笔记**；
-切换路由、刷新页面后计时继续。
+当前提供**番茄钟**与**倒计时**两个插件，两个区块都声明了 `pinnable: true`，因此可以
+从插件卡片、预览弹窗、编辑器区块工具条或 `Ctrl / ⌘ + K` 命令面板直接置顶为全局浮窗，
+**不需要先创建或插入笔记**；切换路由、刷新页面后计时继续。
+
+后续新插件会继续放在 `plugins/` 下，沿用同一套契约。置顶是**区块级**能力，不是仓库级
+承诺：分栏卡片等嵌入正文的区块可以保持仅插入形态。
 
 ## 插件
 
@@ -22,6 +39,15 @@
 
 两个计时器都用绝对时间戳 `endsAt` 保存运行状态，关闭笔记或刷新页面不会重置；
 只在开始、暂停、重置、结束等状态变化时写入 props，不会每秒触发自动保存。
+
+## 界面
+
+<table>
+  <tr>
+    <td width="50%"><img src="docs/assets/screenshots/pomodoro-block.png" alt="番茄钟组件预览" /><br /><sub>番茄钟：专注 / 休息循环，可调时长</sub></td>
+    <td width="50%"><img src="docs/assets/screenshots/countdown-block.png" alt="倒计时组件预览" /><br /><sub>倒计时：快捷预设与逐分钟微调</sub></td>
+  </tr>
+</table>
 
 ## 环境要求
 
@@ -47,6 +73,7 @@ kiwi-timer-plugins/
 │   ├── pomodoro/          # plugin.json、index.js、style.css、README.md
 │   └── countdown/
 ├── docs/
+│   ├── assets/screenshots/
 │   ├── DEVELOPMENT.md     # 运行时契约与实现说明
 │   └── RELEASING.md       # 版本、打包与发布清单
 ├── scripts/package.mjs    # 校验 manifest 并生成可安装 zip
@@ -65,19 +92,21 @@ npm run validate   # 校验 manifest 与文件大小限制
 npm run package    # 生成 dist/pomodoro-1.1.0.zip 与 dist/countdown-1.1.0.zip
 ```
 
-打包约束：
+打包脚本会自动发现 `plugins/` 下的每个目录，新增插件只需添加 `plugin.json` 与
+`index.js`（可选 `style.css` / `README.md`）。打包约束：
 
 - `plugin.json`、`index.js`、`style.css`、`README.md` 位于 zip 根目录。
 - 入口脚本 ≤ 2 MB，样式 ≤ 512 KB，整包 ≤ 5 MB。
 - `key` 匹配 `^[a-z0-9][a-z0-9-]{1,63}$`，安装后不可修改。
-- 本仓库所有区块保持 `pinnable: true`。
+- 番茄钟与倒计时的区块保持 `pinnable: true`，由校验脚本强制；新插件可按区块自行决定。
 
 运行时契约、props 持久化、主题变量与置顶行为见 [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md)；
 上游规范见 [Kiwi `docs/PLUGIN_SPEC.md`](https://github.com/LsWGG/Kiwi/blob/main/docs/PLUGIN_SPEC.md)。
 
 ## 版本
 
-遵循语义化版本（见 [CHANGELOG.md](CHANGELOG.md)）：
+每个插件在 manifest 中独立维护版本；根 `package.json`、Git tag 与 GitHub Release
+跟随仓库发布。版本遵循语义化版本（见 [CHANGELOG.md](CHANGELOG.md)）：
 
 - **主版本**：破坏已保存 `default_props` 或区块契约。
 - **次版本**：新增用户可见能力（例如支持 `pinnable`）。
