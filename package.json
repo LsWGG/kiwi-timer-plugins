@@ -1,0 +1,15 @@
+{
+  "name": "kiwi-timer-plugins",
+  "version": "1.1.0",
+  "private": true,
+  "description": "Focus timers for Kiwi: a Pomodoro block and a countdown block, both pinnable as global floating windows.",
+  "type": "module",
+  "scripts": {
+    "package": "node scripts/package.mjs",
+    "validate": "node scripts/package.mjs --check"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "license": "SEE LICENSE IN LICENSE"
+}

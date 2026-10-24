@@ -1,0 +1,32 @@
+{
+  "manifest_version": 1,
+  "kind": "component",
+  "key": "countdown",
+  "name": "倒计时",
+  "version": "1.1.0",
+  "description": "可调时长的倒计时卡片，支持开始、暂停、重置与结束提醒，状态随笔记保存，可置顶为全局浮窗。",
+  "author": "Kiwi",
+  "icon": "clock",
+  "homepage": "",
+  "entry": "index.js",
+  "style": "style.css",
+  "blocks": [
+    {
+      "type": "countdown",
+      "label": "倒计时",
+      "icon": "clock",
+      "description": "插入一个自定义时长的倒计时，可置顶为跨页面浮窗",
+      "category": "效率",
+      "default_props": {
+        "title": "倒计时",
+        "durationSeconds": 600,
+        "remaining": 600,
+        "running": false,
+        "endsAt": 0,
+        "completedCount": 0
+      },
+      "pinnable": true
+    }
+  ],
+  "settings": []
+}
