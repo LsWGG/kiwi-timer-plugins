@@ -22,7 +22,8 @@ plugins/pomodoro/
   index.js       # 入口 ESM，导出 setup(host)
   style.css      # 区块样式，颜色使用 --kiwi-* 变量
   README.md      # 用户安装说明
-plugins/countdown/  # 同上
+plugins/countdown/  # 同上（支持时长 / 指定时刻与结束提示音）
+plugins/timeline/   # 竖向时间轴（嵌入正文，不置顶）
 scripts/package.mjs # 校验与打包（自动发现 plugins/ 下的新目录）
 ```
 
@@ -34,7 +35,7 @@ scripts/package.mjs # 校验与打包（自动发现 plugins/ 下的新目录）
 |---|---|---|
 | `manifest_version` | `1` | 当前唯一支持的版本 |
 | `kind` | `component` | 组件插件 |
-| `key` | `pomodoro` / `countdown` | 全局唯一，安装后不可修改 |
+| `key` | `pomodoro` / `countdown` / `timeline` | 全局唯一，安装后不可修改 |
 | `name` | 番茄钟 / 倒计时 | 显示名称 |
 | `version` | 语义化版本 | 与 `package.json`、CHANGELOG、zip 文件名同步 |
 | `entry` | `index.js` | 包内相对路径 |
@@ -80,7 +81,12 @@ export function setup(host) {
 | `host.vue` | Vue 运行时命名空间；入口不能 `import "vue"` |
 | `host.toast` | `toast.success(text)` / `toast.error(text)` |
 | `host.theme` | `version` / `accent` / `accentStrong` / `accentSoft` / `shade(step, alpha)` |
+| `host.components` | 可复用 UI 组件；`NoteEditor` 为 Markdown 富文本编辑器（支持待办勾选框等），旧宿主可能没有 |
 | `host.apiVersion` | 当前为 `1` |
+
+`NoteEditor` 用法：`modelValue` 绑定 Markdown 字符串，`readonly` 切换阅读态，
+监听 `update:modelValue` 写回 props。使用前做 `host.components?.NoteEditor`
+特性检测，旧版本 Kiwi 可回退为 textarea。
 
 宿主传给组件的 props：
 
@@ -127,13 +133,34 @@ export function setup(host) {
 | 字段 | 范围 / 取值 | 说明 |
 |---|---|---|
 | `title` | ≤ 40 字符 | 卡片标题 |
-| `durationSeconds` | 60–21600 | 总时长 |
+| `mode` | `duration` / `target` | 按时长或指定时刻 |
+| `durationSeconds` | 60–21600 | 时长模式总时长 |
 | `remaining` | 0–`durationSeconds` | 暂停剩余 |
 | `running` | Boolean | 是否运行 |
 | `endsAt` | 毫秒时间戳，暂停时为 0 | 结束时刻 |
+| `startedAt` | 毫秒时间戳 | 本轮开始时刻（进度条基准） |
+| `targetAt` | 毫秒时间戳 | 指定时刻模式的目标时间 |
+| `soundEnabled` | Boolean | 结束提示音开关，默认开启 |
 | `completedCount` | ≥ 0 整数 | 完成次数 |
 
-运行中禁止调整时长；倒计时结束后自动停止并累计 `completedCount`，「再来一次」从完整时长重新开始。
+运行中禁止调整时长或切换模式；倒计时结束后自动停止、播放提示音并累计
+`completedCount`，「再来一次」从完整时长重新开始。指定时刻模式在目标已过时按原时长顺延一次。
+旧区块缺少 `mode` / `targetAt` / `startedAt` / `soundEnabled` 时按「按时长 + 开启提示音」兼容。
+
+时间轴 props：
+
+| 字段 | 范围 / 取值 | 说明 |
+|---|---|---|
+| `title` | ≤ 60 字符 | 区块标题 |
+| `points` | 数组，最多 200 项 | 时间点列表，按手动顺序展示 |
+| `points[].id` | ≤ 64 字符 | 组件内唯一，用于增删改 |
+| `points[].time` | ≤ 40 字符 | 自由格式时间文本（`09:00` / `10-29` 等） |
+| `points[].summary` | ≤ 120 字符 | 摘要，收起时展示 |
+| `points[].content` | ≤ 5000 字符 | 展开后的笔记正文 |
+| `points[].key` | Boolean | 关键时间点，琥珀色圆点 |
+
+时间轴只在编辑标题 / 时间 / 摘要 / 正文、增删时间点、切换关键节点时写入 props；
+展开 / 收起是组件本地状态，不触发自动保存。
 
 ## 6. 主题
 

@@ -1,0 +1,35 @@
+{
+  "manifest_version": 1,
+  "kind": "component",
+  "key": "timeline",
+  "name": "时间轴",
+  "version": "1.1.0",
+  "description": "竖向时间轴，每个时间点可展开记录富文本笔记（支持待办勾选框），收起时仅显示摘要，支持关键时间点标记。",
+  "author": "Kiwi",
+  "icon": "list",
+  "homepage": "",
+  "entry": "index.js",
+  "style": "style.css",
+  "blocks": [
+    {
+      "type": "timeline",
+      "label": "时间轴",
+      "icon": "list",
+      "description": "竖向时间轴，展开时间点记录富文本笔记与待办，可标记关键节点",
+      "category": "效率",
+      "default_props": {
+        "title": "时间轴",
+        "points": [
+          {
+            "id": "p1",
+            "time": "09:00",
+            "summary": "开始",
+            "content": "",
+            "key": false
+          }
+        ]
+      }
+    }
+  ],
+  "settings": []
+}

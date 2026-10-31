@@ -93,6 +93,7 @@
   font-variant-numeric: tabular-nums;
   letter-spacing: -0.03em;
   line-height: 1.05;
+  white-space: nowrap;
 }
 
 .kiwi-countdown.is-finished .kiwi-countdown__time {
@@ -239,6 +240,80 @@
   text-align: center;
 }
 
+/* 模式切换：按时长 / 指定时刻 */
+.kiwi-countdown__modes {
+  display: inline-flex;
+  gap: 2px;
+  margin-top: 10px;
+  padding: 2px;
+  border: 1px solid rgb(226 232 240);
+  border-radius: 8px;
+  background: rgb(248 250 252);
+}
+
+.kiwi-countdown__mode {
+  height: 22px;
+  padding: 0 9px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: rgb(100 116 139);
+  font-size: 10.5px;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.kiwi-countdown__mode:hover {
+  color: rgb(var(--kiwi-700));
+}
+
+.kiwi-countdown__mode.is-active {
+  background: #fff;
+  box-shadow: 0 1px 2px rgb(15 23 42 / 0.08);
+  color: rgb(var(--kiwi-700));
+  font-weight: 600;
+}
+
+/* 指定时刻：年月日时分秒（datetime-local，step=1） */
+.kiwi-countdown__target {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.kiwi-countdown__target-label {
+  color: rgb(100 116 139);
+  font-size: 10.5px;
+}
+
+.kiwi-countdown__target-input {
+  height: 28px;
+  padding: 0 8px;
+  border: 1px solid rgb(226 232 240);
+  border-radius: 7px;
+  background: #fff;
+  color: rgb(51 65 85);
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+}
+
+.kiwi-countdown__target-input:focus {
+  border-color: rgb(var(--kiwi-500) / 0.6);
+  outline: 2px solid rgb(var(--kiwi-500) / 0.22);
+}
+
+.kiwi-countdown__target-hint {
+  flex-basis: 100%;
+  color: rgb(148 163 184);
+  font-size: 10px;
+}
+
+.kiwi-countdown__sound.is-muted {
+  color: rgb(148 163 184);
+}
+
 @media (max-width: 480px) {
   .kiwi-countdown__time {
     font-size: 34px;
@@ -266,5 +341,9 @@
 
   .kiwi-countdown__preset {
     padding: 0 6px;
+  }
+
+  .kiwi-countdown__target-input {
+    max-width: 100%;
   }
 }

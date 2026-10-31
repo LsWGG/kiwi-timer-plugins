@@ -2,7 +2,7 @@
 
 <p align="center">
   A maintained collection of component plugins for Kiwi.<br />
-  Currently two focus timers — more plugins are on the way.<br />
+  Currently two focus timers plus a vertical timeline — more plugins are on the way.<br />
   <a href="README.zh-CN.md">简体中文</a> · <strong>English</strong>
 </p>
 
@@ -25,11 +25,12 @@ imports and enables it. This repository is the long-term home for component plug
 maintained outside the main Kiwi repository, with shared validation, packaging,
 versioning, release notes, and documentation.
 
-It currently ships **Pomodoro** and **Countdown**. Both blocks declare `pinnable: true`,
-so they can be placed in a global floating window from the plugin card, the preview
-dialog, the editor toolbar, or the `Ctrl / ⌘ + K` command palette — **without creating
-or inserting a note first**. The timer keeps running across routes and page reloads
-while the window stays open.
+It currently ships **Pomodoro**, **Countdown**, and **Timeline**. The two timer blocks
+declare `pinnable: true`, so they can be placed in a global floating window from the
+plugin card, the preview dialog, the editor toolbar, or the `Ctrl / ⌘ + K` command
+palette — **without creating or inserting a note first**. The timer keeps running across
+routes and page reloads while the window stays open. Timeline is an embedded block that
+stays in the note.
 
 More plugins will be added under `plugins/` using the same contract. Pinning is
 per-block, not per-repository: embedded blocks such as column cards can stay
@@ -40,12 +41,15 @@ insert-only.
 | Plugin | Key | Block | What it does | Global pinning |
 |---|---|---|---|---|
 | Pomodoro 番茄钟 | `pomodoro` | `pomodoro` | 25 min focus / 5 min break cycle, pause, skip, reset, completed-round count, adjustable durations | Yes |
-| Countdown 倒计时 | `countdown` | `countdown` | Custom duration timer with presets (1 / 5 / 10 / 25 / 60 min), ±1 min tuning, completion count | Yes |
+| Countdown 倒计时 | `countdown` | `countdown` | Duration mode with presets (1 / 5 / 10 / 25 / 60 min) or a target date-time to the second; end sound, completion count | Yes |
+| Timeline 时间轴 | `timeline` | `timeline` | Vertical timeline; each point expands into rich-text notes (including task checkboxes) with a collapsed summary, key-point highlighting, add / delete | No |
 
 Both timers persist their running state with an absolute `endsAt` timestamp, so closing
 the note or refreshing the page does not restart them. They only write props on state
 changes (start / pause / reset / finish), not every second, so Kiwi's autosave is not
-flooded.
+flooded. Timeline keeps its points in `props.points` and only writes on edits,
+expand / collapse is local UI state. Point content is stored as Markdown and uses the
+host-provided `host.components.NoteEditor` rich-text editor.
 
 ## Interface
 
@@ -61,11 +65,13 @@ flooded.
 - Kiwi `1.0.0` or newer with **component plugin** support (`kind: "component"`).
 - A Kiwi build that understands the manifest `pinnable` field. Older builds simply
   ignore the field and keep the block insert-only.
+- Rich-text timeline content requires a Kiwi build with `host.components.NoteEditor`;
+  older builds automatically fall back to a plain textarea.
 - `zip` and Node.js 18+ only if you want to rebuild the packages locally.
 
 ## Install
 
-1. Download or build `dist/pomodoro-1.1.0.zip` / `dist/countdown-1.1.0.zip`.
+1. Download or build `dist/pomodoro-1.1.0.zip` / `dist/countdown-1.2.0.zip` / `dist/timeline-1.1.0.zip`.
 2. Open **Kiwi → Settings → Plugins & Blocks → Import plugin** and select the zip.
 3. Enable the plugin.
 4. Insert with `/番茄钟` or `/倒计时`, or pin it directly from the plugin card / preview
