@@ -12,7 +12,7 @@
 
 <p align="center">
   <img alt="Kiwi component plugin" src="https://img.shields.io/badge/Kiwi-component%20plugin-6f72dc" />
-  <img alt="Version" src="https://img.shields.io/badge/version-1.1.0-0ea5e9" />
+  <img alt="Version" src="https://img.shields.io/badge/version-1.4.1-0ea5e9" />
   <img alt="Pinnable" src="https://img.shields.io/badge/pinnable-global%20floating%20window-f59e0b" />
   <img alt="License" src="https://img.shields.io/badge/license-all%20rights%20reserved-64748b" />
 </p>
@@ -56,9 +56,15 @@ host-provided `host.components.NoteEditor` rich-text editor.
 <table>
   <tr>
     <td width="50%"><img src="docs/assets/screenshots/pomodoro-block.png" alt="Pomodoro component preview" /><br /><sub>Pomodoro: focus / break cycle with adjustable durations</sub></td>
-    <td width="50%"><img src="docs/assets/screenshots/countdown-block.png" alt="Countdown component preview" /><br /><sub>Countdown: presets and ±1 minute tuning</sub></td>
+    <td width="50%"><img src="docs/assets/screenshots/countdown-block.png" alt="Countdown component preview" /><br /><sub>Countdown: duration presets, ±1 minute tuning, and end sound</sub></td>
   </tr>
 </table>
+
+<p align="center">
+  <img src="docs/assets/screenshots/countdown-target.png" alt="Countdown target time with the self-drawn calendar" width="920" />
+</p>
+
+<p align="center"><sub>Target time: a self-drawn calendar and second-level steppers that follow the theme — no native browser date popup.</sub></p>
 
 ## Requirements
 
@@ -71,7 +77,7 @@ host-provided `host.components.NoteEditor` rich-text editor.
 
 ## Install
 
-1. Download or build `dist/pomodoro-1.1.0.zip` / `dist/countdown-1.2.0.zip` / `dist/timeline-1.1.0.zip`.
+1. Download or build `dist/pomodoro-1.2.0.zip` / `dist/countdown-1.4.1.zip` / `dist/timeline-1.2.0.zip`.
 2. Open **Kiwi → Settings → Plugins & Blocks → Import plugin** and select the zip.
 3. Enable the plugin.
 4. Insert with `/番茄钟` or `/倒计时`, or pin it directly from the plugin card / preview
@@ -103,7 +109,7 @@ There is no bundler step: `index.js` is a single-file browser ESM that exports
 
 ```bash
 npm run validate   # check manifest fields and file limits
-npm run package    # build dist/pomodoro-1.1.0.zip and dist/countdown-1.1.0.zip
+npm run package    # build dist/pomodoro-1.2.0.zip, dist/countdown-1.4.1.zip and dist/timeline-1.2.0.zip
 ```
 
 The packaging script discovers every directory under `plugins/`, so a new plugin is

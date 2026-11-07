@@ -3,7 +3,7 @@
   "kind": "component",
   "key": "timeline",
   "name": "时间轴",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "竖向时间轴，每个时间点可展开记录富文本笔记（支持待办勾选框），收起时仅显示摘要，支持关键时间点标记。",
   "author": "Kiwi",
   "icon": "list",

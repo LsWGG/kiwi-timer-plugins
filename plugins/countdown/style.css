@@ -1,30 +1,56 @@
 /*
- * 倒计时插件样式。强调色全部使用 --kiwi-* 变量，跟随系统主题色。
+ * 倒计时插件样式。
+ * 强调色跟随编辑 / 学习模式的主题强调色，中性色跟随主题插件的明暗与材质。
  * 类名统一 kiwi-countdown 前缀，避免影响编辑器其它区块。
  */
 .kiwi-countdown {
+  /* 插件内部主题别名：未加载主题引擎时回退到浅色默认值。 */
+  --plugin-surface: var(--theme-surface, 255 255 255);
+  --plugin-surface-muted: var(--theme-surface-muted, 241 245 249);
+  --plugin-app: var(--theme-app, 248 250 252);
+  --plugin-border: var(--theme-border, 226 232 240);
+  --plugin-border-strong: var(--theme-border-strong, 203 213 225);
+  --plugin-text-primary: var(--theme-text-primary, 30 41 59);
+  --plugin-text-strong: var(--theme-text-strong, 51 65 85);
+  --plugin-text-secondary: var(--theme-text-secondary, 71 85 105);
+  --plugin-text-muted: var(--theme-text-muted, 100 116 139);
+  --plugin-text-subtle: var(--theme-text-subtle, 148 163 184);
+  --plugin-text-faint: var(--theme-text-faint, 203 213 225);
+  --plugin-accent: var(--theme-accent, 90 85 199);
+  --plugin-accent-foreground: var(--theme-accent-foreground, 255 255 255);
+  --plugin-danger-bg: rgb(254 226 226);
+  --plugin-danger-fg: rgb(225 29 72);
+
   box-sizing: border-box;
   width: min(100%, 420px);
-  container-type: inline-size;
   padding: 14px 16px 12px;
-  border: 1px solid rgb(226 232 240);
+  border: 1px solid rgb(var(--plugin-border));
   border-radius: 16px;
   background:
-    radial-gradient(circle at 92% 0%, rgb(var(--kiwi-100) / 0.6), transparent 45%),
-    linear-gradient(160deg, #ffffff, rgb(var(--kiwi-50) / 0.55));
+    radial-gradient(circle at 92% 0%, rgb(var(--plugin-accent) / 0.14), transparent 45%),
+    linear-gradient(
+      160deg,
+      rgb(var(--plugin-surface) / var(--theme-surface-opacity, 1)),
+      rgb(var(--plugin-accent) / 0.07)
+    );
   box-shadow: 0 1px 2px rgb(15 23 42 / 0.04);
-  color: rgb(51 65 85);
+  color: rgb(var(--plugin-text-strong));
   font-size: 13px;
   user-select: none;
 }
 
+html[data-kiwi-theme-mode='dark'] .kiwi-countdown {
+  --plugin-danger-bg: rgb(244 63 94 / 0.18);
+  --plugin-danger-fg: rgb(251 113 133);
+}
+
 .kiwi-countdown.is-selected {
-  border-color: rgb(var(--kiwi-500) / 0.55);
-  box-shadow: 0 0 0 2px rgb(var(--kiwi-500) / 0.16);
+  border-color: rgb(var(--plugin-accent) / 0.55);
+  box-shadow: 0 0 0 2px rgb(var(--plugin-accent) / 0.16);
 }
 
 .kiwi-countdown.is-readonly {
-  background: #fff;
+  background: rgb(var(--plugin-surface) / var(--theme-surface-opacity, 1));
   box-shadow: none;
 }
 
@@ -41,7 +67,7 @@
   width: 24px;
   height: 24px;
   border-radius: 8px;
-  background: rgb(var(--kiwi-500) / 0.12);
+  background: rgb(var(--plugin-accent) / 0.14);
   font-size: 12px;
 }
 
@@ -53,7 +79,7 @@
 .kiwi-countdown__title {
   overflow: hidden;
   margin: 0;
-  color: rgb(30 41 59);
+  color: rgb(var(--plugin-text-primary));
   font-size: 12.5px;
   font-weight: 600;
   line-height: 1.35;
@@ -63,7 +89,7 @@
 
 .kiwi-countdown__meta {
   margin: 1px 0 0;
-  color: rgb(148 163 184);
+  color: rgb(var(--plugin-text-subtle));
   font-size: 10.5px;
 }
 
@@ -74,20 +100,20 @@
   border: 0;
   border-radius: 6px;
   background: transparent;
-  color: rgb(148 163 184);
+  color: rgb(var(--plugin-text-subtle));
   font-size: 16px;
   line-height: 1;
   cursor: pointer;
 }
 
 .kiwi-countdown__remove:hover {
-  background: rgb(254 226 226);
-  color: rgb(225 29 72);
+  background: var(--plugin-danger-bg);
+  color: var(--plugin-danger-fg);
 }
 
 .kiwi-countdown__time {
   margin: 10px 0 8px;
-  color: rgb(var(--kiwi-700));
+  color: rgb(var(--plugin-accent));
   font-size: 40px;
   font-weight: 650;
   font-variant-numeric: tabular-nums;
@@ -97,14 +123,14 @@
 }
 
 .kiwi-countdown.is-finished .kiwi-countdown__time {
-  color: rgb(148 163 184);
+  color: rgb(var(--plugin-text-subtle));
 }
 
 .kiwi-countdown__track {
   overflow: hidden;
   height: 6px;
   border-radius: 999px;
-  background: rgb(var(--kiwi-100));
+  background: rgb(var(--plugin-accent) / 0.16);
 }
 
 .kiwi-countdown__fill {
@@ -113,14 +139,14 @@
   border-radius: inherit;
   background: linear-gradient(
     90deg,
-    rgb(var(--kiwi-400)),
-    rgb(var(--kiwi-600))
+    rgb(var(--plugin-accent) / 0.7),
+    rgb(var(--plugin-accent))
   );
   transition: width 0.25s linear;
 }
 
 .kiwi-countdown.is-finished .kiwi-countdown__fill {
-  background: rgb(203 213 225);
+  background: rgb(var(--plugin-border-strong));
 }
 
 .kiwi-countdown__actions {
@@ -141,33 +167,34 @@
 }
 
 .kiwi-countdown__primary {
-  border: 1px solid rgb(var(--kiwi-600));
-  background: rgb(var(--kiwi-600));
-  color: #fff;
+  border: 1px solid rgb(var(--plugin-accent));
+  background: rgb(var(--plugin-accent));
+  color: rgb(var(--plugin-accent-foreground));
   font-weight: 600;
 }
 
 .kiwi-countdown__primary:hover {
-  border-color: rgb(var(--kiwi-700));
-  background: rgb(var(--kiwi-700));
+  border-color: rgb(var(--plugin-accent));
+  background: rgb(var(--plugin-accent));
+  box-shadow: inset 0 0 0 100px rgb(0 0 0 / 0.08);
 }
 
 .kiwi-countdown__primary.is-running {
-  border-color: rgb(var(--kiwi-500) / 0.5);
-  background: rgb(var(--kiwi-500) / 0.14);
-  color: rgb(var(--kiwi-700));
+  border-color: rgb(var(--plugin-accent) / 0.5);
+  background: rgb(var(--plugin-accent) / 0.14);
+  color: rgb(var(--plugin-accent));
 }
 
 .kiwi-countdown__ghost {
-  border: 1px solid rgb(226 232 240);
-  background: #fff;
-  color: rgb(71 85 105);
+  border: 1px solid rgb(var(--plugin-border));
+  background: rgb(var(--plugin-surface) / var(--theme-surface-opacity, 1));
+  color: rgb(var(--plugin-text-secondary));
 }
 
 .kiwi-countdown__ghost:hover {
-  border-color: rgb(var(--kiwi-400) / 0.6);
-  background: rgb(var(--kiwi-50));
-  color: rgb(var(--kiwi-700));
+  border-color: rgb(var(--plugin-accent) / 0.6);
+  background: rgb(var(--plugin-accent) / 0.1);
+  color: rgb(var(--plugin-accent));
 }
 
 .kiwi-countdown__presets {
@@ -177,31 +204,31 @@
   gap: 5px;
   margin-top: 10px;
   padding-top: 9px;
-  border-top: 1px dashed rgb(226 232 240);
+  border-top: 1px dashed rgb(var(--plugin-border));
 }
 
 .kiwi-countdown__preset {
   height: 24px;
   padding: 0 8px;
-  border: 1px solid rgb(226 232 240);
+  border: 1px solid rgb(var(--plugin-border));
   border-radius: 7px;
-  background: #fff;
-  color: rgb(100 116 139);
+  background: rgb(var(--plugin-surface) / var(--theme-surface-opacity, 1));
+  color: rgb(var(--plugin-text-muted));
   font-size: 10.5px;
   cursor: pointer;
   transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
 }
 
 .kiwi-countdown__preset:hover {
-  border-color: rgb(var(--kiwi-400));
-  background: rgb(var(--kiwi-50));
-  color: rgb(var(--kiwi-700));
+  border-color: rgb(var(--plugin-accent));
+  background: rgb(var(--plugin-accent) / 0.1);
+  color: rgb(var(--plugin-accent));
 }
 
 .kiwi-countdown__preset.is-active {
-  border-color: rgb(var(--kiwi-500) / 0.6);
-  background: rgb(var(--kiwi-500) / 0.12);
-  color: rgb(var(--kiwi-700));
+  border-color: rgb(var(--plugin-accent) / 0.6);
+  background: rgb(var(--plugin-accent) / 0.14);
+  color: rgb(var(--plugin-accent));
   font-weight: 600;
 }
 
@@ -209,7 +236,7 @@
   width: 1px;
   height: 16px;
   margin: 0 3px;
-  background: rgb(226 232 240);
+  background: rgb(var(--plugin-border));
 }
 
 .kiwi-countdown__step {
@@ -217,24 +244,24 @@
   place-items: center;
   width: 20px;
   height: 20px;
-  border: 1px solid rgb(226 232 240);
+  border: 1px solid rgb(var(--plugin-border));
   border-radius: 6px;
-  background: #fff;
-  color: rgb(100 116 139);
+  background: rgb(var(--plugin-surface) / var(--theme-surface-opacity, 1));
+  color: rgb(var(--plugin-text-muted));
   font-size: 13px;
   line-height: 1;
   cursor: pointer;
 }
 
 .kiwi-countdown__step:hover {
-  border-color: rgb(var(--kiwi-400));
-  background: rgb(var(--kiwi-50));
-  color: rgb(var(--kiwi-700));
+  border-color: rgb(var(--plugin-accent));
+  background: rgb(var(--plugin-accent) / 0.1);
+  color: rgb(var(--plugin-accent));
 }
 
 .kiwi-countdown__duration {
   min-width: 44px;
-  color: rgb(71 85 105);
+  color: rgb(var(--plugin-text-secondary));
   font-size: 10.5px;
   font-variant-numeric: tabular-nums;
   text-align: center;
@@ -246,9 +273,9 @@
   gap: 2px;
   margin-top: 10px;
   padding: 2px;
-  border: 1px solid rgb(226 232 240);
+  border: 1px solid rgb(var(--plugin-border));
   border-radius: 8px;
-  background: rgb(248 250 252);
+  background: rgb(var(--plugin-surface-muted));
 }
 
 .kiwi-countdown__mode {
@@ -257,20 +284,20 @@
   border: 0;
   border-radius: 6px;
   background: transparent;
-  color: rgb(100 116 139);
+  color: rgb(var(--plugin-text-muted));
   font-size: 10.5px;
   cursor: pointer;
   transition: background 0.15s ease, color 0.15s ease;
 }
 
 .kiwi-countdown__mode:hover {
-  color: rgb(var(--kiwi-700));
+  color: rgb(var(--plugin-accent));
 }
 
 .kiwi-countdown__mode.is-active {
-  background: #fff;
-  box-shadow: 0 1px 2px rgb(15 23 42 / 0.08);
-  color: rgb(var(--kiwi-700));
+  background: rgb(var(--plugin-surface) / var(--theme-surface-opacity, 1));
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.12);
+  color: rgb(var(--plugin-accent));
   font-weight: 600;
 }
 
@@ -284,34 +311,289 @@
 }
 
 .kiwi-countdown__target-label {
-  color: rgb(100 116 139);
+  color: rgb(var(--plugin-text-muted));
   font-size: 10.5px;
 }
 
-.kiwi-countdown__target-input {
-  height: 28px;
-  padding: 0 8px;
-  border: 1px solid rgb(226 232 240);
-  border-radius: 7px;
-  background: #fff;
-  color: rgb(51 65 85);
-  font-size: 11px;
-  font-variant-numeric: tabular-nums;
+/* 自绘日期时间选择器：触发器 + 日历 / 时分秒弹层，全程不调用浏览器原生 UI。 */
+.kiwi-countdown__picker {
+  position: relative;
+  flex: 1 1 150px;
+  min-width: 0;
 }
 
-.kiwi-countdown__target-input:focus {
-  border-color: rgb(var(--kiwi-500) / 0.6);
-  outline: 2px solid rgb(var(--kiwi-500) / 0.22);
+.kiwi-countdown__target-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  width: 100%;
+  height: 28px;
+  padding: 0 8px;
+  border: 1px solid rgb(var(--plugin-border));
+  border-radius: 7px;
+  background: rgb(var(--plugin-surface) / var(--theme-surface-opacity, 1));
+  color: rgb(var(--plugin-text-strong));
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.kiwi-countdown__target-trigger:hover {
+  border-color: rgb(var(--plugin-accent) / 0.45);
+}
+
+.kiwi-countdown__target-trigger.is-open,
+.kiwi-countdown__target-trigger:focus-visible {
+  border-color: rgb(var(--plugin-accent) / 0.6);
+  outline: 2px solid rgb(var(--plugin-accent) / 0.22);
+}
+
+.kiwi-countdown__target-value {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.kiwi-countdown__target-value.is-empty {
+  color: rgb(var(--plugin-text-subtle));
+}
+
+.kiwi-countdown__target-icon {
+  display: grid;
+  flex: 0 0 auto;
+  place-items: center;
+  color: rgb(var(--plugin-text-subtle));
+  transition: color 0.15s ease;
+}
+
+.kiwi-countdown__target-trigger:hover .kiwi-countdown__target-icon,
+.kiwi-countdown__target-trigger.is-open .kiwi-countdown__target-icon {
+  color: rgb(var(--plugin-accent));
+}
+
+.kiwi-countdown__calendar {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  z-index: 40;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px;
+  width: 318px;
+  width: min(318px, calc(var(--countdown-width, 318px) - 16px));
+  padding: 9px;
+  border: 1px solid rgb(var(--plugin-border-strong) / 0.9);
+  border-radius: 12px;
+  background: rgb(var(--plugin-surface) / 0.98);
+  box-shadow: 0 18px 44px rgb(15 23 42 / 0.28);
+}
+
+html[data-kiwi-theme-blur='true'] .kiwi-countdown__calendar {
+  -webkit-backdrop-filter: blur(var(--theme-surface-blur, 10px));
+  backdrop-filter: blur(var(--theme-surface-blur, 10px));
+}
+
+.kiwi-countdown__cal-main {
+  min-width: 0;
+}
+
+.kiwi-countdown__cal-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px;
+  margin-bottom: 4px;
+}
+
+.kiwi-countdown__cal-title {
+  color: rgb(var(--plugin-text-strong));
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.kiwi-countdown__cal-nav {
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  border: 0;
+  border-radius: 5px;
+  background: transparent;
+  color: rgb(var(--plugin-text-subtle));
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.kiwi-countdown__cal-nav:hover {
+  background: rgb(var(--plugin-accent) / 0.14);
+  color: rgb(var(--plugin-accent));
+}
+
+.kiwi-countdown__cal-weekdays,
+.kiwi-countdown__cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+}
+
+.kiwi-countdown__cal-weekdays {
+  margin-bottom: 2px;
+}
+
+.kiwi-countdown__cal-weekday {
+  padding: 1px 0;
+  color: rgb(var(--plugin-text-faint));
+  font-size: 9px;
+  text-align: center;
+}
+
+.kiwi-countdown__cal-grid {
+  gap: 1px;
+}
+
+.kiwi-countdown__cal-day {
+  display: grid;
+  place-items: center;
+  height: 23px;
+  padding: 0;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: rgb(var(--plugin-text-strong));
+  font-size: 10.5px;
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+  transition: background 0.12s ease, color 0.12s ease;
+}
+
+.kiwi-countdown__cal-day:hover:not(:disabled) {
+  background: rgb(var(--plugin-accent) / 0.14);
+  color: rgb(var(--plugin-accent));
+}
+
+.kiwi-countdown__cal-day.is-outside {
+  color: rgb(var(--plugin-text-faint));
+}
+
+.kiwi-countdown__cal-day.is-today {
+  box-shadow: inset 0 0 0 1px rgb(var(--plugin-accent) / 0.45);
+}
+
+.kiwi-countdown__cal-day.is-selected,
+.kiwi-countdown__cal-day.is-selected:hover:not(:disabled) {
+  background: rgb(var(--plugin-accent));
+  color: rgb(var(--plugin-accent-foreground));
+  font-weight: 600;
+  box-shadow: none;
+}
+
+.kiwi-countdown__cal-day.is-past {
+  opacity: 0.32;
+  cursor: default;
+}
+
+.kiwi-countdown__clock {
+  display: flex;
+  align-items: stretch;
+  gap: 1px;
+  padding-left: 7px;
+  border-left: 1px solid rgb(var(--plugin-border) / 0.8);
+}
+
+.kiwi-countdown__clock-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+}
+
+.kiwi-countdown__clock-label {
+  color: rgb(var(--plugin-text-faint));
+  font-size: 9px;
+  line-height: 1;
+}
+
+.kiwi-countdown__clock-step {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 17px;
+  padding: 0;
+  border: 0;
+  border-radius: 5px;
+  background: transparent;
+  color: rgb(var(--plugin-text-subtle));
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.kiwi-countdown__clock-step:hover {
+  background: rgb(var(--plugin-accent) / 0.14);
+  color: rgb(var(--plugin-accent));
+}
+
+.kiwi-countdown__clock-value {
+  min-width: 24px;
+  padding: 2px 0;
+  border-radius: 5px;
+  background: rgb(var(--plugin-surface-muted) / 0.8);
+  color: rgb(var(--plugin-text-strong));
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+}
+
+.kiwi-countdown__cal-foot {
+  display: flex;
+  grid-column: 1 / -1;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 2px;
+  padding-top: 7px;
+  border-top: 1px solid rgb(var(--plugin-border) / 0.75);
+}
+
+.kiwi-countdown__cal-action {
+  height: 24px;
+  padding: 0 9px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: rgb(var(--plugin-text-muted));
+  font-size: 10.5px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.kiwi-countdown__cal-action:hover {
+  background: rgb(var(--plugin-accent) / 0.14);
+  color: rgb(var(--plugin-accent));
+}
+
+.kiwi-countdown__cal-action.is-primary,
+.kiwi-countdown__cal-action.is-primary:hover {
+  background: rgb(var(--plugin-accent));
+  color: rgb(var(--plugin-accent-foreground));
+  font-weight: 600;
+}
+
+.kiwi-countdown__cal-action.is-primary:hover {
+  filter: brightness(1.06);
 }
 
 .kiwi-countdown__target-hint {
   flex-basis: 100%;
-  color: rgb(148 163 184);
+  color: rgb(var(--plugin-text-subtle));
   font-size: 10px;
 }
 
 .kiwi-countdown__sound.is-muted {
-  color: rgb(148 163 184);
+  color: rgb(var(--plugin-text-subtle));
 }
 
 @media (max-width: 480px) {
@@ -320,30 +602,38 @@
   }
 }
 
-/* 窄编辑器 / 移动端：压缩字号与按钮间距，保持操作区单行优先。 */
-@container (max-width: 300px) {
-  .kiwi-countdown__time {
-    font-size: 32px;
-  }
+/* 窄编辑器 / 移动端：压缩字号与按钮间距，保持操作区单行优先。
+ * 由 ResizeObserver 切换 .is-narrow；不用 container-type，避免它创建
+ * 层叠上下文把日期弹层压在后续行内元素下面。 */
+.kiwi-countdown.is-narrow .kiwi-countdown__time {
+  font-size: 32px;
+}
 
-  .kiwi-countdown__actions {
-    gap: 5px;
-  }
+.kiwi-countdown.is-narrow .kiwi-countdown__actions {
+  gap: 5px;
+}
 
-  .kiwi-countdown__primary,
-  .kiwi-countdown__ghost {
-    padding: 0 10px;
-  }
+.kiwi-countdown.is-narrow .kiwi-countdown__primary,
+.kiwi-countdown.is-narrow .kiwi-countdown__ghost {
+  padding: 0 10px;
+}
 
-  .kiwi-countdown__presets {
-    gap: 4px;
-  }
+.kiwi-countdown.is-narrow .kiwi-countdown__presets {
+  gap: 4px;
+}
 
-  .kiwi-countdown__preset {
-    padding: 0 6px;
-  }
+.kiwi-countdown.is-narrow .kiwi-countdown__preset {
+  padding: 0 6px;
+}
 
-  .kiwi-countdown__target-input {
-    max-width: 100%;
-  }
+.kiwi-countdown.is-narrow .kiwi-countdown__calendar {
+  grid-template-columns: minmax(0, 1fr);
+  width: calc(var(--countdown-width, 318px) - 12px);
+}
+
+.kiwi-countdown.is-narrow .kiwi-countdown__clock {
+  justify-content: center;
+  padding: 7px 0 0;
+  border-top: 1px solid rgb(var(--plugin-border) / 0.8);
+  border-left: 0;
 }
