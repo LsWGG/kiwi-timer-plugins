@@ -3,7 +3,7 @@
   "kind": "component",
   "key": "pomodoro",
   "name": "番茄钟",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "专注 / 休息循环计时器，支持开始、暂停、跳过与完成轮数统计，状态随笔记保存，可置顶为全局浮窗。",
   "author": "Kiwi",
   "icon": "target",

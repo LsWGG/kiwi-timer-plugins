@@ -1,29 +1,65 @@
 /*
- * 竖向时间轴插件样式。强调色全部使用 --kiwi-* 变量，关键时间点用琥珀色区分。
+ * 竖向时间轴插件样式。
+ * 强调色跟随编辑 / 学习模式的主题强调色，中性色跟随主题插件的明暗与材质；
+ * 关键时间点用琥珀色区分，并为深色主题单独提亮。
  * 类名统一 kiwi-timeline 前缀，避免影响编辑器其它区块。
  */
 .kiwi-timeline {
+  /* 插件内部主题别名：未加载主题引擎时回退到浅色默认值。 */
+  --plugin-surface: var(--theme-surface, 255 255 255);
+  --plugin-surface-muted: var(--theme-surface-muted, 241 245 249);
+  --plugin-app: var(--theme-app, 248 250 252);
+  --plugin-border: var(--theme-border, 226 232 240);
+  --plugin-border-strong: var(--theme-border-strong, 203 213 225);
+  --plugin-text-primary: var(--theme-text-primary, 30 41 59);
+  --plugin-text-strong: var(--theme-text-strong, 51 65 85);
+  --plugin-text-secondary: var(--theme-text-secondary, 71 85 105);
+  --plugin-text-muted: var(--theme-text-muted, 100 116 139);
+  --plugin-text-subtle: var(--theme-text-subtle, 148 163 184);
+  --plugin-text-faint: var(--theme-text-faint, 203 213 225);
+  --plugin-accent: var(--theme-accent, 90 85 199);
+  --plugin-accent-foreground: var(--theme-accent-foreground, 255 255 255);
+  --plugin-danger-bg: rgb(254 226 226);
+  --plugin-danger-fg: rgb(225 29 72);
+  --plugin-warning-bg: rgb(254 243 199);
+  --plugin-warning-fg: rgb(180 83 9);
+  --plugin-warning-strong: rgb(245 158 11);
+  --plugin-warning-border: rgb(217 119 6 / 0.55);
+
   box-sizing: border-box;
   width: 100%;
   container-type: inline-size;
   padding: 14px 16px 12px;
-  border: 1px solid rgb(226 232 240);
+  border: 1px solid rgb(var(--plugin-border));
   border-radius: 16px;
   background:
-    radial-gradient(circle at 96% 0%, rgb(var(--kiwi-100) / 0.5), transparent 40%),
-    linear-gradient(160deg, #ffffff, rgb(var(--kiwi-50) / 0.4));
+    radial-gradient(circle at 96% 0%, rgb(var(--plugin-accent) / 0.12), transparent 40%),
+    linear-gradient(
+      160deg,
+      rgb(var(--plugin-surface) / var(--theme-surface-opacity, 1)),
+      rgb(var(--plugin-accent) / 0.06)
+    );
   box-shadow: 0 1px 2px rgb(15 23 42 / 0.04);
-  color: rgb(51 65 85);
+  color: rgb(var(--plugin-text-strong));
   font-size: 13px;
 }
 
+html[data-kiwi-theme-mode='dark'] .kiwi-timeline {
+  --plugin-danger-bg: rgb(244 63 94 / 0.18);
+  --plugin-danger-fg: rgb(251 113 133);
+  --plugin-warning-bg: rgb(245 158 11 / 0.18);
+  --plugin-warning-fg: rgb(252 211 77);
+  --plugin-warning-strong: rgb(251 191 36);
+  --plugin-warning-border: rgb(251 191 36 / 0.45);
+}
+
 .kiwi-timeline.is-selected {
-  border-color: rgb(var(--kiwi-500) / 0.55);
-  box-shadow: 0 0 0 2px rgb(var(--kiwi-500) / 0.16);
+  border-color: rgb(var(--plugin-accent) / 0.55);
+  box-shadow: 0 0 0 2px rgb(var(--plugin-accent) / 0.16);
 }
 
 .kiwi-timeline.is-readonly {
-  background: #fff;
+  background: rgb(var(--plugin-surface) / var(--theme-surface-opacity, 1));
   box-shadow: none;
 }
 
@@ -42,8 +78,8 @@
   width: 24px;
   height: 24px;
   border-radius: 8px;
-  background: rgb(var(--kiwi-500) / 0.12);
-  color: rgb(var(--kiwi-700));
+  background: rgb(var(--plugin-accent) / 0.14);
+  color: rgb(var(--plugin-accent));
   font-size: 13px;
 }
 
@@ -55,7 +91,7 @@
 .kiwi-timeline__title {
   overflow: hidden;
   margin: 0;
-  color: rgb(30 41 59);
+  color: rgb(var(--plugin-text-primary));
   font-size: 13px;
   font-weight: 600;
   line-height: 1.35;
@@ -70,26 +106,26 @@
   border: 1px solid transparent;
   border-radius: 6px;
   background: transparent;
-  color: rgb(30 41 59);
+  color: rgb(var(--plugin-text-primary));
   font: inherit;
   font-size: 13px;
   font-weight: 600;
 }
 
 .kiwi-timeline__title-input:hover {
-  border-color: rgb(226 232 240);
-  background: #fff;
+  border-color: rgb(var(--plugin-border));
+  background: rgb(var(--plugin-surface) / var(--theme-surface-opacity, 1));
 }
 
 .kiwi-timeline__title-input:focus {
-  border-color: rgb(var(--kiwi-500) / 0.6);
-  background: #fff;
-  outline: 2px solid rgb(var(--kiwi-500) / 0.18);
+  border-color: rgb(var(--plugin-accent) / 0.6);
+  background: rgb(var(--plugin-surface) / var(--theme-surface-opacity, 1));
+  outline: 2px solid rgb(var(--plugin-accent) / 0.18);
 }
 
 .kiwi-timeline__meta {
   margin: 1px 0 0 4px;
-  color: rgb(148 163 184);
+  color: rgb(var(--plugin-text-subtle));
   font-size: 10.5px;
 }
 
@@ -100,15 +136,15 @@
   border: 0;
   border-radius: 6px;
   background: transparent;
-  color: rgb(148 163 184);
+  color: rgb(var(--plugin-text-subtle));
   font-size: 16px;
   line-height: 1;
   cursor: pointer;
 }
 
 .kiwi-timeline__remove-block:hover {
-  background: rgb(254 226 226);
-  color: rgb(225 29 72);
+  background: var(--plugin-danger-bg);
+  color: var(--plugin-danger-fg);
 }
 
 /* 时间轴主线：每个时间点自带一段，首尾自然衔接。
@@ -137,8 +173,8 @@
   border-radius: 999px;
   background: linear-gradient(
     180deg,
-    rgb(var(--kiwi-200)),
-    rgb(226 232 240)
+    rgb(var(--plugin-accent) / 0.35),
+    rgb(var(--plugin-border))
   );
 }
 
@@ -152,15 +188,15 @@
   left: 0;
   width: 12px;
   height: 12px;
-  border: 2px solid #fff;
+  border: 2px solid rgb(var(--plugin-surface) / var(--theme-surface-opacity, 1));
   border-radius: 999px;
-  background: rgb(var(--kiwi-400));
-  box-shadow: 0 0 0 1px rgb(var(--kiwi-300) / 0.8);
+  background: rgb(var(--plugin-accent) / 0.75);
+  box-shadow: 0 0 0 1px rgb(var(--plugin-accent) / 0.35);
 }
 
 .kiwi-timeline__item.is-key .kiwi-timeline__dot {
-  background: rgb(245 158 11);
-  box-shadow: 0 0 0 1px rgb(217 119 6 / 0.55);
+  background: var(--plugin-warning-strong);
+  box-shadow: 0 0 0 1px var(--plugin-warning-border);
 }
 
 .kiwi-timeline__card {
@@ -171,8 +207,8 @@
 }
 
 .kiwi-timeline__item.is-open .kiwi-timeline__card {
-  border-color: rgb(226 232 240);
-  background: rgb(248 250 252 / 0.8);
+  border-color: rgb(var(--plugin-border));
+  background: rgb(var(--plugin-surface-muted) / 0.8);
 }
 
 .kiwi-timeline__row {
@@ -186,7 +222,7 @@
   flex: 0 0 auto;
   max-width: 96px;
   overflow: hidden;
-  color: rgb(var(--kiwi-700));
+  color: rgb(var(--plugin-accent));
   font-size: 11px;
   font-weight: 600;
   font-variant-numeric: tabular-nums;
@@ -195,14 +231,14 @@
 }
 
 .kiwi-timeline__item.is-key .kiwi-timeline__time {
-  color: rgb(180 83 9);
+  color: var(--plugin-warning-fg);
 }
 
 .kiwi-timeline__summary {
   min-width: 0;
   flex: 1;
   overflow: hidden;
-  color: rgb(51 65 85);
+  color: rgb(var(--plugin-text-strong));
   font-size: 12px;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -215,7 +251,7 @@
   border: 1px solid transparent;
   border-radius: 6px;
   background: transparent;
-  color: rgb(51 65 85);
+  color: rgb(var(--plugin-text-strong));
   font: inherit;
   font-size: 12px;
 }
@@ -223,14 +259,14 @@
 .kiwi-timeline__time-input {
   flex: 0 0 82px;
   width: 82px;
-  color: rgb(var(--kiwi-700));
+  color: rgb(var(--plugin-accent));
   font-size: 11px;
   font-weight: 600;
   font-variant-numeric: tabular-nums;
 }
 
 .kiwi-timeline__item.is-key .kiwi-timeline__time-input {
-  color: rgb(180 83 9);
+  color: var(--plugin-warning-fg);
 }
 
 .kiwi-timeline__summary-input {
@@ -240,21 +276,21 @@
 
 .kiwi-timeline__time-input:hover,
 .kiwi-timeline__summary-input:hover {
-  border-color: rgb(226 232 240);
-  background: #fff;
+  border-color: rgb(var(--plugin-border));
+  background: rgb(var(--plugin-surface) / var(--theme-surface-opacity, 1));
 }
 
 .kiwi-timeline__time-input:focus,
 .kiwi-timeline__summary-input:focus {
-  border-color: rgb(var(--kiwi-500) / 0.6);
-  background: #fff;
-  outline: 2px solid rgb(var(--kiwi-500) / 0.16);
+  border-color: rgb(var(--plugin-accent) / 0.6);
+  background: rgb(var(--plugin-surface) / var(--theme-surface-opacity, 1));
+  outline: 2px solid rgb(var(--plugin-accent) / 0.16);
 }
 
 .kiwi-timeline__summary-input::placeholder,
 .kiwi-timeline__time-input::placeholder,
 .kiwi-timeline__content-input::placeholder {
-  color: rgb(148 163 184);
+  color: rgb(var(--plugin-text-subtle));
 }
 
 .kiwi-timeline__icon {
@@ -267,7 +303,7 @@
   border: 0;
   border-radius: 6px;
   background: transparent;
-  color: rgb(148 163 184);
+  color: rgb(var(--plugin-text-subtle));
   font-size: 13px;
   line-height: 1;
   cursor: pointer;
@@ -275,28 +311,28 @@
 }
 
 .kiwi-timeline__icon:hover {
-  background: rgb(var(--kiwi-50));
-  color: rgb(var(--kiwi-700));
+  background: rgb(var(--plugin-accent) / 0.1);
+  color: rgb(var(--plugin-accent));
 }
 
 .kiwi-timeline__icon.is-key {
-  color: rgb(245 158 11);
+  color: var(--plugin-warning-strong);
 }
 
 .kiwi-timeline__icon.is-key:hover {
-  background: rgb(254 243 199);
-  color: rgb(180 83 9);
+  background: var(--plugin-warning-bg);
+  color: var(--plugin-warning-fg);
 }
 
 .kiwi-timeline__remove:hover {
-  background: rgb(254 226 226);
-  color: rgb(225 29 72);
+  background: var(--plugin-danger-bg);
+  color: var(--plugin-danger-fg);
 }
 
 .kiwi-timeline__content {
   margin: 6px 0 2px;
   padding: 0 4px;
-  color: rgb(71 85 105);
+  color: rgb(var(--plugin-text-secondary));
   font-size: 12px;
   line-height: 1.7;
   white-space: pre-wrap;
@@ -309,10 +345,10 @@
   min-height: 66px;
   margin-top: 6px;
   padding: 7px 8px;
-  border: 1px solid rgb(226 232 240);
+  border: 1px solid rgb(var(--plugin-border));
   border-radius: 8px;
-  background: #fff;
-  color: rgb(51 65 85);
+  background: rgb(var(--plugin-surface) / var(--theme-surface-opacity, 1));
+  color: rgb(var(--plugin-text-strong));
   font: inherit;
   font-size: 12px;
   line-height: 1.65;
@@ -325,20 +361,20 @@
 }
 
 .kiwi-timeline__content.is-empty {
-  color: rgb(148 163 184);
+  color: rgb(var(--plugin-text-subtle));
 }
 
 .kiwi-timeline__content-input:focus {
-  border-color: rgb(var(--kiwi-500) / 0.6);
-  outline: 2px solid rgb(var(--kiwi-500) / 0.16);
+  border-color: rgb(var(--plugin-accent) / 0.6);
+  outline: 2px solid rgb(var(--plugin-accent) / 0.16);
 }
 
 .kiwi-timeline__empty {
   margin: 4px 0 0;
   padding: 10px 12px;
-  border: 1px dashed rgb(226 232 240);
+  border: 1px dashed rgb(var(--plugin-border));
   border-radius: 10px;
-  color: rgb(148 163 184);
+  color: rgb(var(--plugin-text-subtle));
   font-size: 11.5px;
   text-align: center;
 }
@@ -347,18 +383,18 @@
   width: 100%;
   height: 28px;
   margin-top: 10px;
-  border: 1px dashed rgb(var(--kiwi-300));
+  border: 1px dashed rgb(var(--plugin-accent) / 0.45);
   border-radius: 9px;
-  background: rgb(var(--kiwi-50) / 0.6);
-  color: rgb(var(--kiwi-700));
+  background: rgb(var(--plugin-accent) / 0.08);
+  color: rgb(var(--plugin-accent));
   font-size: 11px;
   cursor: pointer;
   transition: background 0.15s ease, border-color 0.15s ease;
 }
 
 .kiwi-timeline__add:hover {
-  border-color: rgb(var(--kiwi-400));
-  background: rgb(var(--kiwi-50));
+  border-color: rgb(var(--plugin-accent) / 0.65);
+  background: rgb(var(--plugin-accent) / 0.12);
 }
 
 /* 窄容器：压缩时间列，图标保持可点击。 */

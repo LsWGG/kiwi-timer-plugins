@@ -3,7 +3,7 @@
   "kind": "component",
   "key": "countdown",
   "name": "倒计时",
-  "version": "1.2.0",
+  "version": "1.4.1",
   "description": "支持自定义时长或指定年月日时分秒时刻的倒计时，结束时播放提示音，状态随笔记保存，可置顶为全局浮窗。",
   "author": "Kiwi",
   "icon": "clock",

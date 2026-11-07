@@ -52,14 +52,19 @@ export function setup(host) {
     )
   }
 
-  /** datetime-local 需要本地时区的 YYYY-MM-DDTHH:mm:ss。 */
-  function toLocalInput(timestamp) {
-    if (!timestamp) return ''
+  const WEEKDAYS = ['一', '二', '三', '四', '五', '六', '日']
+
+  function startOfDay(timestamp) {
     const date = new Date(timestamp)
-    if (Number.isNaN(date.getTime())) return ''
+    date.setHours(0, 0, 0, 0)
+    return date.getTime()
+  }
+
+  function sameDay(a, b) {
     return (
-      `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T` +
-      `${pad(date.getHours())}:${pad(date.getMinutes())}:${pad(date.getSeconds())}`
+      a.getFullYear() === b.getFullYear() &&
+      a.getMonth() === b.getMonth() &&
+      a.getDate() === b.getDate()
     )
   }
 
@@ -74,9 +79,16 @@ export function setup(host) {
     },
     setup(props) {
       const now = ref(Date.now())
+      const pickerOpen = ref(false)
+      const pickerMonth = ref({ year: 0, month: 0 })
+      let pickerEl = null
+      let rootEl = null
+      let resizeObserver = null
       let ticker = null
       let completedEndsAt = 0
       let audioCtx = null
+      const rootWidth = ref(0)
+      const isNarrow = ref(false)
 
       const title = computed(() => {
         const raw = String(props.blockProps?.title || '倒计时').trim()
@@ -275,11 +287,15 @@ export function setup(host) {
         now.value = Date.now()
       }
 
-      function setTargetFromInput(event) {
-        if (props.readonly) return
-        const raw = event && event.target ? event.target.value : ''
-        const timestamp = new Date(raw).getTime()
-        if (!Number.isFinite(timestamp)) return
+      /** 目标时刻当前值：未设置时以「现在 + 时长」作为默认落点。 */
+      function targetDateValue() {
+        return new Date(
+          targetAt.value > 0 ? targetAt.value : Date.now() + durationSeconds.value * 1000,
+        )
+      }
+
+      function applyTarget(timestamp) {
+        if (props.readonly || !Number.isFinite(timestamp)) return
         commit({
           mode: 'target',
           targetAt: timestamp,
@@ -289,6 +305,112 @@ export function setup(host) {
           remaining: Math.max(0, Math.ceil((timestamp - Date.now()) / 1000)),
         })
         now.value = Date.now()
+        const date = new Date(timestamp)
+        pickerMonth.value = { year: date.getFullYear(), month: date.getMonth() }
+      }
+
+      function togglePicker() {
+        if (props.readonly) return
+        if (pickerOpen.value) {
+          pickerOpen.value = false
+          return
+        }
+        const date = targetDateValue()
+        pickerMonth.value = { year: date.getFullYear(), month: date.getMonth() }
+        pickerOpen.value = true
+      }
+
+      function shiftPickerMonth(delta) {
+        const next = new Date(pickerMonth.value.year, pickerMonth.value.month + delta, 1)
+        pickerMonth.value = { year: next.getFullYear(), month: next.getMonth() }
+      }
+
+      /** 固定 6 行 × 7 列，切换月份时弹层高度不跳动。 */
+      const calendarCells = computed(() => {
+        const { year, month } = pickerMonth.value
+        const first = new Date(year, month, 1)
+        const offset = (first.getDay() + 6) % 7 // 周一为一周起点
+        const total = new Date(year, month + 1, 0).getDate()
+        const prevTotal = new Date(year, month, 0).getDate()
+        const cells = []
+        for (let i = offset - 1; i >= 0; i -= 1) {
+          cells.push({
+            key: `p${i}`,
+            date: new Date(year, month - 1, prevTotal - i),
+            inMonth: false,
+          })
+        }
+        for (let day = 1; day <= total; day += 1) {
+          cells.push({ key: `c${day}`, date: new Date(year, month, day), inMonth: true })
+        }
+        let next = 1
+        while (cells.length < 42) {
+          cells.push({
+            key: `n${next}`,
+            date: new Date(year, month + 1, next),
+            inMonth: false,
+          })
+          next += 1
+        }
+        return cells
+      })
+
+      const pickerTime = computed(() => {
+        const date = targetDateValue()
+        return {
+          hour: pad(date.getHours()),
+          minute: pad(date.getMinutes()),
+          second: pad(date.getSeconds()),
+        }
+      })
+
+      function adjustPickerTime(unit, delta) {
+        if (props.readonly) return
+        const date = targetDateValue()
+        if (unit === 'hour') date.setHours(date.getHours() + delta)
+        else if (unit === 'minute') date.setMinutes(date.getMinutes() + delta)
+        else date.setSeconds(date.getSeconds() + delta)
+        const timestamp = Math.max(date.getTime(), Date.now() + 1000)
+        applyTarget(timestamp)
+      }
+
+      function pickDay(cell) {
+        if (props.readonly) return
+        if (startOfDay(cell.date.getTime()) < startOfDay(Date.now())) return
+        const base = targetDateValue()
+        const next = new Date(
+          cell.date.getFullYear(),
+          cell.date.getMonth(),
+          cell.date.getDate(),
+          base.getHours(),
+          base.getMinutes(),
+          base.getSeconds(),
+        )
+        applyTarget(Math.max(next.getTime(), Date.now() + 1000))
+      }
+
+      function clearTarget() {
+        if (props.readonly) return
+        pickerOpen.value = false
+        commit({
+          mode: 'target',
+          targetAt: 0,
+          running: false,
+          endsAt: 0,
+          startedAt: 0,
+          remaining: durationSeconds.value,
+        })
+        now.value = Date.now()
+      }
+
+      function onPickerPointerDown(event) {
+        if (!pickerOpen.value) return
+        if (pickerEl && pickerEl.contains(event.target)) return
+        pickerOpen.value = false
+      }
+
+      function onPickerKeydown(event) {
+        if (event.key === 'Escape') pickerOpen.value = false
       }
 
       function toggleSound() {
@@ -344,11 +466,29 @@ export function setup(host) {
           now.value = Date.now()
           checkFinished()
         }, 250)
+        document.addEventListener('mousedown', onPickerPointerDown, true)
+        document.addEventListener('keydown', onPickerKeydown)
+        // 用 ResizeObserver 代替 container-type：容器查询会创建层叠上下文，
+        // 导致日期弹层被后续带 backdrop-filter 的行内元素（如代码胶囊）盖住。
+        if (rootEl && typeof ResizeObserver === 'function') {
+          resizeObserver = new ResizeObserver(() => {
+            if (!rootEl) return
+            const width = rootEl.clientWidth
+            rootWidth.value = width
+            isNarrow.value = width > 0 && width < 300
+          })
+          resizeObserver.observe(rootEl)
+        }
       })
 
       onBeforeUnmount(() => {
         if (ticker) window.clearInterval(ticker)
         ticker = null
+        if (resizeObserver) resizeObserver.disconnect()
+        resizeObserver = null
+        rootEl = null
+        document.removeEventListener('mousedown', onPickerPointerDown, true)
+        document.removeEventListener('keydown', onPickerKeydown)
       })
 
       function renderModeTabs() {
@@ -427,18 +567,220 @@ export function setup(host) {
         ])
       }
 
+      function renderChevron(direction) {
+        const paths = {
+          up: 'M2.5 7.25 6 3.75l3.5 3.5',
+          down: 'M2.5 4.75 6 8.25l3.5-3.5',
+          left: 'M7.25 2.5 3.75 6l3.5 3.5',
+          right: 'M4.75 2.5 8.25 6l-3.5 3.5',
+        }
+        return h(
+          'svg',
+          {
+            viewBox: '0 0 12 12',
+            width: '10',
+            height: '10',
+            fill: 'none',
+            stroke: 'currentColor',
+            'stroke-width': '1.5',
+            'stroke-linecap': 'round',
+            'stroke-linejoin': 'round',
+            'aria-hidden': 'true',
+          },
+          [h('path', { d: paths[direction] })],
+        )
+      }
+
+      function renderClockColumn(label, unit, value) {
+        return h('div', { class: 'kiwi-countdown__clock-col' }, [
+          h('span', { class: 'kiwi-countdown__clock-label' }, label),
+          h(
+            'button',
+            {
+              type: 'button',
+              class: 'kiwi-countdown__clock-step',
+              title: `${label} +1`,
+              onClick: () => adjustPickerTime(unit, 1),
+            },
+            [renderChevron('up')],
+          ),
+          h('span', { class: 'kiwi-countdown__clock-value' }, value),
+          h(
+            'button',
+            {
+              type: 'button',
+              class: 'kiwi-countdown__clock-step',
+              title: `${label} -1`,
+              onClick: () => adjustPickerTime(unit, -1),
+            },
+            [renderChevron('down')],
+          ),
+        ])
+      }
+
+      /** 插件内自绘日历 + 时分秒步进，避免使用浏览器原生的日期选择弹层。 */
+      function renderCalendar() {
+        const selected = targetAt.value > 0 ? new Date(targetAt.value) : null
+        const today = new Date()
+        const todayStart = startOfDay(today.getTime())
+        return h('div', { class: 'kiwi-countdown__calendar' }, [
+          h('div', { class: 'kiwi-countdown__cal-main' }, [
+            h('div', { class: 'kiwi-countdown__cal-head' }, [
+              h(
+                'button',
+                {
+                  type: 'button',
+                  class: 'kiwi-countdown__cal-nav',
+                  title: '上个月',
+                  'aria-label': '上个月',
+                  onClick: () => shiftPickerMonth(-1),
+                },
+                [renderChevron('left')],
+              ),
+              h(
+                'span',
+                { class: 'kiwi-countdown__cal-title' },
+                `${pickerMonth.value.year}年${pickerMonth.value.month + 1}月`,
+              ),
+              h(
+                'button',
+                {
+                  type: 'button',
+                  class: 'kiwi-countdown__cal-nav',
+                  title: '下个月',
+                  'aria-label': '下个月',
+                  onClick: () => shiftPickerMonth(1),
+                },
+                [renderChevron('right')],
+              ),
+            ]),
+            h(
+              'div',
+              { class: 'kiwi-countdown__cal-weekdays' },
+              WEEKDAYS.map((label) =>
+                h('span', { class: 'kiwi-countdown__cal-weekday' }, label),
+              ),
+            ),
+            h(
+              'div',
+              { class: 'kiwi-countdown__cal-grid' },
+              calendarCells.value.map((cell) => {
+                const past = startOfDay(cell.date.getTime()) < todayStart
+                return h(
+                  'button',
+                  {
+                    type: 'button',
+                    class: [
+                      'kiwi-countdown__cal-day',
+                      cell.inMonth ? '' : 'is-outside',
+                      selected && sameDay(selected, cell.date) ? 'is-selected' : '',
+                      sameDay(today, cell.date) ? 'is-today' : '',
+                      past ? 'is-past' : '',
+                    ],
+                    disabled: past,
+                    onClick: () => pickDay(cell),
+                  },
+                  cell.date.getDate(),
+                )
+              }),
+            ),
+          ]),
+          h('div', { class: 'kiwi-countdown__clock' }, [
+            renderClockColumn('时', 'hour', pickerTime.value.hour),
+            renderClockColumn('分', 'minute', pickerTime.value.minute),
+            renderClockColumn('秒', 'second', pickerTime.value.second),
+          ]),
+          h('div', { class: 'kiwi-countdown__cal-foot' }, [
+            h(
+              'button',
+              {
+                type: 'button',
+                class: 'kiwi-countdown__cal-action',
+                onClick: clearTarget,
+              },
+              '清除',
+            ),
+            h(
+              'button',
+              {
+                type: 'button',
+                class: ['kiwi-countdown__cal-action', 'is-primary'],
+                onClick: () => {
+                  pickerOpen.value = false
+                },
+              },
+              '完成',
+            ),
+          ]),
+        ])
+      }
+
       function renderTargetPicker() {
         if (props.readonly || running.value || mode.value !== 'target') return null
         return h('div', { class: 'kiwi-countdown__target' }, [
           h('label', { class: 'kiwi-countdown__target-label' }, '目标时刻'),
-          h('input', {
-            type: 'datetime-local',
-            step: '1',
-            class: 'kiwi-countdown__target-input',
-            value: toLocalInput(targetAt.value),
-            min: toLocalInput(Date.now()),
-            onChange: setTargetFromInput,
-          }),
+          h(
+            'div',
+            {
+              class: 'kiwi-countdown__picker',
+              ref: (el) => {
+                pickerEl = el
+              },
+            },
+            [
+              h(
+                'button',
+                {
+                  type: 'button',
+                  class: [
+                    'kiwi-countdown__target-trigger',
+                    pickerOpen.value ? 'is-open' : '',
+                  ],
+                  'aria-expanded': pickerOpen.value ? 'true' : 'false',
+                  onClick: togglePicker,
+                },
+                [
+                  h(
+                    'span',
+                    {
+                      class: [
+                        'kiwi-countdown__target-value',
+                        targetAt.value > 0 ? '' : 'is-empty',
+                      ],
+                    },
+                    targetAt.value > 0 ? formatDateTime(targetAt.value) : '选择日期时间',
+                  ),
+                  h('span', { class: 'kiwi-countdown__target-icon' }, [
+                    h(
+                      'svg',
+                      {
+                        viewBox: '0 0 16 16',
+                        width: '12',
+                        height: '12',
+                        fill: 'none',
+                        stroke: 'currentColor',
+                        'stroke-width': '1.4',
+                        'stroke-linecap': 'round',
+                        'stroke-linejoin': 'round',
+                        'aria-hidden': 'true',
+                      },
+                      [
+                        h('rect', {
+                          x: '2.5',
+                          y: '3.5',
+                          width: '11',
+                          height: '9.5',
+                          rx: '1.6',
+                        }),
+                        h('path', { d: 'M2.5 6.5h11M5.5 2.5v2M10.5 2.5v2' }),
+                      ],
+                    ),
+                  ]),
+                ],
+              ),
+              pickerOpen.value ? renderCalendar() : null,
+            ],
+          ),
           h(
             'span',
             { class: 'kiwi-countdown__target-hint' },
@@ -470,13 +812,20 @@ export function setup(host) {
         return h(
           'div',
           {
+            ref: (el) => {
+              rootEl = el
+            },
             class: [
               'kiwi-countdown',
+              isNarrow.value ? 'is-narrow' : '',
               running.value ? 'is-running' : '',
               finished.value ? 'is-finished' : '',
               props.readonly ? 'is-readonly' : '',
               props.selected ? 'is-selected' : '',
             ],
+            style: rootWidth.value
+              ? { '--countdown-width': `${rootWidth.value}px` }
+              : null,
           },
           [
             h('div', { class: 'kiwi-countdown__head' }, [

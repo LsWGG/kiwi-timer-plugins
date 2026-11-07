@@ -12,7 +12,7 @@
 
 <p align="center">
   <img alt="Kiwi 组件插件" src="https://img.shields.io/badge/Kiwi-component%20plugin-6f72dc" />
-  <img alt="版本" src="https://img.shields.io/badge/version-1.1.0-0ea5e9" />
+  <img alt="版本" src="https://img.shields.io/badge/version-1.4.1-0ea5e9" />
   <img alt="可置顶" src="https://img.shields.io/badge/pinnable-global%20floating%20window-f59e0b" />
   <img alt="许可" src="https://img.shields.io/badge/license-all%20rights%20reserved-64748b" />
 </p>
@@ -49,9 +49,15 @@
 <table>
   <tr>
     <td width="50%"><img src="docs/assets/screenshots/pomodoro-block.png" alt="番茄钟组件预览" /><br /><sub>番茄钟：专注 / 休息循环，可调时长</sub></td>
-    <td width="50%"><img src="docs/assets/screenshots/countdown-block.png" alt="倒计时组件预览" /><br /><sub>倒计时：快捷预设与逐分钟微调</sub></td>
+    <td width="50%"><img src="docs/assets/screenshots/countdown-block.png" alt="倒计时组件预览" /><br /><sub>倒计时：时长预设、逐分钟微调与结束提示音</sub></td>
   </tr>
 </table>
+
+<p align="center">
+  <img src="docs/assets/screenshots/countdown-target.png" alt="倒计时指定时刻与自绘日历" width="920" />
+</p>
+
+<p align="center"><sub>指定时刻：插件自绘的日历与时分秒步进，跟随系统主题，不弹出浏览器原生日期控件。</sub></p>
 
 ## 环境要求
 
@@ -62,7 +68,7 @@
 
 ## 安装
 
-1. 下载或构建 `dist/pomodoro-1.1.0.zip` / `dist/countdown-1.2.0.zip` / `dist/timeline-1.1.0.zip`。
+1. 下载或构建 `dist/pomodoro-1.2.0.zip` / `dist/countdown-1.4.1.zip` / `dist/timeline-1.2.0.zip`。
 2. 打开 Kiwi「设置 → 插件与区块 → 导入插件」，选择 zip。
 3. 启用插件。
 4. 在编辑器中输入 `/番茄钟`、`/倒计时` 或 `/时间轴` 插入；计时器也可以直接从插件卡片、
@@ -93,7 +99,7 @@ kiwi-timer-plugins/
 
 ```bash
 npm run validate   # 校验 manifest 与文件大小限制
-npm run package    # 生成 dist/pomodoro-1.1.0.zip 与 dist/countdown-1.1.0.zip
+npm run package    # 生成 pomodoro / countdown / timeline 三个安装包
 ```
 
 打包脚本会自动发现 `plugins/` 下的每个目录，新增插件只需添加 `plugin.json` 与
