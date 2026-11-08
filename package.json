@@ -1,6 +1,6 @@
 {
   "name": "kiwi-timer-plugins",
-  "version": "1.4.3",
+  "version": "1.6.0",
   "private": true,
   "description": "A maintained collection of Kiwi component plugins: Pomodoro and countdown timers plus a vertical timeline block.",
   "type": "module",
