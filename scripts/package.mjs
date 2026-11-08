@@ -28,8 +28,10 @@ const PINNABLE_REQUIRED_KEYS = new Set(['pomodoro', 'countdown'])
 const MAX_SCRIPT_BYTES = 2 * 1024 * 1024
 const MAX_STYLE_BYTES = 512 * 1024
 const MAX_MANIFEST_BYTES = 1024 * 1024
+const MAX_IMPORT_BYTES = 64 * 1024 * 1024
 const MAX_ASSET_BYTES = 4 * 1024 * 1024
-const MAX_ASSETS_TOTAL_BYTES = 10 * 1024 * 1024
+const MAX_VIDEO_ASSET_BYTES = 48 * 1024 * 1024
+const MAX_ASSETS_TOTAL_BYTES = 60 * 1024 * 1024
 const MAX_ASSET_COUNT = 40
 const SEMVER = /^\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?$/
 const KEY = /^[a-z0-9][a-z0-9-]{1,63}$/
@@ -51,6 +53,7 @@ const THEME_COLOR_KEYS = new Set([
   'accent',
   'accent.foreground',
 ])
+const VIDEO_EXTENSIONS = new Set(['.mp4', '.webm', '.ogv', '.ogg', '.mov'])
 const ASSET_EXTENSIONS = new Set([
   '.png',
   '.jpg',
@@ -64,6 +67,7 @@ const ASSET_EXTENSIONS = new Set([
   '.woff',
   '.ttf',
   '.otf',
+  ...VIDEO_EXTENSIONS,
 ])
 
 function fail(message) {
@@ -167,7 +171,7 @@ function validateCssToken(value, label) {
   if (/[;{}<>]/.test(value)) fail(`${label} contains invalid characters`)
 }
 
-function resolveAsset(dir, value, label) {
+function resolveAsset(dir, value, label, extensions = ASSET_EXTENSIONS) {
   const text = String(value || '').trim()
   if (!text) return ''
   if (/^(https?:|data:)/.test(text)) return ''
@@ -177,7 +181,7 @@ function resolveAsset(dir, value, label) {
   }
   const normalized = relative.startsWith('assets/') ? relative : `assets/${relative}`
   const full = path.join(dir, normalized)
-  if (!ASSET_EXTENSIONS.has(path.extname(normalized).toLowerCase())) {
+  if (!extensions.has(path.extname(normalized).toLowerCase())) {
     fail(`${label} has an unsupported file type: ${normalized}`)
   }
   return full
@@ -259,11 +263,12 @@ async function validateTheme(dir) {
   }
 
   const background = theme.background || {}
-  for (const [value, label] of [
-    [background.image, `${manifest.key}: background.image`],
-    [theme.preview, `${manifest.key}: preview`],
+  for (const [value, label, extensions] of [
+    [background.image, `${manifest.key}: background.image`, ASSET_EXTENSIONS],
+    [background.video, `${manifest.key}: background.video`, VIDEO_EXTENSIONS],
+    [theme.preview, `${manifest.key}: preview`, ASSET_EXTENSIONS],
   ]) {
-    const full = resolveAsset(dir, value, label)
+    const full = resolveAsset(dir, value, label, extensions)
     if (full && !(await exists(full))) {
       fail(`${label} file not found: ${value}`)
     }
@@ -282,13 +287,16 @@ async function validateTheme(dir) {
         fail(`${manifest.key}: unsupported asset type: ${file}`)
       }
       const size = (await stat(path.join(dir, file))).size
-      if (size > MAX_ASSET_BYTES) {
-        fail(`${manifest.key}: asset exceeds 4 MB: ${file}`)
+      const limit = VIDEO_EXTENSIONS.has(ext) ? MAX_VIDEO_ASSET_BYTES : MAX_ASSET_BYTES
+      if (size > limit) {
+        fail(
+          `${manifest.key}: asset exceeds ${limit / 1024 / 1024} MB: ${file}`,
+        )
       }
       total += size
     }
     if (total > MAX_ASSETS_TOTAL_BYTES) {
-      fail(`${manifest.key}: assets exceed 10 MB in total`)
+      fail(`${manifest.key}: assets exceed 60 MB in total`)
     }
   }
 
@@ -323,6 +331,10 @@ async function buildZip(item, theme = false) {
   })
   if (result.status !== 0) {
     fail(`${manifest.key}: zip failed: ${result.stderr || result.stdout || 'unknown error'}`)
+  }
+  const size = (await stat(out)).size
+  if (size > MAX_IMPORT_BYTES) {
+    fail(`${manifest.key}: package exceeds 64 MB (${size} bytes)`)
   }
   return out
 }

@@ -12,7 +12,7 @@
 
 <p align="center">
   <img alt="Kiwi component plugin" src="https://img.shields.io/badge/Kiwi-component%20plugin-6f72dc" />
-  <img alt="Version" src="https://img.shields.io/badge/version-1.4.1-0ea5e9" />
+  <img alt="Version" src="https://img.shields.io/badge/version-1.6.0-0ea5e9" />
   <img alt="Pinnable" src="https://img.shields.io/badge/pinnable-global%20floating%20window-f59e0b" />
   <img alt="License" src="https://img.shields.io/badge/license-all%20rights%20reserved-64748b" />
 </p>

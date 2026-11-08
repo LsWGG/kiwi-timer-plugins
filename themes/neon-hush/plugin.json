@@ -1,0 +1,54 @@
+{
+  "manifest_version": 1,
+  "kind": "theme",
+  "key": "neon-hush",
+  "name": "霓虹禁语",
+  "version": "1.1.0",
+  "description": "赛博科技主题：黑紫夜色里浮着霓虹洋红与电光青，环绕文字在「嘘」声里明灭，深色玻璃面板像一台醒着的终端。",
+  "author": "Kiwi",
+  "icon": "palette",
+  "homepage": "https://github.com/LsWGG/kiwi-timer-plugins",
+  "entry": "",
+  "style": "theme.css",
+  "blocks": [],
+  "theme": {
+    "mode": "dark",
+    "colors": {
+      "app.background": "#05050b",
+      "surface.background": "#0b0b14",
+      "surface.muted": "#12121f",
+      "surface.strong": "#1b1b2e",
+      "border.subtle": "#171726",
+      "border.default": "#292940",
+      "border.strong": "#4a4a6a",
+      "text.primary": "#f2efff",
+      "text.strong": "#ffffff",
+      "text.secondary": "#d4cdee",
+      "text.muted": "#a49cc4",
+      "text.subtle": "#7c7499",
+      "text.faint": "#565070",
+      "accent": "#ff2ed1",
+      "accent.foreground": "#190016"
+    },
+    "background": {
+      "image": "assets/background.webp",
+      "video": "assets/background.mp4",
+      "size": "cover",
+      "position": "center",
+      "repeat": "no-repeat",
+      "dim": 0.22,
+      "blur": 0
+    },
+    "surface": {
+      "opacity": 0.8,
+      "blur": 18,
+      "radius": 12
+    },
+    "typography": {
+      "body": "",
+      "heading": "\"Rajdhani\", \"PingFang SC\", \"Microsoft YaHei\", sans-serif",
+      "mono": "\"JetBrains Mono\", \"Fira Code\", \"Cascadia Code\", ui-monospace, monospace"
+    },
+    "preview": "assets/preview.webp"
+  }
+}
