@@ -35,7 +35,7 @@ html[data-kiwi-theme='pixel-huddle'] {
 /* ---------- 基础 ---------- */
 
 html[data-kiwi-theme='pixel-huddle'] body {
-  background-color: var(--px-paper-deep);
+  background-color: rgb(var(--theme-app));
 }
 
 html[data-kiwi-theme='pixel-huddle'] ::selection {
@@ -68,7 +68,9 @@ html[data-kiwi-theme='pixel-huddle'] .kiwi-card {
 }
 
 html[data-kiwi-theme='pixel-huddle'] .sidebar-glass {
-  background-color: rgb(251 246 232 / 0.9);
+  /* 大面积表面必须乘以 --theme-surface-opacity：用户在「自定义外观」里
+     调低面板不透明度时，主题不能再用写死的 alpha 把设置盖掉。 */
+  background-color: rgb(251 246 232 / calc(0.9 * var(--theme-surface-opacity)));
   border-right-color: rgb(38 40 43 / 0.16);
 }
 
@@ -145,7 +147,7 @@ html[data-kiwi-theme='pixel-huddle'] .kiwi-btn-ghost:hover {
 html[data-kiwi-theme='pixel-huddle'] .kiwi-input {
   border: 2px solid rgb(38 40 43 / 0.26);
   border-radius: 4px;
-  background: rgb(255 251 240 / 0.92);
+  background: rgb(255 251 240 / calc(0.92 * var(--theme-surface-opacity)));
   box-shadow: inset 2px 2px 0 rgb(38 40 43 / 0.04);
 }
 
@@ -202,7 +204,7 @@ html[data-kiwi-theme='pixel-huddle'] input[type='range']::-moz-range-track {
 
 html[data-kiwi-theme='pixel-huddle'][data-kiwi-theme-custom='true'] body .editor-canvas {
   /* 半透明纸面：会议室插画从纸张四周透出来，纸张本身保持可读。 */
-  background-color: rgb(239 230 210 / 0.62);
+  background-color: rgb(239 230 210 / calc(0.62 * var(--theme-surface-opacity)));
   background-image:
     radial-gradient(52rem 26rem at 50% -10%, rgb(217 164 65 / 0.16), transparent 62%),
     linear-gradient(rgb(38 40 43 / 0.05) 1px, transparent 1px),
@@ -212,7 +214,7 @@ html[data-kiwi-theme='pixel-huddle'][data-kiwi-theme-custom='true'] body .editor
 }
 
 html[data-kiwi-theme='pixel-huddle'][data-kiwi-theme-custom='true'] body .editor-sheet {
-  background: #fdf9ee !important;
+  background: rgb(253 249 238 / var(--theme-surface-opacity)) !important;
   background-image:
     linear-gradient(rgb(38 40 43 / 0.032) 1px, transparent 1px),
     linear-gradient(90deg, rgb(38 40 43 / 0.032) 1px, transparent 1px) !important;
@@ -425,7 +427,7 @@ html[data-kiwi-theme='pixel-huddle'] ::-webkit-scrollbar-thumb:hover {
 html[data-kiwi-theme='pixel-huddle'] .page-wrap-slim {
   border: 2px solid rgb(38 40 43 / 0.16);
   border-radius: 8px;
-  background: rgb(251 246 232 / 0.88);
+  background: rgb(251 246 232 / calc(0.88 * var(--theme-surface-opacity)));
   box-shadow: 6px 6px 0 rgb(38 40 43 / 0.08);
   backdrop-filter: blur(10px);
 }
@@ -435,19 +437,19 @@ html[data-kiwi-theme='pixel-huddle'] .page-wrap-slim {
 html[data-kiwi-theme='pixel-huddle'] .page-wrap {
   border: 2px solid rgb(38 40 43 / 0.16);
   border-radius: 8px;
-  background: rgb(251 246 232 / 0.9);
+  background: rgb(251 246 232 / calc(0.9 * var(--theme-surface-opacity)));
   box-shadow: 6px 6px 0 rgb(38 40 43 / 0.08);
   backdrop-filter: blur(10px);
 }
 
 /* 数据表：主面板铺一张实心纸。 */
 html[data-kiwi-theme='pixel-huddle'] section:has(.db-head-row) {
-  background-color: rgb(251 246 232 / 0.95);
+  background-color: rgb(251 246 232 / calc(0.95 * var(--theme-surface-opacity)));
 }
 
 /* Notebook：编辑 / 分屏 / 阅读统一用半透明奶油纸，沿用文本笔记的像素网格。 */
 html[data-kiwi-theme='pixel-huddle'] body .notebook-paper {
-  background-color: rgb(251 246 232 / 0.72);
+  background-color: rgb(251 246 232 / calc(0.72 * var(--theme-surface-opacity)));
   background-image:
     linear-gradient(rgb(38 40 43 / 0.03) 1px, transparent 1px),
     linear-gradient(90deg, rgb(38 40 43 / 0.03) 1px, transparent 1px);
@@ -464,7 +466,7 @@ html[data-kiwi-theme='pixel-huddle'] body .notebook-paper {
 /* 面板是半透明毛玻璃，会议室插画透过时 10px 辅助文字会发虚；
    提高纸底不透明度，并按墨色层级加深分组标题、字段名与说明文字。 */
 html[data-kiwi-theme='pixel-huddle'] body .note-info-panel {
-  background-color: rgb(251 246 232 / 0.9);
+  background-color: rgb(251 246 232 / calc(0.9 * var(--theme-surface-opacity)));
 }
 html[data-kiwi-theme='pixel-huddle'] body .note-info-panel .info-title {
   color: rgb(var(--theme-text-secondary));
@@ -481,14 +483,14 @@ html[data-kiwi-theme='pixel-huddle'] body .note-info-panel .text-slate-300 {
 
 /* 学习页信息密度高，纸面更实一些，插画只做远景。 */
 html[data-kiwi-theme='pixel-huddle'] body.theme-learn :is(.kiwi-card, .glass, .glass-strong) {
-  background-color: rgb(251 246 232 / 0.9);
+  background-color: rgb(251 246 232 / calc(0.9 * var(--theme-surface-opacity)));
 }
 
 html[data-kiwi-theme='pixel-huddle'] body.theme-learn [class~='bg-white/50'],
 html[data-kiwi-theme='pixel-huddle'] body.theme-learn [class~='bg-white/60'],
 html[data-kiwi-theme='pixel-huddle'] body.theme-learn [class~='bg-white/70'],
 html[data-kiwi-theme='pixel-huddle'] body.theme-learn [class~='bg-white/80'] {
-  background-color: rgb(251 246 232 / 0.88);
+  background-color: rgb(251 246 232 / calc(0.88 * var(--theme-surface-opacity)));
 }
 
 html[data-kiwi-theme='pixel-huddle'] body.theme-learn .kiwi-card {
@@ -518,7 +520,7 @@ html[data-kiwi-theme='pixel-huddle'] body.theme-learn .kiwi-card {
 html[data-kiwi-theme='pixel-huddle'][data-kiwi-theme-bg='true'] .chat-thread {
   border: 2px solid rgb(38 40 43 / 0.22);
   border-radius: 6px;
-  background-color: rgb(251 246 232 / 0.94);
+  background-color: rgb(251 246 232 / calc(0.94 * var(--theme-surface-opacity)));
   box-shadow:
     inset 0 1px 0 rgb(255 255 255 / 0.7),
     4px 4px 0 rgb(38 40 43 / 0.1);
@@ -528,14 +530,14 @@ html[data-kiwi-theme='pixel-huddle'][data-kiwi-theme-bg='true'] .chat-thread {
 
 html[data-kiwi-theme='pixel-huddle'][data-kiwi-theme-bg='true'] .chat-header,
 html[data-kiwi-theme='pixel-huddle'][data-kiwi-theme-bg='true'] .chat-sidebar {
-  background-color: rgb(251 246 232 / 0.94);
+  background-color: rgb(251 246 232 / calc(0.94 * var(--theme-surface-opacity)));
   border-color: rgb(38 40 43 / 0.16);
 }
 
 html[data-kiwi-theme='pixel-huddle'][data-kiwi-theme-bg='true'] .chat-composer-inner {
   border: 2px solid rgb(38 40 43 / 0.5);
   border-radius: 6px;
-  background-color: rgb(251 246 232 / 0.96);
+  background-color: rgb(251 246 232 / calc(0.96 * var(--theme-surface-opacity)));
   box-shadow:
     inset 0 1px 0 rgb(255 255 255 / 0.7),
     3px 3px 0 rgb(38 40 43 / 0.12);
