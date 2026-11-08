@@ -1,0 +1,53 @@
+{
+  "manifest_version": 1,
+  "kind": "theme",
+  "key": "pixel-huddle",
+  "name": "例会",
+  "version": "1.0.2",
+  "description": "像素卡通例会主题：奶油网格纸、炭墨描边、橙红强调，会议室里的鱼群陪你把待办开成例会。",
+  "author": "Kiwi",
+  "icon": "palette",
+  "homepage": "https://github.com/LsWGG/kiwi-timer-plugins",
+  "entry": "",
+  "style": "theme.css",
+  "blocks": [],
+  "theme": {
+    "mode": "light",
+    "colors": {
+      "app.background": "#efe6d2",
+      "surface.background": "#fbf6e8",
+      "surface.muted": "#eee3c8",
+      "surface.strong": "#e0d2b0",
+      "border.subtle": "#e7dcc2",
+      "border.default": "#d3c5a4",
+      "border.strong": "#b09f7c",
+      "text.primary": "#27292c",
+      "text.strong": "#1b1d20",
+      "text.secondary": "#4b4a44",
+      "text.muted": "#6e6a5d",
+      "text.subtle": "#8f8977",
+      "text.faint": "#b4ab93",
+      "accent": "#c0522c",
+      "accent.foreground": "#fff7e8"
+    },
+    "background": {
+      "image": "assets/background.webp",
+      "size": "cover",
+      "position": "center",
+      "repeat": "no-repeat",
+      "dim": 0.3,
+      "blur": 0
+    },
+    "surface": {
+      "opacity": 0.96,
+      "blur": 6,
+      "radius": 4
+    },
+    "typography": {
+      "body": "",
+      "heading": "\"Kiwi Pixel\", \"PingFang SC\", \"Microsoft YaHei\", sans-serif",
+      "mono": ""
+    },
+    "preview": "assets/preview.webp"
+  }
+}

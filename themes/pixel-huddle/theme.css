@@ -1,0 +1,552 @@
+/* ============================================================
+   例会 · 像素卡通主题
+   奶油网格纸 × 炭墨描边 × 橙红强调 × 硬投影
+   ------------------------------------------------------------
+   设计来源：会议室像素插画。色板取自画面里的奶油纸、炭黑轮廓、
+   珊瑚橙、湖水蓝、橄榄绿与芥末黄；所有装饰只使用 CSS 渐变与
+   伪元素，不额外堆叠图片。
+
+   字体许可：Fusion Pixel Font（https://github.com/TakWolf/fusion-pixel-font）
+   Copyright (c) 2022, TakWolf. SIL Open Font License 1.1。
+   许可全文见主题包内 README.md。
+   ============================================================ */
+
+/* 标题与按钮使用的像素字体：Fusion Pixel 12px Proportional（OFL 1.1）。 */
+@font-face {
+  font-family: 'Kiwi Pixel';
+  src: url('assets/fusion-pixel-zh_hans.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+html[data-kiwi-theme='pixel-huddle'] {
+  --px-ink: #26282b;
+  --px-ink-soft: #4b4a44;
+  --px-paper: #fbf6e8;
+  --px-paper-deep: #eee3c8;
+  --px-orange: #c0522c;
+  --px-orange-deep: #9e3f20;
+  --px-blue: #4f8fc4;
+  --px-olive: #7c8a4c;
+  --px-mustard: #d9a441;
+}
+
+/* ---------- 基础 ---------- */
+
+html[data-kiwi-theme='pixel-huddle'] body {
+  background-color: var(--px-paper-deep);
+}
+
+html[data-kiwi-theme='pixel-huddle'] ::selection {
+  background: rgb(192 82 44 / 0.26);
+  color: var(--px-ink);
+}
+
+/* 全站直角化：像素画里没有大圆角，头像与胶囊保持原样。 */
+html[data-kiwi-theme='pixel-huddle']
+  [class*='rounded-']:not([class*='rounded-full']):not([class*='rounded-none']) {
+  border-radius: 4px;
+}
+
+/* 界面级标题也使用像素字，让风格从正文延伸到设置页。 */
+html[data-kiwi-theme='pixel-huddle'] :is(h1, h2, h3) {
+  font-family: 'Kiwi Pixel', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+}
+
+/* ---------- 面板：纸面 + 墨线 + 硬投影 ---------- */
+
+html[data-kiwi-theme='pixel-huddle'] :is(.kiwi-card, .glass, .glass-strong, .sidebar-glass) {
+  border-color: rgb(38 40 43 / 0.16);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.65),
+    3px 3px 0 rgb(38 40 43 / 0.1);
+}
+
+html[data-kiwi-theme='pixel-huddle'] .kiwi-card {
+  border-radius: 6px;
+}
+
+html[data-kiwi-theme='pixel-huddle'] .sidebar-glass {
+  background-color: rgb(251 246 232 / 0.9);
+  border-right-color: rgb(38 40 43 / 0.16);
+}
+
+html[data-kiwi-theme='pixel-huddle'] .kiwi-card:hover {
+  border-color: rgb(192 82 44 / 0.45);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.65),
+    4px 4px 0 rgb(38 40 43 / 0.15);
+}
+
+html[data-kiwi-theme='pixel-huddle'] .kiwi-menu-panel {
+  border: 2px solid rgb(38 40 43 / 0.55);
+  border-radius: 6px;
+  background-color: rgb(251 246 232 / 0.98);
+  box-shadow: 5px 5px 0 rgb(38 40 43 / 0.14);
+}
+
+html[data-kiwi-theme='pixel-huddle'] .kiwi-modal-panel {
+  border: 2px solid rgb(38 40 43 / 0.6);
+  border-radius: 8px;
+  box-shadow:
+    0 0 0 1px rgb(255 255 255 / 0.4),
+    8px 8px 0 rgb(38 40 43 / 0.13),
+    0 40px 90px -50px rgb(38 40 43 / 0.65);
+}
+
+/* ---------- 按钮：像从像素画里按下去的键帽 ---------- */
+
+html[data-kiwi-theme='pixel-huddle'] :is(.kiwi-btn-primary, .kiwi-btn-secondary) {
+  font-family: 'Kiwi Pixel', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  letter-spacing: 0.03em;
+}
+
+html[data-kiwi-theme='pixel-huddle'] .kiwi-btn-primary {
+  border: 2px solid var(--px-ink);
+  border-radius: 4px;
+  background-image:
+    linear-gradient(180deg, rgb(255 255 255 / 0.18), transparent 52%),
+    linear-gradient(135deg, #cf6a42, #a3431f);
+  box-shadow: 3px 3px 0 rgb(38 40 43 / 0.88);
+}
+
+html[data-kiwi-theme='pixel-huddle'] .kiwi-btn-primary:hover {
+  filter: none;
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0 rgb(38 40 43 / 0.88);
+}
+
+html[data-kiwi-theme='pixel-huddle'] .kiwi-btn-primary:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 rgb(38 40 43 / 0.88);
+}
+
+html[data-kiwi-theme='pixel-huddle'] .kiwi-btn-secondary {
+  border: 2px solid rgb(38 40 43 / 0.4);
+  border-radius: 4px;
+  background: var(--px-paper);
+  box-shadow: 2px 2px 0 rgb(38 40 43 / 0.14);
+}
+
+html[data-kiwi-theme='pixel-huddle'] .kiwi-btn-secondary:hover {
+  border-color: var(--px-ink);
+  background: #fffaf0;
+  color: var(--px-orange);
+  box-shadow: 3px 3px 0 rgb(38 40 43 / 0.18);
+}
+
+html[data-kiwi-theme='pixel-huddle'] .kiwi-btn-ghost:hover {
+  border-radius: 4px;
+}
+
+/* ---------- 输入框 / 选择器 ---------- */
+
+html[data-kiwi-theme='pixel-huddle'] .kiwi-input {
+  border: 2px solid rgb(38 40 43 / 0.26);
+  border-radius: 4px;
+  background: rgb(255 251 240 / 0.92);
+  box-shadow: inset 2px 2px 0 rgb(38 40 43 / 0.04);
+}
+
+html[data-kiwi-theme='pixel-huddle'] .kiwi-input:focus {
+  border-color: var(--px-ink);
+  box-shadow:
+    0 0 0 3px rgb(192 82 44 / 0.2),
+    inset 2px 2px 0 rgb(38 40 43 / 0.04);
+  outline: none;
+}
+
+html[data-kiwi-theme='pixel-huddle'] :is(input[type='checkbox'], input[type='radio']) {
+  accent-color: var(--px-orange);
+}
+
+/* 滑杆也用方块键帽，避免出现系统默认的圆形滑块。 */
+html[data-kiwi-theme='pixel-huddle'] input[type='range'] {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 6px;
+  border: 2px solid rgb(38 40 43 / 0.45);
+  border-radius: 0;
+  background: var(--px-paper-deep);
+  box-shadow: inset 2px 2px 0 rgb(38 40 43 / 0.08);
+  cursor: pointer;
+}
+
+html[data-kiwi-theme='pixel-huddle'] input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  border: 2px solid var(--px-ink);
+  border-radius: 0;
+  background: var(--px-orange);
+  box-shadow: 2px 2px 0 rgb(38 40 43 / 0.55);
+}
+
+html[data-kiwi-theme='pixel-huddle'] input[type='range']::-moz-range-thumb {
+  width: 10px;
+  height: 10px;
+  border: 2px solid var(--px-ink);
+  border-radius: 0;
+  background: var(--px-orange);
+  box-shadow: 2px 2px 0 rgb(38 40 43 / 0.55);
+}
+
+html[data-kiwi-theme='pixel-huddle'] input[type='range']::-moz-range-track {
+  height: 6px;
+  border-radius: 0;
+  background: var(--px-paper-deep);
+}
+
+/* ---------- 编辑器画布与纸张 ---------- */
+
+html[data-kiwi-theme='pixel-huddle'][data-kiwi-theme-custom='true'] body .editor-canvas {
+  /* 半透明纸面：会议室插画从纸张四周透出来，纸张本身保持可读。 */
+  background-color: rgb(239 230 210 / 0.62);
+  background-image:
+    radial-gradient(52rem 26rem at 50% -10%, rgb(217 164 65 / 0.16), transparent 62%),
+    linear-gradient(rgb(38 40 43 / 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(38 40 43 / 0.05) 1px, transparent 1px);
+  background-size: auto, 24px 24px, 24px 24px;
+  border-color: rgb(38 40 43 / 0.2);
+}
+
+html[data-kiwi-theme='pixel-huddle'][data-kiwi-theme-custom='true'] body .editor-sheet {
+  background: #fdf9ee !important;
+  background-image:
+    linear-gradient(rgb(38 40 43 / 0.032) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(38 40 43 / 0.032) 1px, transparent 1px) !important;
+  background-size: 28px 28px !important;
+  border: 2px solid rgb(38 40 43 / 0.24);
+  border-radius: 2px;
+  box-shadow:
+    0 0 0 1px rgb(255 255 255 / 0.5),
+    8px 8px 0 rgb(38 40 43 / 0.065),
+    0 34px 80px -56px rgb(38 40 43 / 0.55);
+}
+
+html[data-kiwi-theme='pixel-huddle'] .kiwi-editor:not(.kiwi-editor-docx) .editor-sheet::before {
+  background: repeating-linear-gradient(
+    90deg,
+    rgb(192 82 44 / 0.75) 0 8px,
+    rgb(192 82 44 / 0) 8px 12px
+  );
+}
+
+/* ---------- 标题：像素字 + 方块装饰条 ---------- */
+
+html[data-kiwi-theme='pixel-huddle'] :is(.ProseMirror, .prose-wiki) :is(h1, h2, h3) {
+  letter-spacing: 0.015em;
+  text-shadow: 2px 2px 0 rgb(38 40 43 / 0.06);
+}
+
+html[data-kiwi-theme='pixel-huddle'][data-kiwi-theme-custom='true']
+  .kiwi-editor:not(.kiwi-editor-docx)
+  .ProseMirror
+  > :is(h1, h2)::before {
+  width: 5px;
+  border-radius: 0;
+  background: repeating-linear-gradient(
+    180deg,
+    var(--px-orange) 0 7px,
+    var(--px-orange-deep) 7px 14px
+  );
+}
+
+html[data-kiwi-theme='pixel-huddle'][data-kiwi-theme-custom='true']
+  .kiwi-editor:not(.kiwi-editor-docx)
+  .ProseMirror
+  > h3::before {
+  border-radius: 0;
+  background: var(--px-olive);
+}
+
+html[data-kiwi-theme='pixel-huddle'][data-kiwi-theme-custom='true']
+  .kiwi-editor:not(.kiwi-editor-docx)
+  .ProseMirror
+  > h4::before {
+  border-radius: 0;
+  background: var(--px-mustard);
+}
+
+/* ---------- 引用 / 行内代码 / 代码块 ---------- */
+
+html[data-kiwi-theme='pixel-huddle'][data-kiwi-theme-custom='true']
+  .kiwi-editor:not(.kiwi-editor-docx)
+  .ProseMirror
+  blockquote {
+  border-radius: 0 6px 6px 0;
+  background: linear-gradient(
+    90deg,
+    rgb(217 164 65 / 0.18),
+    rgb(217 164 65 / 0.05) 62%,
+    transparent
+  );
+  color: var(--px-ink-soft);
+  box-shadow: inset 2px 0 0 rgb(38 40 43 / 0.12);
+}
+
+html[data-kiwi-theme='pixel-huddle'][data-kiwi-theme-custom='true']
+  .kiwi-editor:not(.kiwi-editor-docx)
+  .ProseMirror
+  blockquote::before {
+  width: 4px;
+  border-radius: 0;
+  background: var(--px-orange);
+}
+
+html[data-kiwi-theme='pixel-huddle'][data-kiwi-theme-custom='true']
+  .kiwi-editor
+  .ProseMirror
+  :not(pre)
+  > code {
+  border: 1px solid rgb(38 40 43 / 0.14);
+  border-radius: 3px;
+  background: rgb(217 164 65 / 0.22);
+  color: #6b4a12;
+}
+
+/* 代码块保留用户选择的语法配色，只补像素描边与硬投影。 */
+html[data-kiwi-theme='pixel-huddle'] .kiwi-editor .ProseMirror pre {
+  border: 2px solid rgb(38 40 43 / 0.75);
+  border-radius: 4px;
+  box-shadow: 4px 4px 0 rgb(38 40 43 / 0.14);
+}
+
+/* ---------- 表格 ---------- */
+
+html[data-kiwi-theme='pixel-huddle'][data-kiwi-theme-custom='true']
+  .kiwi-editor:not(.kiwi-editor-docx)
+  .ProseMirror
+  th {
+  border-color: rgb(38 40 43 / 0.24);
+  background: linear-gradient(180deg, #f4e7c4, #ecdcb4);
+  color: var(--px-ink);
+}
+
+html[data-kiwi-theme='pixel-huddle'][data-kiwi-theme-custom='true']
+  .kiwi-editor:not(.kiwi-editor-docx)
+  .ProseMirror
+  td {
+  border-color: rgb(38 40 43 / 0.15);
+}
+
+html[data-kiwi-theme='pixel-huddle'][data-kiwi-theme-custom='true']
+  .kiwi-editor:not(.kiwi-editor-docx)
+  .ProseMirror
+  tbody
+  tr:nth-child(even)
+  td {
+  background: rgb(238 227 200 / 0.35);
+}
+
+html[data-kiwi-theme='pixel-huddle'][data-kiwi-theme-custom='true']
+  .kiwi-editor:not(.kiwi-editor-docx)
+  .ProseMirror
+  tbody
+  tr:hover
+  td {
+  background: rgb(192 82 44 / 0.08);
+}
+
+/* ---------- 提示块 / 折叠块 / 提及 ---------- */
+
+html[data-kiwi-theme='pixel-huddle'][data-kiwi-theme-custom='true']
+  .kiwi-editor
+  .ProseMirror
+  .callout-block {
+  border: 2px solid rgb(38 40 43 / 0.26);
+  border-left: 4px solid var(--px-orange);
+  border-radius: 6px;
+  background: linear-gradient(135deg, rgb(217 164 65 / 0.18), rgb(217 164 65 / 0.05));
+  box-shadow: 3px 3px 0 rgb(38 40 43 / 0.07);
+}
+
+html[data-kiwi-theme='pixel-huddle'][data-kiwi-theme-custom='true']
+  .kiwi-editor
+  .ProseMirror
+  div[data-type='details'] {
+  border: 2px solid rgb(38 40 43 / 0.18);
+  border-radius: 6px;
+  background: rgb(238 227 200 / 0.42);
+}
+
+html[data-kiwi-theme='pixel-huddle'] .kiwi-editor .ProseMirror .kiwi-mention {
+  border: 1px solid rgb(192 82 44 / 0.28);
+  border-radius: 3px;
+}
+
+/* ---------- 键盘键帽 ---------- */
+
+html[data-kiwi-theme='pixel-huddle'] kbd {
+  border: 2px solid rgb(38 40 43 / 0.5);
+  border-radius: 3px;
+  background: var(--px-paper);
+  color: var(--px-ink);
+  box-shadow: 0 2px 0 rgb(38 40 43 / 0.32);
+  padding: 1px 5px;
+}
+
+/* ---------- 滚动条：斜纹橙红 ---------- */
+
+html[data-kiwi-theme='pixel-huddle'] ::-webkit-scrollbar {
+  width: 14px;
+  height: 14px;
+}
+
+html[data-kiwi-theme='pixel-huddle'] ::-webkit-scrollbar-track {
+  background: rgb(238 227 200 / 0.85);
+}
+
+html[data-kiwi-theme='pixel-huddle'] ::-webkit-scrollbar-thumb {
+  border: 3px solid transparent;
+  border-radius: 0;
+  background: repeating-linear-gradient(
+      45deg,
+      var(--px-orange) 0 4px,
+      var(--px-orange-deep) 4px 8px
+    )
+    padding-box;
+}
+
+html[data-kiwi-theme='pixel-huddle'] ::-webkit-scrollbar-thumb:hover {
+  background: repeating-linear-gradient(
+      45deg,
+      #d4653c 0 4px,
+      #ae4826 4px 8px
+    )
+    padding-box;
+}
+
+/* ---------- 设置页：整页铺一张奶油纸 ---------- */
+
+/* 设置页大量说明文字直接排在页面上，插画透过文字会降低可读性；
+   给统一的窄版容器铺一张实体纸，侧边仍露出会议室插画。 */
+html[data-kiwi-theme='pixel-huddle'] .page-wrap-slim {
+  border: 2px solid rgb(38 40 43 / 0.16);
+  border-radius: 8px;
+  background: rgb(251 246 232 / 0.88);
+  box-shadow: 6px 6px 0 rgb(38 40 43 / 0.08);
+  backdrop-filter: blur(10px);
+}
+
+/* ---------- Wiki / 知识库：宽版页面同样铺纸 ---------- */
+
+html[data-kiwi-theme='pixel-huddle'] .page-wrap {
+  border: 2px solid rgb(38 40 43 / 0.16);
+  border-radius: 8px;
+  background: rgb(251 246 232 / 0.9);
+  box-shadow: 6px 6px 0 rgb(38 40 43 / 0.08);
+  backdrop-filter: blur(10px);
+}
+
+/* 数据表：主面板铺一张实心纸。 */
+html[data-kiwi-theme='pixel-huddle'] section:has(.db-head-row) {
+  background-color: rgb(251 246 232 / 0.95);
+}
+
+/* Notebook：编辑 / 分屏 / 阅读统一用半透明奶油纸，沿用文本笔记的像素网格。 */
+html[data-kiwi-theme='pixel-huddle'] body .notebook-paper {
+  background-color: rgb(251 246 232 / 0.72);
+  background-image:
+    linear-gradient(rgb(38 40 43 / 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(38 40 43 / 0.03) 1px, transparent 1px);
+  background-size: 28px 28px;
+  border: 2px solid rgb(38 40 43 / 0.22);
+  border-radius: 4px;
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.65),
+    8px 8px 0 rgb(38 40 43 / 0.07);
+}
+
+/* ---------- 笔记信息面板 ---------- */
+
+/* 面板是半透明毛玻璃，会议室插画透过时 10px 辅助文字会发虚；
+   提高纸底不透明度，并按墨色层级加深分组标题、字段名与说明文字。 */
+html[data-kiwi-theme='pixel-huddle'] body .note-info-panel {
+  background-color: rgb(251 246 232 / 0.9);
+}
+html[data-kiwi-theme='pixel-huddle'] body .note-info-panel .info-title {
+  color: rgb(var(--theme-text-secondary));
+}
+html[data-kiwi-theme='pixel-huddle'] body .note-info-panel .info-row dt,
+html[data-kiwi-theme='pixel-huddle'] body .note-info-panel .text-slate-400 {
+  color: rgb(var(--theme-text-muted));
+}
+html[data-kiwi-theme='pixel-huddle'] body .note-info-panel .text-slate-300 {
+  color: rgb(var(--theme-text-subtle));
+}
+
+/* ---------- 学习模式 ---------- */
+
+/* 学习页信息密度高，纸面更实一些，插画只做远景。 */
+html[data-kiwi-theme='pixel-huddle'] body.theme-learn :is(.kiwi-card, .glass, .glass-strong) {
+  background-color: rgb(251 246 232 / 0.9);
+}
+
+html[data-kiwi-theme='pixel-huddle'] body.theme-learn [class~='bg-white/50'],
+html[data-kiwi-theme='pixel-huddle'] body.theme-learn [class~='bg-white/60'],
+html[data-kiwi-theme='pixel-huddle'] body.theme-learn [class~='bg-white/70'],
+html[data-kiwi-theme='pixel-huddle'] body.theme-learn [class~='bg-white/80'] {
+  background-color: rgb(251 246 232 / 0.88);
+}
+
+html[data-kiwi-theme='pixel-huddle'] body.theme-learn .kiwi-card {
+  border-radius: 8px;
+}
+
+/* ---------- 动效：两帧一格的像素节奏 ---------- */
+
+@media (prefers-reduced-motion: no-preference) {
+  html[data-kiwi-theme='pixel-huddle'] .kiwi-card {
+    transition:
+      transform 160ms steps(2, end),
+      box-shadow 160ms steps(2, end),
+      border-color 160ms steps(2, end);
+  }
+
+  html[data-kiwi-theme='pixel-huddle'] .kiwi-card:hover {
+    transform: translate(-1px, -1px);
+  }
+}
+
+/* ---------- 问答页：一张像素纸托住回答 ---------- */
+
+/* 助手回答没有气泡，直接压在会议室插画上时正文和引用来源会糊成一片。
+   给消息流铺一张接近不透明的奶油纸，顶栏 / 侧栏 / 输入区同步提亮，
+   壁纸仍然留在窗口边缘，但长回答始终有稳定的阅读底面。 */
+html[data-kiwi-theme='pixel-huddle'][data-kiwi-theme-bg='true'] .chat-thread {
+  border: 2px solid rgb(38 40 43 / 0.22);
+  border-radius: 6px;
+  background-color: rgb(251 246 232 / 0.94);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.7),
+    4px 4px 0 rgb(38 40 43 / 0.1);
+  backdrop-filter: blur(14px) saturate(1.02);
+  -webkit-backdrop-filter: blur(14px) saturate(1.02);
+}
+
+html[data-kiwi-theme='pixel-huddle'][data-kiwi-theme-bg='true'] .chat-header,
+html[data-kiwi-theme='pixel-huddle'][data-kiwi-theme-bg='true'] .chat-sidebar {
+  background-color: rgb(251 246 232 / 0.94);
+  border-color: rgb(38 40 43 / 0.16);
+}
+
+html[data-kiwi-theme='pixel-huddle'][data-kiwi-theme-bg='true'] .chat-composer-inner {
+  border: 2px solid rgb(38 40 43 / 0.5);
+  border-radius: 6px;
+  background-color: rgb(251 246 232 / 0.96);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.7),
+    3px 3px 0 rgb(38 40 43 / 0.12);
+  backdrop-filter: blur(12px) saturate(1.02);
+  -webkit-backdrop-filter: blur(12px) saturate(1.02);
+}
+
+html[data-kiwi-theme='pixel-huddle'] .chat-user-bubble {
+  border: 2px solid var(--px-ink);
+  border-radius: 4px;
+  background-image: linear-gradient(135deg, #cf6a42, #a3431f);
+  color: #fff8e7;
+  box-shadow: 3px 3px 0 rgb(38 40 43 / 0.16);
+}
