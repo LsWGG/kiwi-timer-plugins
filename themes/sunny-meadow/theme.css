@@ -1,0 +1,505 @@
+/* ============================================================
+   晴野 · 日系治愈风景主题
+   晴空 × 花野 × 雪山 × 暖桃强调色
+   ------------------------------------------------------------
+   设计来源：日系治愈风景插画。奶油白纸面取花野间的小路，
+   鼠尾草绿取远山，雾蓝取天空，暖桃取云与花；面板保持半透明，
+   让风景始终在界面背后呼吸。
+
+   字体许可：Cormorant Garamond（https://github.com/CatharsisFonts/Cormorant）
+   Copyright 2015 the Cormorant Project Authors. SIL Open Font License 1.1。
+   许可全文见主题包内 README.md。
+   ============================================================ */
+
+/* 大标题使用的衬线字体：Cormorant Garamond（OFL 1.1，latin 子集）。 */
+@font-face {
+  font-family: 'Kiwi Meadow Serif';
+  src: url('assets/cormorant-garamond-600.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+html[data-kiwi-theme='sunny-meadow'] {
+  --sm-cream: #fffdf7;
+  --sm-peach: #f0b09a;
+  --sm-coral: #b95a42;
+  --sm-coral-soft: #d98a71;
+  --sm-leaf: #5f8f45;
+  --sm-leaf-soft: #a8c48c;
+  --sm-sky: #6f9fd4;
+  --sm-ink: #2c3b36;
+}
+
+/* ---------- 基础 ---------- */
+
+html[data-kiwi-theme='sunny-meadow'] body {
+  background-color: #e8f1f6;
+}
+
+html[data-kiwi-theme='sunny-meadow'] ::selection {
+  background: rgb(217 138 113 / 0.3);
+  color: var(--sm-ink);
+}
+
+/* ---------- 面板：柔光玻璃，始终给风景留一口气 ---------- */
+
+html[data-kiwi-theme='sunny-meadow'] :is(.kiwi-card, .glass, .glass-strong, .sidebar-glass) {
+  border-color: rgb(255 255 255 / 0.55);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.75),
+    0 20px 48px -34px rgb(44 74 58 / 0.45);
+}
+
+html[data-kiwi-theme='sunny-meadow'] .kiwi-card {
+  border-radius: 20px;
+}
+
+html[data-kiwi-theme='sunny-meadow'] .kiwi-card:hover {
+  border-color: rgb(217 138 113 / 0.5);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.8),
+    0 24px 54px -34px rgb(44 74 58 / 0.5);
+}
+
+/* ---------- 阅读优先：内容面板托住文字 ---------- */
+
+/* 插画色彩浓，11px 说明文字不能直接压在花田上。
+   顶栏、侧栏与内容面板保持雾面玻璃，但把底色提到能稳定承托文字的程度。 */
+html[data-kiwi-theme='sunny-meadow'] .glass {
+  background-color: rgb(255 253 247 / 0.84);
+}
+
+html[data-kiwi-theme='sunny-meadow'] .glass-strong {
+  background-color: rgb(255 253 247 / 0.9);
+}
+
+html[data-kiwi-theme='sunny-meadow'] .sidebar-glass {
+  background-color: rgb(255 253 247 / 0.86);
+  border-right-color: rgb(211 223 202 / 0.75);
+}
+
+html[data-kiwi-theme='sunny-meadow'] .kiwi-card {
+  background-color: rgb(255 253 247 / 0.86);
+}
+
+/* 顶栏只在最上方，留一点天空的通透感。 */
+html[data-kiwi-theme='sunny-meadow'] header.bg-white\/55 {
+  background-color: rgb(255 253 247 / 0.82);
+  border-bottom-color: rgb(211 223 202 / 0.75);
+}
+
+/* 设置页与 Wiki 的说明文字直接排在页面层，铺一张雾面纸承接整页内容。 */
+html[data-kiwi-theme='sunny-meadow'] :is(.page-wrap-slim, .page-wrap) {
+  border: 1px solid rgb(255 255 255 / 0.7);
+  border-radius: 24px;
+  background: rgb(255 253 247 / 0.86);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.85),
+    0 24px 60px -48px rgb(44 74 58 / 0.55);
+  backdrop-filter: blur(24px) saturate(1.06);
+}
+
+/* 数据表与 Notebook 没有独立纸面，给所在主面板铺一张雾面纸。 */
+html[data-kiwi-theme='sunny-meadow'] section:has(.db-head-row),
+html[data-kiwi-theme='sunny-meadow'] section:has(.nb-preview-cell) {
+  background: rgb(255 253 247 / 0.92);
+  backdrop-filter: blur(20px);
+}
+
+html[data-kiwi-theme='sunny-meadow'] .kiwi-menu-panel {
+  border-color: rgb(211 223 202 / 0.9);
+  border-radius: 14px;
+  background-color: rgb(255 253 247 / 0.97);
+  box-shadow: 0 20px 48px -30px rgb(44 74 58 / 0.5);
+}
+
+html[data-kiwi-theme='sunny-meadow'] .kiwi-modal-panel {
+  border: 1px solid rgb(255 255 255 / 0.72);
+  border-radius: 22px;
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.9),
+    0 36px 80px -46px rgb(44 74 58 / 0.55);
+}
+
+/* ---------- 按钮：暖桃渐变 + 柔光 ---------- */
+
+html[data-kiwi-theme='sunny-meadow'] .kiwi-btn-primary {
+  border: 1px solid rgb(255 255 255 / 0.35);
+  border-radius: 999px;
+  background-image: linear-gradient(135deg, var(--sm-coral-soft) 0%, var(--sm-coral) 78%);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.35),
+    0 8px 20px -12px rgb(185 90 66 / 0.65);
+}
+
+html[data-kiwi-theme='sunny-meadow'] .kiwi-btn-primary:hover {
+  filter: brightness(1.04);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.4),
+    0 10px 24px -12px rgb(185 90 66 / 0.7);
+}
+
+html[data-kiwi-theme='sunny-meadow'] .kiwi-btn-secondary {
+  border-color: rgb(185 90 66 / 0.26);
+  border-radius: 999px;
+  background: rgb(255 253 247 / 0.82);
+  color: var(--sm-coral);
+}
+
+html[data-kiwi-theme='sunny-meadow'] .kiwi-btn-secondary:hover {
+  border-color: rgb(185 90 66 / 0.5);
+  background: rgb(255 253 247 / 0.95);
+  color: var(--sm-coral);
+}
+
+/* ---------- 输入框 / 选择器 ---------- */
+
+html[data-kiwi-theme='sunny-meadow'] .kiwi-input {
+  border-color: rgb(211 223 202 / 0.9);
+  border-radius: 12px;
+  background: rgb(255 253 247 / 0.82);
+}
+
+html[data-kiwi-theme='sunny-meadow'] .kiwi-input:focus {
+  border-color: rgb(185 90 66 / 0.55);
+  box-shadow: 0 0 0 3px rgb(185 90 66 / 0.14);
+  outline: none;
+}
+
+html[data-kiwi-theme='sunny-meadow'] :is(input[type='checkbox'], input[type='radio']) {
+  accent-color: var(--sm-coral);
+}
+
+/* 滑杆：草绿到晴空的细轨，暖桃圆钮，替换系统默认控件。 */
+html[data-kiwi-theme='sunny-meadow'] input[type='range'] {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 6px;
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    rgb(168 196 140 / 0.6),
+    rgb(111 159 212 / 0.42)
+  );
+  cursor: pointer;
+}
+
+html[data-kiwi-theme='sunny-meadow'] input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgb(255 253 247 / 0.95);
+  border-radius: 999px;
+  background: linear-gradient(180deg, var(--sm-coral-soft), var(--sm-coral));
+  box-shadow:
+    0 2px 6px rgb(44 74 58 / 0.28),
+    0 0 0 1px rgb(185 90 66 / 0.35);
+}
+
+html[data-kiwi-theme='sunny-meadow'] input[type='range']::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  border: 2px solid rgb(255 253 247 / 0.95);
+  border-radius: 999px;
+  background: var(--sm-coral);
+  box-shadow: 0 2px 6px rgb(44 74 58 / 0.28);
+}
+
+html[data-kiwi-theme='sunny-meadow'] input[type='range']::-moz-range-track {
+  height: 6px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgb(168 196 140 / 0.6), rgb(111 159 212 / 0.42));
+}
+
+/* ---------- 编辑器画布与纸张 ---------- */
+
+html[data-kiwi-theme='sunny-meadow'][data-kiwi-theme-custom='true'] body .editor-canvas {
+  /* 半透明晴空：花野与雪山从纸张四周透出来，纸张本身保持实色。 */
+  background-color: rgb(234 242 247 / 0.45);
+  background-image:
+    radial-gradient(48rem 28rem at 10% -6%, rgb(240 176 154 / 0.22), transparent 62%),
+    radial-gradient(44rem 26rem at 96% 104%, rgb(168 196 140 / 0.2), transparent 62%),
+    radial-gradient(circle at 1px 1px, rgb(111 159 212 / 0.16) 1px, transparent 0);
+  background-size: auto, auto, 22px 22px;
+  border-color: rgb(211 223 202 / 0.9);
+}
+
+html[data-kiwi-theme='sunny-meadow'][data-kiwi-theme-custom='true'] body .editor-sheet {
+  background: linear-gradient(180deg, #fffdf8 0%, #fdf9ef 100%) !important;
+  border: 1px solid rgb(255 255 255 / 0.8);
+  border-radius: 16px;
+  box-shadow:
+    0 0 0 1px rgb(211 223 202 / 0.72),
+    0 2px 4px rgb(44 74 58 / 0.05),
+    0 30px 70px -50px rgb(44 74 58 / 0.5);
+}
+
+html[data-kiwi-theme='sunny-meadow'] .kiwi-editor:not(.kiwi-editor-docx) .editor-sheet::before {
+  background: linear-gradient(
+    90deg,
+    rgb(185 90 66 / 0),
+    rgb(240 176 154 / 0.9),
+    rgb(185 90 66 / 0)
+  );
+}
+
+/* ---------- 标题：衬线字 + 暖桃装饰 ---------- */
+
+/* 笔记标题属于内容层，与正文标题一起使用衬线字；界面控件保持无衬线。 */
+html[data-kiwi-theme='sunny-meadow'] .editor-sheet > div > h1 {
+  font-family: var(--theme-font-heading);
+  letter-spacing: -0.012em;
+}
+
+html[data-kiwi-theme='sunny-meadow'] :is(.ProseMirror, .prose-wiki) :is(h1, h2, h3) {
+  letter-spacing: 0.012em;
+  text-shadow: 0 1px 0 rgb(255 255 255 / 0.6);
+}
+
+html[data-kiwi-theme='sunny-meadow'][data-kiwi-theme-custom='true']
+  .kiwi-editor:not(.kiwi-editor-docx)
+  .ProseMirror
+  > :is(h1, h2)::before {
+  border-radius: 999px;
+  background: linear-gradient(180deg, var(--sm-peach), var(--sm-coral));
+}
+
+html[data-kiwi-theme='sunny-meadow'][data-kiwi-theme-custom='true']
+  .kiwi-editor:not(.kiwi-editor-docx)
+  .ProseMirror
+  > h2::after {
+  content: '';
+  display: block;
+  width: 44px;
+  height: 2px;
+  margin-top: 0.38rem;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--sm-coral), rgb(217 138 113 / 0));
+}
+
+html[data-kiwi-theme='sunny-meadow'][data-kiwi-theme-custom='true']
+  .prose-wiki
+  > h2::after {
+  content: '';
+  display: block;
+  width: 44px;
+  height: 2px;
+  margin-top: 0.38rem;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--sm-coral), rgb(217 138 113 / 0));
+}
+
+/* ---------- 引用 / 行内代码 / 代码块 ---------- */
+
+html[data-kiwi-theme='sunny-meadow'][data-kiwi-theme-custom='true']
+  .kiwi-editor:not(.kiwi-editor-docx)
+  .ProseMirror
+  blockquote {
+  border-radius: 0 16px 16px 0;
+  background: linear-gradient(
+    90deg,
+    rgb(168 196 140 / 0.24),
+    rgb(168 196 140 / 0.06) 60%,
+    transparent
+  );
+  color: var(--sm-ink);
+}
+
+html[data-kiwi-theme='sunny-meadow'][data-kiwi-theme-custom='true']
+  .kiwi-editor:not(.kiwi-editor-docx)
+  .ProseMirror
+  blockquote::before {
+  width: 4px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, var(--sm-leaf-soft), var(--sm-leaf));
+}
+
+html[data-kiwi-theme='sunny-meadow'][data-kiwi-theme-custom='true']
+  .kiwi-editor
+  .ProseMirror
+  :not(pre)
+  > code {
+  border-radius: 6px;
+  background: rgb(168 196 140 / 0.2);
+  color: #45632f;
+}
+
+/* 代码块保留用户选择的语法配色，只补柔和的鼠尾草描边。 */
+html[data-kiwi-theme='sunny-meadow'] .kiwi-editor .ProseMirror pre {
+  border: 1px solid rgb(211 223 202 / 0.85);
+  border-radius: 14px;
+  box-shadow: 0 12px 28px -22px rgb(44 74 58 / 0.45);
+}
+
+/* ---------- 表格 ---------- */
+
+html[data-kiwi-theme='sunny-meadow'][data-kiwi-theme-custom='true']
+  .kiwi-editor:not(.kiwi-editor-docx)
+  .ProseMirror
+  th {
+  border-color: rgb(211 223 202 / 0.9);
+  background: linear-gradient(180deg, rgb(240 176 154 / 0.22), rgb(240 176 154 / 0.1));
+  color: var(--sm-ink);
+}
+
+html[data-kiwi-theme='sunny-meadow'][data-kiwi-theme-custom='true']
+  .kiwi-editor:not(.kiwi-editor-docx)
+  .ProseMirror
+  td {
+  border-color: rgb(211 223 202 / 0.85);
+}
+
+html[data-kiwi-theme='sunny-meadow'][data-kiwi-theme-custom='true']
+  .kiwi-editor:not(.kiwi-editor-docx)
+  .ProseMirror
+  tbody
+  tr:nth-child(even)
+  td {
+  background: rgb(168 196 140 / 0.08);
+}
+
+html[data-kiwi-theme='sunny-meadow'][data-kiwi-theme-custom='true']
+  .kiwi-editor:not(.kiwi-editor-docx)
+  .ProseMirror
+  tbody
+  tr:hover
+  td {
+  background: rgb(240 176 154 / 0.12);
+}
+
+/* ---------- 提示块 / 折叠块 / 提及 ---------- */
+
+html[data-kiwi-theme='sunny-meadow'][data-kiwi-theme-custom='true']
+  .kiwi-editor
+  .ProseMirror
+  .callout-block {
+  border-color: rgb(211 223 202 / 0.9);
+  border-left-color: var(--sm-coral);
+  border-radius: 16px;
+  background: linear-gradient(135deg, rgb(240 176 154 / 0.16), rgb(168 196 140 / 0.1));
+}
+
+html[data-kiwi-theme='sunny-meadow'][data-kiwi-theme-custom='true']
+  .kiwi-editor
+  .ProseMirror
+  div[data-type='details'] {
+  border-color: rgb(211 223 202 / 0.9);
+  border-radius: 14px;
+  background: rgb(238 244 234 / 0.62);
+}
+
+/* ---------- 键盘键帽 ---------- */
+
+html[data-kiwi-theme='sunny-meadow'] kbd {
+  border: 1px solid rgb(211 223 202 / 0.9);
+  border-radius: 6px;
+  background: rgb(255 253 247 / 0.9);
+  color: var(--sm-ink);
+  box-shadow: 0 2px 0 rgb(44 74 58 / 0.12);
+  padding: 1px 5px;
+}
+
+/* ---------- 滚动条：鼠尾草绿 → 晴空蓝 ---------- */
+
+html[data-kiwi-theme='sunny-meadow'] ::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+html[data-kiwi-theme='sunny-meadow'] ::-webkit-scrollbar-track {
+  background: rgb(234 242 247 / 0.7);
+}
+
+html[data-kiwi-theme='sunny-meadow'] ::-webkit-scrollbar-thumb {
+  border: 3px solid transparent;
+  border-radius: 999px;
+  background: linear-gradient(180deg, var(--sm-leaf-soft), var(--sm-sky)) padding-box;
+}
+
+html[data-kiwi-theme='sunny-meadow'] ::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #8fb56f, #5b8fc9) padding-box;
+}
+
+/* ---------- 学习模式：把强调色换成草野绿 ---------- */
+
+/* 计划、统计与日程卡片密度高，纸面再实一档，插画只做远景。 */
+html[data-kiwi-theme='sunny-meadow'] body.theme-learn :is(.kiwi-card, .glass, .glass-strong) {
+  background-color: rgb(255 253 247 / 0.93);
+}
+
+html[data-kiwi-theme='sunny-meadow'] body.theme-learn [class~='bg-white/50'],
+html[data-kiwi-theme='sunny-meadow'] body.theme-learn [class~='bg-white/60'],
+html[data-kiwi-theme='sunny-meadow'] body.theme-learn [class~='bg-white/70'],
+html[data-kiwi-theme='sunny-meadow'] body.theme-learn [class~='bg-white/80'] {
+  background-color: rgb(255 253 247 / 0.88);
+}
+
+html[data-kiwi-theme='sunny-meadow'] body.theme-learn .kiwi-btn-primary {
+  background-image: linear-gradient(135deg, #6d9a4e 0%, #4a7433 100%);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.28),
+    0 8px 20px -12px rgb(74 116 51 / 0.6);
+}
+
+html[data-kiwi-theme='sunny-meadow'] body.theme-learn .kiwi-card:hover {
+  border-color: rgb(95 143 69 / 0.45);
+}
+
+/* ---------- 动效：轻轻呼吸，而不是弹跳 ---------- */
+
+@media (prefers-reduced-motion: no-preference) {
+  html[data-kiwi-theme='sunny-meadow'] .kiwi-card {
+    transition:
+      transform 220ms ease,
+      box-shadow 220ms ease,
+      border-color 220ms ease;
+  }
+
+  html[data-kiwi-theme='sunny-meadow'] .kiwi-card:hover {
+    transform: translateY(-1px);
+  }
+}
+
+/* ---------- 问答页：奶油纸张般的阅读面 ---------- */
+
+/* 助手回答直接叠在治愈系风景上时，正文与引用来源的对比度不足。
+   消息流改为高不透明度的奶油色纸面，边缘保持柔和圆角与轻玻璃感，
+   顶栏 / 侧栏 / 输入区同步提亮，风景只在窗口四周透气。 */
+html[data-kiwi-theme='sunny-meadow'][data-kiwi-theme-bg='true'] .chat-thread {
+  border: 1px solid rgb(255 255 255 / 0.75);
+  border-radius: 24px;
+  background-image: linear-gradient(
+    180deg,
+    rgb(255 253 247 / 0.96) 0%,
+    rgb(255 253 247 / 0.9) 100%
+  );
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.85),
+    0 28px 64px -52px rgb(44 59 54 / 0.55);
+  backdrop-filter: blur(24px) saturate(1.06);
+  -webkit-backdrop-filter: blur(24px) saturate(1.06);
+}
+
+html[data-kiwi-theme='sunny-meadow'][data-kiwi-theme-bg='true'] .chat-header,
+html[data-kiwi-theme='sunny-meadow'][data-kiwi-theme-bg='true'] .chat-sidebar {
+  background-color: rgb(255 253 247 / 0.9);
+  border-color: rgb(211 223 202 / 0.75);
+}
+
+html[data-kiwi-theme='sunny-meadow'][data-kiwi-theme-bg='true'] .chat-composer-inner {
+  border: 1px solid rgb(211 223 202 / 0.9);
+  border-radius: 20px;
+  background-color: rgb(255 253 247 / 0.95);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.85),
+    0 18px 44px -38px rgb(44 59 54 / 0.5);
+  backdrop-filter: blur(20px) saturate(1.05);
+  -webkit-backdrop-filter: blur(20px) saturate(1.05);
+}
+
+html[data-kiwi-theme='sunny-meadow'] .chat-user-bubble {
+  background-image: linear-gradient(135deg, var(--sm-coral-soft) 0%, var(--sm-coral) 100%);
+  color: #fff9f2;
+  box-shadow: 0 12px 26px -22px rgb(185 90 66 / 0.7);
+}

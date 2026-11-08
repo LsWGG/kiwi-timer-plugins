@@ -1,0 +1,53 @@
+{
+  "manifest_version": 1,
+  "kind": "theme",
+  "key": "sunny-meadow",
+  "name": "晴野",
+  "version": "1.0.1",
+  "description": "日系治愈风景主题：晴空、花野与雪山作背景，柔光玻璃、暖桃强调色，像在午后山丘上写字。",
+  "author": "Kiwi",
+  "icon": "palette",
+  "homepage": "https://github.com/LsWGG/kiwi-timer-plugins",
+  "entry": "",
+  "style": "theme.css",
+  "blocks": [],
+  "theme": {
+    "mode": "light",
+    "colors": {
+      "app.background": "#eaf2f7",
+      "surface.background": "#fffdf7",
+      "surface.muted": "#eef4ea",
+      "surface.strong": "#dfeada",
+      "border.subtle": "#e6ecdf",
+      "border.default": "#d3dfca",
+      "border.strong": "#b6c8ac",
+      "text.primary": "#2c3b36",
+      "text.strong": "#1f2d28",
+      "text.secondary": "#465a52",
+      "text.muted": "#667c70",
+      "text.subtle": "#74897c",
+      "text.faint": "#97ab9c",
+      "accent": "#b95a42",
+      "accent.foreground": "#fff9f2"
+    },
+    "background": {
+      "image": "assets/background.webp",
+      "size": "cover",
+      "position": "center",
+      "repeat": "no-repeat",
+      "dim": 0.05,
+      "blur": 0
+    },
+    "surface": {
+      "opacity": 0.92,
+      "blur": 20,
+      "radius": 18
+    },
+    "typography": {
+      "body": "",
+      "heading": "\"Kiwi Meadow Serif\", \"Songti SC\", \"STSong\", \"Noto Serif CJK SC\", \"SimSun\", serif",
+      "mono": ""
+    },
+    "preview": "assets/preview.webp"
+  }
+}
