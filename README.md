@@ -19,10 +19,12 @@
 
 ---
 
-Kiwi component plugins add interactive blocks to Kiwi's editor. A plugin is a zip
+Kiwi component plugins add interactive blocks to Kiwi's editor, while theme plugins
+reskin the whole interface with declarative JSON + CSS. A component plugin is a zip
 containing a manifest and a single-file browser ESM; Kiwi loads it only after the user
-imports and enables it. This repository is the long-term home for component plugins and
-theme plugins maintained outside the main Kiwi repository, with shared validation,
+imports and enables it. Theme plugins never execute JavaScript. This repository is the
+long-term home for component plugins and theme plugins maintained outside the main Kiwi
+repository, with shared validation,
 packaging, versioning, release notes, and documentation.
 
 It currently ships **Pomodoro**, **Countdown**, and **Timeline**, plus the **Grand Line**,
@@ -171,7 +173,8 @@ attached to the matching Git tag / GitHub release.
 A Kiwi component plugin is third-party code that runs in the browser after a user
 imports and enables it. It can read data available to the current page. Install only
 plugins from sources you trust. Kiwi does not execute plugin scripts on the server, and
-public share pages do not load plugin runtimes.
+public share pages do not load plugin runtimes. Theme plugins contain only JSON, CSS,
+images and fonts; they never execute JavaScript.
 
 ## License
 
