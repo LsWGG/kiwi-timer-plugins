@@ -39,8 +39,10 @@ manifest 可以有不同的版本，zip 文件名始终使用各自的 manifest 
    sha256sum dist/*.zip
    ```
 
-   预期：每个 zip 只有 `plugin.json`、`index.js`、`style.css`、`README.md` 四个文件，
-   且都位于根目录；manifest 版本与 `pinnable: true` 正确。
+   预期：每个组件 zip 只有 `plugin.json`、`index.js`、`style.css`、`README.md` 四个文件，
+   且都位于根目录；manifest 版本与 `pinnable: true` 正确。主题包只含 `plugin.json`、
+   `theme.css`、`README.md` 与 `assets/**`，manifest 的 `kind` 为 `theme`、`entry` 与
+   `blocks` 为空。
 
 ## 3. 在 Kiwi 中验收
 
@@ -103,7 +105,7 @@ CHANGELOG 对应小节粘贴到说明中。
 - [ ] 版本号四处一致
 - [ ] CHANGELOG 已更新（新增 / 变更 / 修复 / 兼容性）
 - [ ] `npm run validate` 通过
-- [ ] `npm run package` 生成两个 zip
+- [ ] `npm run package` 生成全部组件插件与主题 zip
 - [ ] zip 根目录文件与 manifest 校验通过
 - [ ] Kiwi 手工验收清单全部通过
 - [ ] commit、tag、push 完成
