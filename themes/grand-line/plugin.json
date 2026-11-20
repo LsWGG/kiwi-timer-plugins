@@ -1,0 +1,54 @@
+{
+  "manifest_version": 1,
+  "kind": "theme",
+  "key": "grand-line",
+  "name": "伟大航路",
+  "version": "1.0.4",
+  "description": "海贼王高定主题：WANTED 悬赏令报头、草帽骷髅旗、贝里悬赏金与航海罗盘；新闻纸暖白、朱红、宝藏金与海图青。",
+  "author": "Kiwi",
+  "icon": "palette",
+  "homepage": "",
+  "entry": "",
+  "style": "theme.css",
+  "blocks": [],
+  "theme": {
+    "mode": "light",
+    "colors": {
+      "app.background": "#efe4cc",
+      "surface.background": "#faf4e4",
+      "surface.muted": "#f1e6cf",
+      "surface.strong": "#e4d4b2",
+      "border.subtle": "#e2d5b8",
+      "border.default": "#cdbb95",
+      "border.strong": "#a68e64",
+      "text.primary": "#1b1712",
+      "text.strong": "#0c0a08",
+      "text.secondary": "#3b3227",
+      "text.muted": "#5d5140",
+      "text.subtle": "#7d6e58",
+      "text.faint": "#ab9c82",
+      "accent": "#b02a1c",
+      "accent.foreground": "#fff8e8"
+    },
+    "background": {
+      "image": "assets/background.webp",
+      "video": "assets/background.mp4",
+      "size": "cover",
+      "position": "center",
+      "repeat": "no-repeat",
+      "dim": 0.22,
+      "blur": 0
+    },
+    "surface": {
+      "opacity": 0.93,
+      "blur": 8,
+      "radius": 3
+    },
+    "typography": {
+      "body": "\"Noto Sans CJK SC\", \"Noto Sans SC\", \"Source Han Sans SC\", \"PingFang SC\", \"Microsoft YaHei\", system-ui, sans-serif",
+      "heading": "\"Noto Serif CJK SC\", \"Noto Serif SC\", \"Source Han Serif SC\", \"Songti SC\", \"STSong\", serif",
+      "mono": "\"JetBrains Mono\", \"Cascadia Code\", \"SFMono-Regular\", Menlo, Consolas, \"Noto Sans Mono CJK SC\", monospace"
+    },
+    "preview": "assets/preview.webp"
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "manifest_version": 1,
+  "kind": "theme",
+  "key": "ink-dusk",
+  "name": "墨霞",
+  "version": "1.0.0",
+  "description": "高定古风主题：宣纸暖白与墨色山水，朱砂点睛，鎏金细线，衬线排版。",
+  "author": "Kiwi",
+  "icon": "palette",
+  "homepage": "",
+  "entry": "",
+  "style": "theme.css",
+  "blocks": [],
+  "theme": {
+    "mode": "light",
+    "colors": {
+      "app.background": "#f3ead9",
+      "surface.background": "#fbf6ea",
+      "surface.muted": "#f4ecdc",
+      "surface.strong": "#e9ddc6",
+      "border.subtle": "#efe6d3",
+      "border.default": "#dccbae",
+      "border.strong": "#bfa87f",
+      "text.primary": "#2c2721",
+      "text.strong": "#1e1a16",
+      "text.secondary": "#4b4337",
+      "text.muted": "#6d6150",
+      "text.subtle": "#93856f",
+      "text.faint": "#c0b39c",
+      "accent": "#9c3d2e",
+      "accent.foreground": "#fdf7ec"
+    },
+    "background": {
+      "image": "assets/background.webp",
+      "video": "",
+      "size": "cover",
+      "position": "center",
+      "repeat": "no-repeat",
+      "dim": 0.18,
+      "blur": 0
+    },
+    "surface": {
+      "opacity": 0.94,
+      "blur": 12
+    },
+    "typography": {
+      "body": "\"Noto Serif CJK SC\", \"Noto Serif SC\", \"Source Han Serif SC\", \"Songti SC\", \"STSong\", serif",
+      "heading": "\"Noto Serif CJK SC\", \"Noto Serif SC\", \"Source Han Serif SC\", \"Songti SC\", \"STSong\", serif",
+      "mono": "\"JetBrains Mono\", \"Cascadia Code\", \"SFMono-Regular\", Consolas, monospace"
+    },
+    "preview": "assets/preview.webp"
+  }
+}

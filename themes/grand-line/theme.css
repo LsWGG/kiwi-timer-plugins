@@ -1,0 +1,1643 @@
+/* ==========================================================================
+   伟大航路（grand-line）· 海贼王高定主题
+   --------------------------------------------------------------------------
+   视觉母题直接取自《海贼王》的航海世界：
+   - WANTED 悬赏令：编辑器纸张顶端是 WANTED / DEAD OR ALIVE 报头，
+     右上角朱红悬赏章，段首下沉字像被通缉的海报。
+   - 草帽海贼团骷髅旗：标题前的草帽骷髅、聊天头像、登录页水印。
+   - 贝里悬赏金：笔记类型徽章前缀 ฿，状态栏与元信息使用悬赏金额式等宽字。
+   - 航海图与罗盘：编辑画布的等距航线、弹窗与登录页的罗盘水印。
+   - 少年漫画印刷：新闻纸暖白、墨线分栏、朱红 / 宝藏金 / 海图青、
+     半调网点、硬位移投影、速度线与夸张的漫画拟声词。
+
+   配色在 plugin.json 中声明；这里补全部组件的装饰细节，
+   每条规则都限定在 html[data-kiwi-theme='grand-line'] 下。
+
+   设计基准（WCAG 2.2）：
+   - 正文墨色 #1b1712 / 新闻纸 #faf4e4 = 16.2:1
+   - 次级文字 #3b3227 = 11.4:1，辅助文字 #5d5140 = 7.0:1
+   - 强调朱红 #b02a1c = 6.0:1，白字压朱红 = 6.2:1
+   - 宝藏金只做底纹 / 高亮，文字一律用墨色（11:1）
+   ========================================================================== */
+
+@font-face {
+  font-family: 'Grand Line Display';
+  src: url('assets/bangers.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Grand Line Pirate';
+  src: url('assets/pirata-one.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+html[data-kiwi-theme='grand-line'] {
+  --op-ink: #17130f;
+  --op-ink-soft: #2b241c;
+  --op-paper: #faf4e4;
+  --op-paper-deep: #f0e4ca;
+  --op-red: #b02a1c;
+  --op-red-deep: #8e1f14;
+  --op-yellow: #f2c14e;
+  --op-kraft: #d8c39a;
+  --op-cream: #fff8e8;
+  --op-sea: #2e6f8e;
+  --op-sea-deep: #123a4d;
+  --op-keyline: rgb(23 19 15 / 0.66);
+  --op-keyline-soft: rgb(23 19 15 / 0.28);
+  --op-halftone: radial-gradient(circle at 1px 1px, rgb(23 19 15 / 0.14) 1px, transparent 1.4px);
+  --op-halftone-soft: radial-gradient(circle at 1px 1px, rgb(23 19 15 / 0.065) 1px, transparent 1.35px);
+  --op-hard: 3px 3px 0 rgb(23 19 15 / 0.82);
+  --op-hard-sm: 2px 2px 0 rgb(23 19 15 / 0.72);
+  --op-hard-red: 3px 3px 0 rgb(176 42 28 / 0.72);
+  --op-serif: 'Noto Serif CJK SC', 'Noto Serif SC', 'Source Han Serif SC', 'Songti SC', 'STSong', serif;
+  --op-sans: 'Noto Sans CJK SC', 'Noto Sans SC', 'Source Han Sans SC', 'PingFang SC', 'Microsoft YaHei', system-ui, sans-serif;
+  --op-mono: 'JetBrains Mono', 'Cascadia Code', 'SFMono-Regular', Menlo, Consolas, 'Noto Sans Mono CJK SC', monospace;
+  color-scheme: light;
+}
+
+/* ---------- 基础：新闻纸、选中、滚动条、焦点 ---------- */
+
+html[data-kiwi-theme='grand-line'] body {
+  font-family: var(--op-sans);
+  letter-spacing: 0.004em;
+  -webkit-font-smoothing: antialiased;
+}
+
+html[data-kiwi-theme='grand-line'] ::selection {
+  background: var(--op-yellow);
+  color: var(--op-ink);
+}
+
+html[data-kiwi-theme='grand-line'] ::-webkit-scrollbar {
+  width: 11px;
+  height: 11px;
+}
+html[data-kiwi-theme='grand-line'] ::-webkit-scrollbar-track {
+  background: rgb(239 228 204 / 0.6);
+}
+html[data-kiwi-theme='grand-line'] ::-webkit-scrollbar-thumb {
+  background: var(--op-ink-soft);
+  border: 2px solid var(--op-paper-deep);
+  border-radius: 0;
+}
+html[data-kiwi-theme='grand-line'] ::-webkit-scrollbar-thumb:hover {
+  background: var(--op-red);
+}
+html[data-kiwi-theme='grand-line'] ::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+html[data-kiwi-theme='grand-line'] :focus-visible {
+  outline: 2px solid var(--op-red);
+  outline-offset: 2px;
+}
+
+/* ---------- 排版：标题衬线、元信息等宽 ---------- */
+
+html[data-kiwi-theme='grand-line'] h1,
+html[data-kiwi-theme='grand-line'] h2,
+html[data-kiwi-theme='grand-line'] h3,
+html[data-kiwi-theme='grand-line'] h4 {
+  font-family: var(--op-serif);
+  letter-spacing: 0.006em;
+}
+
+html[data-kiwi-theme='grand-line'] code,
+html[data-kiwi-theme='grand-line'] kbd,
+html[data-kiwi-theme='grand-line'] pre,
+html[data-kiwi-theme='grand-line'] samp {
+  font-family: var(--op-mono);
+}
+
+/* ---------- 面板：剪报、墨线、硬投影与网点 ---------- */
+
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] .glass,
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] .glass-strong {
+  border-radius: 3px !important;
+  box-shadow:
+    inset 0 0 0 1px rgb(23 19 15 / 0.34),
+    2px 2px 0 rgb(23 19 15 / 0.42) !important;
+}
+
+html[data-kiwi-theme='grand-line'] .kiwi-card {
+  background-color: rgb(250 244 228 / calc(0.9 * var(--theme-surface-opacity))) !important;
+}
+
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] .kiwi-card {
+  border-color: var(--op-keyline) !important;
+  border-radius: 3px !important;
+  box-shadow: var(--op-hard) !important;
+  background-image:
+    linear-gradient(var(--op-red), var(--op-red)),
+    linear-gradient(var(--op-red), var(--op-red)),
+    var(--op-halftone-soft);
+  background-repeat: no-repeat, no-repeat, repeat;
+  background-size: 11px 2px, 2px 11px, 12px 12px;
+  background-position: 9px 9px, 9px 9px, 0 0;
+}
+
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] .kiwi-card:hover {
+  border-color: var(--op-red) !important;
+  box-shadow: 3px 3px 0 rgb(176 42 28 / 0.6) !important;
+  transform: translate(-1px, -1px);
+}
+
+/* 侧栏顶沿：草帽缎带——朱红宽条 + 旧金细线。 */
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] .sidebar-glass {
+  border-top: 5px solid var(--op-red);
+  border-radius: 0;
+  box-shadow: inset -3px 0 0 rgb(23 19 15 / 0.9);
+  background-image:
+    linear-gradient(var(--op-yellow), var(--op-yellow)),
+    var(--op-halftone-soft);
+  background-repeat: no-repeat, repeat;
+  background-size: 100% 3px, 10px 10px;
+  background-position: top left, 0 0;
+}
+
+/* 侧栏导航：当前项做成报纸索引条——朱红书脊 + 黄色底 + 墨线。 */
+html[data-kiwi-theme='grand-line'] .sidebar-glass a [class*='from-kiwi-100'] {
+  background-image: none !important;
+  background-color: rgb(242 193 78 / 0.34) !important;
+  border-color: rgb(23 19 15 / 0.55) !important;
+  border-radius: 2px !important;
+  box-shadow:
+    inset 3px 0 0 var(--op-red),
+    2px 2px 0 rgb(23 19 15 / 0.32) !important;
+}
+html[data-kiwi-theme='grand-line'] .sidebar-glass [class*='text-kiwi-600'] {
+  color: var(--op-red) !important;
+}
+html[data-kiwi-theme='grand-line'] .sidebar-glass a:hover {
+  background-color: rgb(242 193 78 / 0.16);
+}
+html[data-kiwi-theme='grand-line'] .sidebar-glass a:hover [class*='hover:text-slate-600'] {
+  color: var(--op-ink) !important;
+}
+
+/* 笔记类型色：蓝 / 紫 / 青 / 绿 / 靛 / 橙全部收进墨、朱红、旧金与海图青。 */
+html[data-kiwi-theme='grand-line'] [class*='text-blue-500'] {
+  color: var(--op-ink) !important;
+}
+html[data-kiwi-theme='grand-line'] [class*='text-violet-500'] {
+  color: var(--op-red) !important;
+}
+html[data-kiwi-theme='grand-line'] [class*='text-sky-500'] {
+  color: var(--op-sea) !important;
+}
+html[data-kiwi-theme='grand-line'] [class*='text-emerald-500'] {
+  color: var(--op-sea) !important;
+}
+html[data-kiwi-theme='grand-line'] [class*='text-emerald-600'] {
+  color: #1f556e !important;
+}
+html[data-kiwi-theme='grand-line'] [class*='text-indigo-500'] {
+  color: var(--op-red-deep) !important;
+}
+html[data-kiwi-theme='grand-line'] [class*='text-orange-500'],
+html[data-kiwi-theme='grand-line'] [class*='text-orange-400'] {
+  color: var(--op-red) !important;
+}
+html[data-kiwi-theme='grand-line'] [class*='text-amber-400'],
+html[data-kiwi-theme='grand-line'] [class*='text-amber-500'] {
+  color: #9a7420 !important;
+}
+
+/* 顶部栏 / 工作区工具条：细墨线压边。 */
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] .kiwi-toolbar {
+  border-color: var(--op-keyline) !important;
+  border-radius: 2px !important;
+  box-shadow: var(--op-hard-sm) !important;
+  background-image: var(--op-halftone-soft);
+  background-size: 12px 12px;
+}
+html[data-kiwi-theme='grand-line'] .kiwi-toolbar button:hover,
+html[data-kiwi-theme='grand-line'] .kiwi-toolbar .btn:hover {
+  background-color: rgb(242 193 78 / 0.24) !important;
+  color: var(--op-red) !important;
+}
+html[data-kiwi-theme='grand-line'] .kiwi-toolbar [class*='bg-kiwi-100'] {
+  background-color: rgb(242 193 78 / 0.55) !important;
+  color: var(--op-ink) !important;
+}
+
+/* ---------- 按钮：橡皮图章与铅字标牌 ---------- */
+
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] .kiwi-btn-primary {
+  background-image: none !important;
+  background-color: var(--op-red) !important;
+  color: var(--op-cream) !important;
+  border: 1px solid var(--op-ink) !important;
+  border-radius: 2px !important;
+  box-shadow: 2px 2px 0 var(--op-ink) !important;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  transition:
+    transform 120ms ease,
+    box-shadow 120ms ease,
+    background-color 120ms ease;
+}
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] .kiwi-btn-primary:hover {
+  background-color: var(--op-red-deep) !important;
+  background-image: repeating-conic-gradient(
+    from 0deg at 50% 50%,
+    rgb(255 248 232 / 0.16) 0deg 2deg,
+    transparent 2deg 9deg
+  ) !important;
+  box-shadow: 3px 3px 0 var(--op-ink) !important;
+  transform: translate(-1px, -1px);
+  filter: none;
+}
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] .kiwi-btn-primary:active {
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0 var(--op-ink) !important;
+}
+
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] .kiwi-btn-secondary {
+  background-color: rgb(250 244 228 / 0.94) !important;
+  color: var(--op-ink) !important;
+  border: 1px solid var(--op-ink) !important;
+  border-radius: 2px !important;
+  box-shadow: 2px 2px 0 rgb(23 19 15 / 0.55) !important;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] .kiwi-btn-secondary:hover {
+  background-color: rgb(242 193 78 / 0.5) !important;
+  color: var(--op-ink) !important;
+  border-color: var(--op-ink) !important;
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0 rgb(23 19 15 / 0.6) !important;
+}
+
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] .kiwi-btn-ghost {
+  border-radius: 2px !important;
+  color: var(--op-ink-soft) !important;
+  letter-spacing: 0.04em;
+}
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] .kiwi-btn-ghost:hover {
+  background-color: rgb(242 193 78 / 0.28) !important;
+  color: var(--op-red) !important;
+}
+
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] .kiwi-btn-danger {
+  background-image: none !important;
+  background-color: var(--op-ink) !important;
+  color: var(--op-cream) !important;
+  border: 1px solid var(--op-ink) !important;
+  border-radius: 2px !important;
+  box-shadow: 2px 2px 0 rgb(176 42 28 / 0.72) !important;
+  letter-spacing: 0.06em;
+}
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] .kiwi-btn-danger:hover {
+  background-color: var(--op-red-deep) !important;
+  box-shadow: 3px 3px 0 var(--op-ink) !important;
+}
+
+/* ---------- 输入框：铅字格 ---------- */
+
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] .kiwi-input,
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] body input:not([type='checkbox']):not([type='radio']):not([type='range']):not([type='color']):not([type='file']):not([type='button']):not([type='submit']):not([type='reset']),
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] body textarea,
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] body select {
+  border-color: rgb(23 19 15 / 0.5) !important;
+  border-radius: 2px !important;
+  background-color: rgb(250 244 228 / 0.88) !important;
+  color: var(--op-ink) !important;
+  caret-color: var(--op-red);
+}
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] .kiwi-input:focus,
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] body textarea:focus,
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] body select:focus {
+  border-color: var(--op-red) !important;
+  box-shadow:
+    0 0 0 1px var(--op-red),
+    0 0 0 3px rgb(176 42 28 / 0.16),
+    inset 0 1px 0 rgb(23 19 15 / 0.08) !important;
+}
+html[data-kiwi-theme='grand-line'] input::placeholder,
+html[data-kiwi-theme='grand-line'] textarea::placeholder {
+  color: rgb(125 110 88 / 0.85);
+  letter-spacing: 0.02em;
+}
+html[data-kiwi-theme='grand-line'] input[type='checkbox'],
+html[data-kiwi-theme='grand-line'] input[type='radio'] {
+  accent-color: var(--op-red);
+}
+
+/* ---------- 浮层菜单：剪下来的纸片 ---------- */
+
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] .kiwi-menu-panel,
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] .slash-menu-box,
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] .kiwi-suggest-box {
+  border: 1px solid var(--op-ink) !important;
+  border-radius: 2px !important;
+  box-shadow: 4px 4px 0 rgb(23 19 15 / 0.72) !important;
+  background-image: var(--op-halftone-soft);
+  background-size: 11px 11px;
+}
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] #kiwi-drag-handle {
+  border-color: var(--op-ink) !important;
+  border-radius: 2px !important;
+  background-color: var(--op-paper) !important;
+  box-shadow: 2px 2px 0 rgb(23 19 15 / 0.55) !important;
+}
+
+/* ---------- 弹窗：悬赏令头版 + 罗盘水印 ---------- */
+
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] .kiwi-modal-panel {
+  border: 1px solid var(--op-ink) !important;
+  border-radius: 3px !important;
+  box-shadow: 6px 6px 0 rgb(23 19 15 / 0.78) !important;
+  background-image: var(--op-halftone-soft);
+  background-size: 13px 13px;
+}
+html[data-kiwi-theme='grand-line'] .kiwi-modal-panel::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto;
+  height: 6px;
+  background:
+    linear-gradient(var(--op-red), var(--op-red)) top left / 100% 4px no-repeat,
+    linear-gradient(var(--op-yellow), var(--op-yellow)) bottom left / 100% 2px no-repeat;
+  pointer-events: none;
+}
+html[data-kiwi-theme='grand-line'] .kiwi-modal-panel::after {
+  content: '';
+  position: absolute;
+  right: 1rem;
+  bottom: 0.9rem;
+  width: 96px;
+  height: 96px;
+  background: url('assets/compass-rose.svg') center / contain no-repeat;
+  opacity: 0.12;
+  pointer-events: none;
+}
+
+/* Element Plus 渲染到 body 的弹层：对话框 / 消息框 / 下拉。 */
+html[data-kiwi-theme='grand-line'] .el-dialog,
+html[data-kiwi-theme='grand-line'] .el-message-box {
+  border: 1px solid var(--op-ink);
+  border-radius: 3px;
+  background: var(--op-paper);
+  box-shadow: 6px 6px 0 rgb(23 19 15 / 0.7);
+}
+html[data-kiwi-theme='grand-line'] .el-overlay {
+  background-color: rgb(23 19 15 / 0.52);
+  backdrop-filter: blur(2px);
+}
+html[data-kiwi-theme='grand-line'] .el-popper.is-light {
+  border: 1px solid var(--op-keyline);
+  border-radius: 2px;
+  background: var(--op-paper);
+  box-shadow: 3px 3px 0 rgb(23 19 15 / 0.5);
+}
+
+/* ---------- 编辑器：一张 WANTED 悬赏令 ---------- */
+
+/* 画布：海图航线（等距斜向虚线）+ 半调网点。 */
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] body .editor-canvas {
+  background-color: rgb(239 228 204) !important;
+  background-image:
+    repeating-linear-gradient(60deg, transparent 0 54px, rgb(46 111 142 / 0.11) 54px 55px, transparent 55px 108px),
+    repeating-linear-gradient(-60deg, transparent 0 54px, rgb(46 111 142 / 0.08) 54px 55px, transparent 55px 108px),
+    var(--op-halftone-soft) !important;
+  background-size: auto, auto, 14px 14px !important;
+  border-color: rgb(23 19 15 / 0.3) !important;
+}
+
+/* 纸张：新闻纸纤维 + 网点，像一张被撕下来贴好的悬赏令。 */
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] body .editor-sheet {
+  border: 1px solid rgb(23 19 15 / 0.55) !important;
+  border-radius: 2px !important;
+  background-color: var(--op-paper) !important;
+  background-image:
+    repeating-linear-gradient(0deg, rgb(23 19 15 / 0.018) 0 1px, transparent 1px 3px),
+    var(--op-halftone-soft) !important;
+  background-size: auto, 13px 13px !important;
+  box-shadow:
+    0 0 0 1px rgb(23 19 15 / 0.2),
+    5px 5px 0 rgb(23 19 15 / 0.14),
+    0 34px 70px -46px rgb(23 19 15 / 0.55) !important;
+}
+
+/* 悬赏令报头：WANTED + DEAD OR ALIVE，草帽缎带压顶。 */
+html[data-kiwi-theme='grand-line'] .kiwi-editor:not(.kiwi-editor-docx) .editor-sheet {
+  padding-top: 4.7rem !important;
+}
+html[data-kiwi-theme='grand-line'] .kiwi-editor:not(.kiwi-editor-docx) .editor-sheet::before {
+  content: 'WANTED';
+  position: absolute;
+  inset: 0 0 auto;
+  height: auto;
+  padding: 11px 0 2px;
+  border-radius: 0;
+  border-bottom: 3px double rgb(23 19 15 / 0.78);
+  background:
+    linear-gradient(var(--op-red), var(--op-red)) top left / 100% 4px no-repeat,
+    linear-gradient(var(--op-yellow), var(--op-yellow)) top 4px left / 100% 2px no-repeat,
+    var(--op-paper);
+  color: var(--op-ink);
+  font-family: 'Grand Line Display', var(--op-serif);
+  font-size: 30px;
+  font-weight: 400;
+  line-height: 0.95;
+  letter-spacing: 0.24em;
+  text-indent: 0.24em;
+  text-align: center;
+  text-transform: uppercase;
+  text-shadow: 2px 2px 0 rgb(176 42 28 / 0.16);
+  pointer-events: none;
+}
+
+/* 悬赏令副标题：DEAD OR ALIVE。 */
+html[data-kiwi-theme='grand-line'] .kiwi-editor:not(.kiwi-editor-docx) .editor-sheet::after {
+  content: 'DEAD OR ALIVE';
+  position: absolute;
+  top: 3.05rem;
+  right: 0;
+  left: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--op-red);
+  font-family: 'Grand Line Pirate', var(--op-serif);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: 0.46em;
+  text-indent: 0.46em;
+  text-align: center;
+  transform: none;
+  pointer-events: none;
+}
+
+/* 正文：宋体骨相，段首下沉字。 */
+html[data-kiwi-theme='grand-line'] .kiwi-editor .ProseMirror,
+html[data-kiwi-theme='grand-line'] .prose-wiki,
+html[data-kiwi-theme='grand-line'] .markdown-view {
+  font-family: var(--op-serif);
+}
+
+html[data-kiwi-theme='grand-line'] .kiwi-editor .ProseMirror > p:not(:empty):first-of-type::first-letter {
+  float: left;
+  margin: 0.04em 0.12em 0 0;
+  color: var(--op-red);
+  font-family: var(--op-serif);
+  font-size: 3.1em;
+  font-weight: 900;
+  line-height: 0.82;
+}
+
+/* 标题：书名号式的粗衬线 + 朱红分栏记号。 */
+html[data-kiwi-theme='grand-line'] .kiwi-editor:not(.kiwi-editor-docx) .ProseMirror h1,
+html[data-kiwi-theme='grand-line'] .kiwi-editor:not(.kiwi-editor-docx) .ProseMirror h2,
+html[data-kiwi-theme='grand-line'] .kiwi-editor:not(.kiwi-editor-docx) .ProseMirror h3,
+html[data-kiwi-theme='grand-line'] .kiwi-editor:not(.kiwi-editor-docx) .ProseMirror h4 {
+  font-family: var(--op-serif) !important;
+  font-weight: 900 !important;
+  letter-spacing: 0.006em !important;
+  text-wrap: balance;
+}
+html[data-kiwi-theme='grand-line'] .kiwi-editor:not(.kiwi-editor-docx) .ProseMirror > h1 {
+  padding-left: 2.2rem;
+  padding-bottom: 0.16em;
+  border-bottom: 3px double var(--op-ink);
+}
+/* 一级标题：草帽骷髅旗当项目符号。 */
+html[data-kiwi-theme='grand-line'] .kiwi-editor:not(.kiwi-editor-docx) .ProseMirror > h1::before {
+  top: 0.06em;
+  bottom: auto;
+  left: 0.12rem;
+  width: 26px;
+  height: 26px;
+  border-radius: 0;
+  background: url('assets/jolly-roger.svg') center / contain no-repeat;
+  box-shadow: none;
+}
+html[data-kiwi-theme='grand-line'] .kiwi-editor:not(.kiwi-editor-docx) .ProseMirror > h2::before {
+  top: 0.42em;
+  bottom: auto;
+  width: 9px;
+  height: 9px;
+  border-radius: 0;
+  background: var(--op-red);
+  transform: rotate(45deg);
+}
+html[data-kiwi-theme='grand-line'] .kiwi-editor:not(.kiwi-editor-docx) .ProseMirror > h3::before {
+  width: 3px;
+  border-radius: 0;
+  background: var(--op-ink);
+}
+html[data-kiwi-theme='grand-line'] .kiwi-editor:not(.kiwi-editor-docx) .ProseMirror > h4::before {
+  width: 7px;
+  height: 7px;
+  border-radius: 0;
+  background: var(--op-yellow);
+  box-shadow: 0 0 0 1px rgb(23 19 15 / 0.7);
+}
+
+/* 列表里的标题：沿用朱红分栏条，不跑回内置紫。 */
+html[data-kiwi-theme='grand-line'] .kiwi-editor:not(.kiwi-editor-docx) .ProseMirror li > h1:first-child::after,
+html[data-kiwi-theme='grand-line'] .kiwi-editor:not(.kiwi-editor-docx) .ProseMirror li > h2:first-child::after {
+  background: var(--op-red);
+}
+html[data-kiwi-theme='grand-line'] .kiwi-editor:not(.kiwi-editor-docx) .ProseMirror li > h3:first-child::after {
+  background: rgb(176 42 28 / 0.8);
+}
+html[data-kiwi-theme='grand-line'] .kiwi-editor:not(.kiwi-editor-docx) .ProseMirror li > h4:first-child::after {
+  background: rgb(242 193 78 / 0.9);
+}
+
+/* 引用：粗墨边 + 漫画拟声词「ドン!」水印。 */
+html[data-kiwi-theme='grand-line'] .kiwi-editor:not(.kiwi-editor-docx) .ProseMirror blockquote {
+  border-radius: 0 !important;
+  background: linear-gradient(
+    90deg,
+    rgb(23 19 15 / 0.06),
+    rgb(23 19 15 / 0.02) 62%,
+    transparent
+  ) !important;
+  color: var(--op-ink-soft) !important;
+}
+html[data-kiwi-theme='grand-line'] .kiwi-editor:not(.kiwi-editor-docx) .ProseMirror blockquote::before {
+  width: 5px;
+  border-radius: 0;
+  background: var(--op-red);
+}
+html[data-kiwi-theme='grand-line'] .kiwi-editor:not(.kiwi-editor-docx) .ProseMirror blockquote::after {
+  content: 'ドン!';
+  position: absolute;
+  top: 50%;
+  right: 0.7rem;
+  color: rgb(176 42 28 / 0.16);
+  font-family: var(--op-serif);
+  font-size: 2.1rem;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  transform: translateY(-50%) rotate(-6deg);
+  pointer-events: none;
+}
+
+/* 列表：朱红项目符号、等宽序号。 */
+html[data-kiwi-theme='grand-line'] .kiwi-editor:not(.kiwi-editor-docx) .ProseMirror ul > li::marker {
+  color: var(--op-red);
+}
+html[data-kiwi-theme='grand-line'] .kiwi-editor:not(.kiwi-editor-docx) .ProseMirror ol > li::marker {
+  color: var(--op-ink);
+  font-family: var(--op-mono);
+  font-size: 0.86em;
+  font-weight: 700;
+}
+html[data-kiwi-theme='grand-line'] .kiwi-editor .ProseMirror ul[data-type='taskList'] input[type='checkbox'] {
+  accent-color: var(--op-red);
+}
+
+/* 分割线：海图航线——青色虚线 + 朱红航点。 */
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] .kiwi-editor:not(.kiwi-editor-docx) .ProseMirror hr {
+  height: 14px !important;
+  border: 0 !important;
+  background:
+    repeating-linear-gradient(90deg, var(--op-sea) 0 9px, transparent 9px 16px) center left / 100% 2px no-repeat,
+    radial-gradient(circle, var(--op-red) 0 4px, transparent 4.5px) center / 12px 12px no-repeat !important;
+}
+
+/* 链接与荧光笔。 */
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] .kiwi-editor .ProseMirror a {
+  color: var(--op-red) !important;
+  text-decoration-color: rgb(176 42 28 / 0.55) !important;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 3px;
+}
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] .kiwi-editor .ProseMirror a:hover {
+  background: rgb(242 193 78 / 0.32);
+  filter: none;
+}
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] .kiwi-editor:not(.kiwi-editor-docx) .ProseMirror mark {
+  background: linear-gradient(
+    180deg,
+    transparent 14%,
+    var(--op-yellow) 14% 90%,
+    transparent 90%
+  ) !important;
+  color: var(--op-ink) !important;
+  border-radius: 0;
+  padding: 0 2px;
+}
+
+/* 行内代码与代码块：黑墨版 + 新闻纸白字。 */
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] .kiwi-editor .ProseMirror code {
+  border: 1px solid rgb(23 19 15 / 0.28);
+  border-radius: 2px;
+  background: var(--op-paper-deep) !important;
+  color: var(--op-ink) !important;
+  padding: 1px 5px;
+  font-size: 0.86em;
+}
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] .kiwi-editor .ProseMirror pre,
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] .kiwi-editor.code-theme-light .ProseMirror pre {
+  border: 1px solid var(--op-ink) !important;
+  border-radius: 2px !important;
+  background: #1c1712 !important;
+  color: #f5ecd8 !important;
+  box-shadow: 3px 3px 0 rgb(23 19 15 / 0.35) !important;
+}
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] .kiwi-editor .ProseMirror pre code {
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  color: inherit !important;
+  /* 行内代码的 padding 不能继承到代码块：行内元素左内边距只作用于首行，
+     会让代码块第一行看起来多一个空格。 */
+  padding: 0 !important;
+}
+html[data-kiwi-theme='grand-line'] .kiwi-editor .ProseMirror pre .hljs-comment,
+html[data-kiwi-theme='grand-line'] .kiwi-editor .ProseMirror pre .hljs-quote {
+  color: #a8997f !important;
+  font-style: italic;
+}
+html[data-kiwi-theme='grand-line'] .kiwi-editor .ProseMirror pre .hljs-keyword,
+html[data-kiwi-theme='grand-line'] .kiwi-editor .ProseMirror pre .hljs-selector-tag,
+html[data-kiwi-theme='grand-line'] .kiwi-editor .ProseMirror pre .hljs-literal,
+html[data-kiwi-theme='grand-line'] .kiwi-editor .ProseMirror pre .hljs-section,
+html[data-kiwi-theme='grand-line'] .kiwi-editor .ProseMirror pre .hljs-doctag {
+  color: #f2c14e !important;
+  font-weight: 700;
+}
+html[data-kiwi-theme='grand-line'] .kiwi-editor .ProseMirror pre .hljs-string,
+html[data-kiwi-theme='grand-line'] .kiwi-editor .ProseMirror pre .hljs-regexp,
+html[data-kiwi-theme='grand-line'] .kiwi-editor .ProseMirror pre .hljs-addition,
+html[data-kiwi-theme='grand-line'] .kiwi-editor .ProseMirror pre .hljs-attribute {
+  color: #e8b98a !important;
+}
+html[data-kiwi-theme='grand-line'] .kiwi-editor .ProseMirror pre .hljs-title,
+html[data-kiwi-theme='grand-line'] .kiwi-editor .ProseMirror pre .hljs-title.function_,
+html[data-kiwi-theme='grand-line'] .kiwi-editor .ProseMirror pre .hljs-function .hljs-title {
+  color: #fff3d6 !important;
+  font-weight: 700;
+}
+html[data-kiwi-theme='grand-line'] .kiwi-editor .ProseMirror pre .hljs-number,
+html[data-kiwi-theme='grand-line'] .kiwi-editor .ProseMirror pre .hljs-selector-attr,
+html[data-kiwi-theme='grand-line'] .kiwi-editor .ProseMirror pre .hljs-selector-pseudo,
+html[data-kiwi-theme='grand-line'] .kiwi-editor .ProseMirror pre .hljs-variable,
+html[data-kiwi-theme='grand-line'] .kiwi-editor .ProseMirror pre .hljs-template-variable {
+  color: #f2c14e !important;
+}
+html[data-kiwi-theme='grand-line'] .kiwi-editor .ProseMirror pre .hljs-built_in,
+html[data-kiwi-theme='grand-line'] .kiwi-editor .ProseMirror pre .hljs-type,
+html[data-kiwi-theme='grand-line'] .kiwi-editor .ProseMirror pre .hljs-symbol,
+html[data-kiwi-theme='grand-line'] .kiwi-editor .ProseMirror pre .hljs-bullet,
+html[data-kiwi-theme='grand-line'] .kiwi-editor .ProseMirror pre .hljs-meta {
+  color: #d9c7a4 !important;
+}
+html[data-kiwi-theme='grand-line'] .kiwi-editor .ProseMirror pre .hljs-name,
+html[data-kiwi-theme='grand-line'] .kiwi-editor .ProseMirror pre .hljs-tag,
+html[data-kiwi-theme='grand-line'] .kiwi-editor .ProseMirror pre .hljs-deletion {
+  color: #e0776a !important;
+}
+
+/* 代码工具条 / 运行结果：纸片化。 */
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] .kiwi-editor .ProseMirror .code-preview-bar,
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] .kiwi-editor .ProseMirror .code-output-node {
+  border: 1px solid var(--op-keyline) !important;
+  border-radius: 2px !important;
+  background: var(--op-paper) !important;
+  color: var(--op-ink) !important;
+  box-shadow: 2px 2px 0 rgb(23 19 15 / 0.22) !important;
+}
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] .kiwi-editor .ProseMirror .code-tools button,
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] .kiwi-editor .ProseMirror .code-preview-action {
+  border-radius: 2px !important;
+  color: rgb(245 236 216 / 0.72) !important;
+}
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] .kiwi-editor .ProseMirror .code-run-btn,
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] .kiwi-editor.code-theme-light .ProseMirror .code-run-btn {
+  border-radius: 2px !important;
+  background: var(--op-yellow) !important;
+  color: var(--op-ink) !important;
+  font-weight: 700;
+}
+
+/* 表格：账本式墨线。 */
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] .kiwi-editor:not(.kiwi-editor-docx) .ProseMirror th {
+  border-top: 2px solid var(--op-ink) !important;
+  border-bottom: 2px solid var(--op-ink) !important;
+  background: var(--op-paper-deep) !important;
+  color: var(--op-ink) !important;
+  font-family: var(--op-mono);
+  font-size: 0.86em;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] .kiwi-editor:not(.kiwi-editor-docx) .ProseMirror td {
+  border-color: rgb(23 19 15 / 0.3) !important;
+}
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] .kiwi-editor:not(.kiwi-editor-docx) .ProseMirror tbody tr:nth-child(even) td {
+  background: rgb(241 230 207 / 0.55) !important;
+}
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] .kiwi-editor:not(.kiwi-editor-docx) .ProseMirror tbody tr:hover td {
+  background: rgb(242 193 78 / 0.2) !important;
+}
+html[data-kiwi-theme='grand-line'] .kiwi-editor .ProseMirror img {
+  border: 1px solid rgb(23 19 15 / 0.55);
+  border-radius: 2px;
+  box-shadow: 3px 3px 0 rgb(23 19 15 / 0.16);
+}
+
+/* 提示块 / 折叠块 / 提及：全部变成“剪贴条目”。 */
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] .kiwi-editor .ProseMirror .callout-block,
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] .kiwi-editor .ProseMirror div[data-type='details'] {
+  border: 1px solid var(--op-keyline) !important;
+  border-radius: 2px !important;
+  box-shadow: 3px 3px 0 rgb(23 19 15 / 0.2) !important;
+  background-image: var(--op-halftone-soft);
+  background-size: 12px 12px;
+}
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] .kiwi-editor .ProseMirror .kiwi-mention {
+  border: 1px solid rgb(23 19 15 / 0.35) !important;
+  border-radius: 1px !important;
+  background: rgb(242 193 78 / 0.34) !important;
+  color: var(--op-ink) !important;
+}
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] .kiwi-editor .ProseMirror .kiwi-mention:hover {
+  background: rgb(242 193 78 / 0.55) !important;
+}
+
+/* 编辑器目录 / 元信息条 / 分页缝。 */
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] body .editor-outline {
+  border: 1px solid var(--op-keyline) !important;
+  border-radius: 2px !important;
+  box-shadow: 3px 3px 0 rgb(23 19 15 / 0.35) !important;
+}
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] body .editor-meta-bar {
+  border-color: rgb(23 19 15 / 0.35) !important;
+  font-family: var(--op-mono);
+  letter-spacing: 0.06em;
+}
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] body .docx-page-head,
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] body .docx-page-footer {
+  font-family: var(--op-mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] .kiwi-editor .kiwi-page-gap-band {
+  background: var(--op-paper-deep) !important;
+}
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] .kiwi-editor .kiwi-page-break::after {
+  border-radius: 1px;
+  font-family: var(--op-mono);
+  letter-spacing: 0.1em;
+}
+
+/* ---------- 笔记卡片 / 嵌入 / Markdown：一叠剪报 ---------- */
+
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] .kiwi-note-card,
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] .kiwi-note-embed,
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] .kiwi-mention-preview,
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] .embed-title-link,
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] .embed-web,
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] .embed-link-card,
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] .embed-file {
+  border-color: var(--op-keyline) !important;
+  border-radius: 2px !important;
+  box-shadow: 3px 3px 0 rgb(23 19 15 / 0.32) !important;
+  background-image: var(--op-halftone-soft);
+  background-size: 12px 12px;
+}
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] .kiwi-note-card:hover,
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] .kiwi-note-embed:hover,
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] .embed-link-card:hover {
+  border-color: var(--op-red) !important;
+  box-shadow: 4px 4px 0 rgb(176 42 28 / 0.42) !important;
+  transform: translate(-1px, -1px);
+}
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] .kiwi-note-kind,
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] .kiwi-note-embed-badge {
+  border: 1px solid rgb(176 42 28 / 0.65) !important;
+  border-radius: 1px !important;
+  background: rgb(176 42 28 / 0.08) !important;
+  color: var(--op-red) !important;
+  font-family: var(--op-mono);
+  font-size: 9px !important;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] .markdown-view .md-note-card,
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] .markdown-view .md-embed-card {
+  border-color: var(--op-keyline) !important;
+  border-radius: 2px !important;
+  box-shadow: 3px 3px 0 rgb(23 19 15 / 0.3) !important;
+  background-image: var(--op-halftone-soft);
+  background-size: 12px 12px;
+}
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] .markdown-view .md-callout {
+  border: 1px solid var(--op-keyline) !important;
+  border-radius: 2px !important;
+  box-shadow: 3px 3px 0 rgb(23 19 15 / 0.2) !important;
+}
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] .markdown-view .md-date-chip {
+  border: 1px solid rgb(176 42 28 / 0.5) !important;
+  border-radius: 1px !important;
+  background: rgb(242 193 78 / 0.26) !important;
+  color: var(--op-red) !important;
+  font-family: var(--op-mono);
+}
+
+/* 阅读态表格与引用同样使用墨线。 */
+html[data-kiwi-theme='grand-line'] .prose-wiki th {
+  border-top: 2px solid var(--op-ink);
+  border-bottom: 2px solid var(--op-ink);
+  background: var(--op-paper-deep);
+  font-family: var(--op-mono);
+  font-size: 0.86em;
+  letter-spacing: 0.05em;
+}
+html[data-kiwi-theme='grand-line'] .prose-wiki blockquote {
+  border-left: 4px solid var(--op-red);
+  color: var(--op-ink-soft);
+}
+
+/* ---------- 对话：电报与剪报 ---------- */
+
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] .chat-sidebar {
+  border-right: 2px solid rgb(23 19 15 / 0.75) !important;
+  background-image: var(--op-halftone-soft);
+  background-size: 12px 12px;
+}
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] .chat-header {
+  border-bottom: 2px solid rgb(23 19 15 / 0.75) !important;
+  background-image: var(--op-halftone-soft);
+  background-size: 12px 12px;
+}
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] .chat-user-bubble {
+  border: 1px solid var(--op-ink) !important;
+  border-radius: 3px 3px 0 3px !important;
+  background-image: none !important;
+  background-color: var(--op-red) !important;
+  color: var(--op-cream) !important;
+  box-shadow: 3px 3px 0 rgb(23 19 15 / 0.55) !important;
+  font-family: var(--op-serif);
+  letter-spacing: 0.01em;
+}
+/* 助手头像：黑底草帽骷髅旗印章，替换内置紫渐变图标。 */
+html[data-kiwi-theme='grand-line'] .chat-thread [class*='from-kiwi-400'] {
+  border-radius: 2px !important;
+  background-color: var(--op-ink) !important;
+  background-image: url('assets/jolly-roger.svg') !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  background-size: 19px 19px !important;
+  box-shadow: 2px 2px 0 var(--op-red);
+}
+html[data-kiwi-theme='grand-line'] .chat-thread [class*='w-16'][class*='from-kiwi-400'] {
+  background-size: 42px 42px !important;
+}
+html[data-kiwi-theme='grand-line'] .chat-thread [class*='from-kiwi-400'] > svg {
+  opacity: 0;
+}
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] .chat-composer-inner {
+  border: 1px solid var(--op-keyline) !important;
+  border-radius: 2px !important;
+  background-color: rgb(250 244 228 / 0.94) !important;
+  box-shadow: 2px 2px 0 rgb(23 19 15 / 0.4) !important;
+}
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] .chat-composer-inner:focus-within {
+  border-color: var(--op-red) !important;
+  box-shadow:
+    0 0 0 1px var(--op-red),
+    0 0 0 3px rgb(176 42 28 / 0.14),
+    2px 2px 0 rgb(23 19 15 / 0.35) !important;
+}
+html[data-kiwi-theme='grand-line'] .chat-thread .prose-wiki,
+html[data-kiwi-theme='grand-line'] .chat-thread .ProseMirror {
+  font-family: var(--op-serif);
+}
+/* 对话正文：整页贴在悬赏令纸上，避免问答文字落在漫画背景上。 */
+html[data-kiwi-theme='grand-line'] .chat-thread {
+  padding: 1.5rem 1.75rem 1.7rem;
+  border: 1px solid var(--op-keyline);
+  border-radius: 3px;
+  background-color: rgb(250 244 228 / 0.95);
+  background-image: var(--op-halftone-soft);
+  background-size: 13px 13px;
+  box-shadow: var(--op-hard-sm);
+}
+
+/* ---------- 表格笔记：铅印账本 ---------- */
+
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] body .sheet-toolbar {
+  border-bottom: 2px solid rgb(23 19 15 / 0.78) !important;
+  background-color: var(--op-paper) !important;
+  background-image: var(--op-halftone-soft);
+  background-size: 12px 12px;
+  box-shadow: none !important;
+}
+html[data-kiwi-theme='grand-line'] body .tool-btn,
+html[data-kiwi-theme='grand-line'] body .fmt-select,
+html[data-kiwi-theme='grand-line'] body .selection-chip {
+  border-radius: 2px !important;
+  font-family: var(--op-sans);
+}
+html[data-kiwi-theme='grand-line'] body .tool-btn:hover,
+html[data-kiwi-theme='grand-line'] body .fmt-select:hover {
+  background: rgb(242 193 78 / 0.3) !important;
+  color: var(--op-ink) !important;
+}
+html[data-kiwi-theme='grand-line'] body .tool-btn.is-on {
+  background: var(--op-yellow) !important;
+  color: var(--op-ink) !important;
+  box-shadow: inset 0 0 0 1px rgb(23 19 15 / 0.6);
+}
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] body .formula-bar {
+  border-bottom: 1px solid rgb(23 19 15 / 0.4) !important;
+  background-color: var(--op-paper-deep) !important;
+}
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] body .name-box,
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] body .formula-input {
+  border-radius: 0 !important;
+  background: var(--op-paper) !important;
+  font-family: var(--op-mono) !important;
+  color: var(--op-ink) !important;
+}
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] body .sheet-scroll {
+  background: var(--op-paper) !important;
+}
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] body .sheet-table th,
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] body .sheet-table td {
+  border-color: rgb(23 19 15 / 0.26) !important;
+}
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] body .corner-cell,
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] body .col-head,
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] body .row-head {
+  border-color: rgb(23 19 15 / 0.38) !important;
+  background: var(--op-paper-deep) !important;
+  color: var(--op-ink) !important;
+  font-family: var(--op-mono) !important;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] body .col-head.is-active,
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] body .row-head.is-active {
+  background: var(--op-red) !important;
+  color: var(--op-cream) !important;
+}
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] body .sheet-cell.is-selected {
+  background-color: rgb(242 193 78 / 0.3) !important;
+  box-shadow: inset 0 0 0 2px var(--op-red) !important;
+}
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] body .sheet-cell.is-active {
+  box-shadow: inset 0 0 0 2px var(--op-ink) !important;
+}
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] body .sheet-cell.is-search-hit {
+  background-color: var(--op-yellow) !important;
+  box-shadow: inset 0 0 0 1px var(--op-ink) !important;
+}
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] body .cell-editor {
+  border-radius: 0 !important;
+  background: var(--op-paper) !important;
+  font-family: var(--op-sans) !important;
+}
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] body .sheet-tabs {
+  border-top: 1px solid rgb(23 19 15 / 0.4) !important;
+  background: var(--op-paper-deep) !important;
+}
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] body .sheet-tab {
+  border-radius: 2px 2px 0 0 !important;
+  font-family: var(--op-sans);
+}
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] body .sheet-tab.is-active {
+  border: 1px solid var(--op-ink) !important;
+  border-bottom-color: transparent !important;
+  background: var(--op-paper) !important;
+  color: var(--op-ink) !important;
+  font-weight: 700;
+  box-shadow: inset 0 3px 0 var(--op-red) !important;
+}
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] body .sheet-status {
+  background: var(--op-ink) !important;
+  color: rgb(250 244 228 / 0.82) !important;
+  font-family: var(--op-mono);
+  letter-spacing: 0.04em;
+}
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] body .sheet-status .status-item b {
+  color: var(--op-yellow) !important;
+}
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] body .status-filter,
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] body .status-hint {
+  color: rgb(250 244 228 / 0.66) !important;
+}
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] body .status-filter:hover {
+  background: rgb(250 244 228 / 0.12) !important;
+  color: var(--op-yellow) !important;
+}
+
+/* ---------- Notebook：稿纸上的分镜格 ---------- */
+
+/* 稿纸保留透光：视频背景仍能隐约透出，但正文不再被漫画抢走对比度。 */
+html[data-kiwi-theme='grand-line'] .notebook-paper {
+  border-color: var(--op-keyline) !important;
+  border-radius: 2px !important;
+  background: rgb(250 244 228 / calc(0.88 * var(--theme-surface-opacity))) !important;
+  box-shadow:
+    2px 2px 0 rgb(23 19 15 / 0.2),
+    inset 0 0 0 1px rgb(23 19 15 / 0.06) !important;
+}
+
+/* Notebook 顶栏与工具条：同一张稿纸的页眉，按键不再悬在漫画上。 */
+html[data-kiwi-theme='grand-line'] div.h-full.flex.flex-col:has(.notebook-paper) > header,
+html[data-kiwi-theme='grand-line'] div.h-full.flex.flex-col:has(.notebook-paper) > div.shrink-0.flex.flex-wrap.items-center {
+  background-color: rgb(250 244 228 / calc(0.88 * var(--theme-surface-opacity))) !important;
+}
+
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] body .nb-cell {
+  border-color: var(--op-keyline) !important;
+  border-radius: 2px !important;
+  background-image: var(--op-halftone-soft);
+  background-size: 12px 12px;
+  box-shadow: 2px 2px 0 rgb(23 19 15 / 0.18);
+}
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] body .nb-run {
+  border: 1px solid var(--op-ink) !important;
+  border-radius: 2px !important;
+  background: var(--op-paper) !important;
+  color: var(--op-ink) !important;
+  box-shadow: 1px 1px 0 var(--op-ink);
+}
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] body .nb-run:hover {
+  background: var(--op-yellow) !important;
+}
+html[data-kiwi-theme='grand-line'] body .nb-count,
+html[data-kiwi-theme='grand-line'] body .nb-type {
+  font-family: var(--op-mono);
+  letter-spacing: 0.08em;
+}
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] body .nb-output {
+  border-top: 1px dashed rgb(23 19 15 / 0.35) !important;
+  background: rgb(246 237 216 / 0.9) !important;
+  font-family: var(--op-mono);
+  font-size: 12px;
+}
+
+/* ---------- 数据表：分类账簿 ---------- */
+
+/* 数据表整页铺一张账簿纸，避免表格直接透出背景漫画。 */
+html[data-kiwi-theme='grand-line'] .contents > div.h-full.flex.flex-col:has(.db-head-row):not(:has(.ProseMirror)) {
+  background-color: rgb(250 244 228 / calc(0.94 * var(--theme-surface-opacity))) !important;
+  background-image:
+    repeating-linear-gradient(0deg, rgb(23 19 15 / 0.018) 0 1px, transparent 1px 3px),
+    var(--op-halftone-soft) !important;
+  background-size: auto, 13px 13px !important;
+}
+
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] body .db-head-row,
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] body .db-index-head {
+  background: var(--op-ink) !important;
+  color: rgb(250 244 228 / 0.92) !important;
+  font-family: var(--op-mono);
+  letter-spacing: 0.05em;
+}
+html[data-kiwi-theme='grand-line'] body .db-head-row *,
+html[data-kiwi-theme='grand-line'] body .db-index-head * {
+  color: inherit !important;
+}
+html[data-kiwi-theme='grand-line'] body .db-head-cell {
+  border-color: rgb(250 244 228 / 0.18) !important;
+}
+html[data-kiwi-theme='grand-line'] body .db-head-cell:hover {
+  background: rgb(242 193 78 / 0.18) !important;
+}
+html[data-kiwi-theme='grand-line'] body .db-index-cell {
+  font-family: var(--op-mono);
+  color: #5d5140;
+}
+html[data-kiwi-theme='grand-line'] body tbody tr:hover .db-index-cell {
+  background: rgb(242 193 78 / 0.24) !important;
+}
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] body .db-input,
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] body .db-textarea {
+  border-radius: 0 !important;
+  background: transparent !important;
+}
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] body .db-boxed .db-input,
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] body .db-boxed .db-textarea {
+  border: 1px solid var(--op-keyline) !important;
+  border-radius: 1px !important;
+  background: var(--op-paper) !important;
+}
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] body .db-progress,
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] body .db-progress-static {
+  --db-progress-color: var(--op-red);
+}
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] body .db-attach-chip {
+  border-color: var(--op-keyline) !important;
+  border-radius: 1px !important;
+  background: var(--op-paper-deep) !important;
+  font-family: var(--op-mono);
+  font-size: 10px;
+}
+
+/* ---------- 画布：纸上的分镜草图 ---------- */
+
+html[data-kiwi-theme='grand-line'] body .kiwi-draw-editor,
+html[data-kiwi-theme='grand-line'] body .kiwi-draw-fullscreen {
+  background-color: var(--op-paper-deep);
+  background-image: var(--op-halftone-soft);
+  background-size: 15px 15px;
+}
+html[data-kiwi-theme='grand-line'] body .jvs-draw-container {
+  --color-bg-canvas: #faf4e4;
+  --color-bg-panel: rgb(250 244 228 / 0.96);
+  --color-border: #17130f;
+  --color-text: #1b1712;
+  --color-text-muted: #5d5140;
+}
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] body .jvs-draw-container .toolbar {
+  border: 1px solid var(--op-ink) !important;
+  border-radius: 2px !important;
+  box-shadow: 3px 3px 0 rgb(23 19 15 / 0.55) !important;
+}
+html[data-kiwi-theme='grand-line'] body .jvs-draw-container .tool-group .active,
+html[data-kiwi-theme='grand-line'] body .jvs-draw-container .tool-group .active:hover,
+html[data-kiwi-theme='grand-line'] body .jvs-draw-container .footer-controls .active,
+html[data-kiwi-theme='grand-line'] body .jvs-draw-container .footer-controls .active:hover {
+  border-radius: 1px;
+  background: var(--op-yellow) !important;
+  color: var(--op-ink) !important;
+}
+html[data-kiwi-theme='grand-line'] body .jvs-draw-container .empty-state .action-btn:hover {
+  background: rgb(242 193 78 / 0.25);
+}
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] body .kiwi-draw-wand-panel {
+  border: 1px solid var(--op-ink) !important;
+  border-radius: 2px !important;
+  box-shadow: 4px 4px 0 rgb(23 19 15 / 0.55) !important;
+}
+html[data-kiwi-theme='grand-line'] body .kiwi-draw-status {
+  font-family: var(--op-mono);
+  letter-spacing: 0.04em;
+}
+
+/* ---------- 内置扩展区块：统一硬边剪报 ---------- */
+
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] .kiwi-gallery-block,
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] .kiwi-calendar-block,
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] .kiwi-formula-block,
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] .kiwi-mermaid-block,
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] .kiwi-datatable-block,
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] .kiwi-draw-block,
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] .kiwi-task-progress-card {
+  border-color: var(--op-keyline) !important;
+  border-radius: 2px !important;
+  box-shadow: 3px 3px 0 rgb(23 19 15 / 0.22) !important;
+  background-image: var(--op-halftone-soft);
+  background-size: 13px 13px;
+}
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] .kiwi-gallery-block.is-selected,
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] .kiwi-formula-block.is-selected,
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] .kiwi-mermaid-block.is-selected,
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] .kiwi-datatable-block.is-selected,
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] .kiwi-draw-block.is-selected,
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] .kiwi-calendar-block.is-selected {
+  border-color: var(--op-red) !important;
+  box-shadow: 0 0 0 2px rgb(176 42 28 / 0.22) !important;
+}
+html[data-kiwi-theme='grand-line'] .kiwi-gallery-item,
+html[data-kiwi-theme='grand-line'] .kiwi-gallery-slide {
+  border-radius: 1px !important;
+}
+html[data-kiwi-theme='grand-line'] .kiwi-gallery-seg {
+  border-radius: 1px !important;
+}
+html[data-kiwi-theme='grand-line'] .kiwi-gallery-tag,
+html[data-kiwi-theme='grand-line'] .kiwi-calendar-tag,
+html[data-kiwi-theme='grand-line'] .kiwi-formula-tag,
+html[data-kiwi-theme='grand-line'] .kiwi-mermaid-tag {
+  font-family: var(--op-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+html[data-kiwi-theme='grand-line'] .kiwi-calendar-day.is-today .kiwi-calendar-daynum {
+  border-radius: 1px;
+  box-shadow: 1px 1px 0 var(--op-ink);
+}
+html[data-kiwi-theme='grand-line'] .kiwi-date-chip {
+  border-radius: 1px !important;
+  font-family: var(--op-mono);
+  font-size: 0.92em;
+  letter-spacing: 0.03em;
+}
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] .kiwi-date-pop {
+  border: 1px solid var(--op-ink) !important;
+  border-radius: 2px !important;
+  box-shadow: 4px 4px 0 rgb(23 19 15 / 0.6) !important;
+}
+
+/* ---------- 总览 / 设置 / 登录：报刊版面语言 ---------- */
+
+/* 页面抬头：压在悬赏令纸头上，避免文字直接落在漫画背景上。 */
+html[data-kiwi-theme='grand-line'] .page-wrap > div:first-child.mb-5,
+html[data-kiwi-theme='grand-line'] .page-wrap > div:first-child.mb-8,
+html[data-kiwi-theme='grand-line'] .page-wrap-slim > div:first-child.mb-5 {
+  padding: 0.85rem 1.1rem;
+  border: 1px solid var(--op-keyline);
+  border-radius: 3px;
+  background-color: rgb(250 244 228 / calc(0.92 * var(--theme-surface-opacity)));
+  background-image: var(--op-halftone-soft);
+  background-size: 12px 12px;
+  box-shadow: var(--op-hard-sm);
+}
+
+/* 设置页抬头图标：默认的渐变 App 图标统一盖成墨色悬赏印章。 */
+html[data-kiwi-theme='grand-line'] .page-wrap > div:first-child.mb-5 [class*='bg-gradient-to-br'],
+html[data-kiwi-theme='grand-line'] .page-wrap > div:first-child.mb-8 [class*='bg-gradient-to-br'],
+html[data-kiwi-theme='grand-line'] .page-wrap-slim > div:first-child.mb-5 [class*='bg-gradient-to-br'] {
+  background-image: none !important;
+  background-color: var(--op-ink) !important;
+  color: var(--op-cream) !important;
+  border-radius: 2px !important;
+  box-shadow:
+    2px 2px 0 var(--op-red),
+    inset 0 0 0 1px rgb(242 193 78 / 0.55) !important;
+}
+
+/* 其余彩色渐变徽章（学习阶段、错题、测验、空状态）也收进草帽色板。 */
+html[data-kiwi-theme='grand-line'] [class*='from-violet-400'][class*='to-violet-600'],
+html[data-kiwi-theme='grand-line'] [class*='from-amber-400'][class*='to-rose-500']:not([class*='blur-2xl']),
+html[data-kiwi-theme='grand-line'] [class*='from-rose-400'][class*='to-rose-600'],
+html[data-kiwi-theme='grand-line'] [class*='from-emerald-400'][class*='to-emerald-600'],
+html[data-kiwi-theme='grand-line'] [class*='from-slate-400'][class*='to-slate-600'],
+html[data-kiwi-theme='grand-line'] [class*='from-kiwi-500'][class*='to-fuchsia-500'] {
+  background-image: none !important;
+  background-color: var(--op-ink) !important;
+  color: var(--op-cream) !important;
+  border-radius: 2px !important;
+  box-shadow: 2px 2px 0 var(--op-red) !important;
+}
+
+/* 设置页分区标题与内嵌说明条：小字也要有纸底，别直接压在漫画上。 */
+html[data-kiwi-theme='grand-line'] .page-wrap-slim > .mb-2.flex.flex-wrap.items-end.justify-between.gap-2:has(> div > h2) {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--op-keyline);
+  border-radius: 2px;
+  background-color: rgb(250 244 228 / calc(0.88 * var(--theme-surface-opacity)));
+  box-shadow: 2px 2px 0 rgb(23 19 15 / 0.14);
+}
+html[data-kiwi-theme='grand-line'] .page-wrap-slim .mb-4.flex.flex-wrap.items-center.justify-between.gap-2:has(> p.text-xs) {
+  padding: 0.5rem 0.7rem;
+  border-left: 3px solid var(--op-red);
+  border-radius: 2px;
+  background-color: rgb(250 244 228 / calc(0.86 * var(--theme-surface-opacity)));
+}
+html[data-kiwi-theme='grand-line'] .page-wrap-slim button.group.flex.items-start.gap-3.rounded-2xl {
+  background-color: rgb(250 244 228 / calc(0.9 * var(--theme-surface-opacity))) !important;
+  border-color: var(--op-keyline) !important;
+  border-radius: 2px !important;
+  box-shadow: 2px 2px 0 rgb(23 19 15 / 0.16);
+}
+html[data-kiwi-theme='grand-line'] .page-wrap-slim button.group.flex.items-start.gap-3.rounded-2xl[aria-pressed='true'] {
+  border-color: var(--op-red) !important;
+  box-shadow: 2px 2px 0 var(--op-red);
+}
+html[data-kiwi-theme='grand-line'] .page-wrap-slim > .mb-4.flex.flex-wrap.items-center.gap-x-4 {
+  border-color: var(--op-keyline) !important;
+  border-radius: 2px !important;
+  background-color: rgb(250 244 228 / calc(0.88 * var(--theme-surface-opacity))) !important;
+}
+
+/* Wiki 视图切换行：切换按钮与右侧提示坐在同一张纸签上。 */
+html[data-kiwi-theme='grand-line'] .page-wrap > .flex.flex-wrap.items-center.gap-2.mb-5.animate-fade-up {
+  padding: 0.5rem 0.7rem;
+  border: 1px solid var(--op-keyline);
+  border-radius: 2px;
+  background-color: rgb(250 244 228 / calc(0.86 * var(--theme-surface-opacity)));
+}
+
+/* 统计卡图标：按强调色改成朱红 / 海青 / 旧金 / 墨色的浅印章。 */
+html[data-kiwi-theme='grand-line'] .kiwi-card > [class*='bg-gradient-to-br'] {
+  border-color: rgb(23 19 15 / 0.3) !important;
+  border-radius: 2px !important;
+  background-image: none !important;
+}
+html[data-kiwi-theme='grand-line'] .kiwi-card > [class*='from-kiwi-500'] {
+  background-color: rgb(176 42 28 / 0.16) !important;
+  color: var(--op-red) !important;
+}
+html[data-kiwi-theme='grand-line'] .kiwi-card > [class*='from-emerald-500'] {
+  background-color: rgb(46 111 142 / 0.16) !important;
+  color: #1f556e !important;
+}
+html[data-kiwi-theme='grand-line'] .kiwi-card > [class*='from-amber-500'] {
+  background-color: rgb(242 193 78 / 0.3) !important;
+  color: #9a7420 !important;
+}
+html[data-kiwi-theme='grand-line'] .kiwi-card > [class*='from-slate-500'] {
+  background-color: rgb(23 19 15 / 0.1) !important;
+  color: var(--op-ink) !important;
+}
+
+/* 空状态：一张贴在漫画上的悬赏告示，右上角盖一枚贝里水印。 */
+html[data-kiwi-theme='grand-line'] div.flex.flex-col.items-center.justify-center.py-16.text-center:has(> div.w-16) {
+  position: relative;
+  padding: 2.4rem 2.6rem 2.2rem;
+  border: 1px solid var(--op-keyline);
+  border-radius: 3px;
+  background-color: rgb(250 244 228 / calc(0.92 * var(--theme-surface-opacity)));
+  background-image: var(--op-halftone-soft);
+  background-size: 13px 13px;
+  box-shadow: var(--op-hard);
+}
+html[data-kiwi-theme='grand-line'] div.flex.flex-col.items-center.justify-center.py-16.text-center:has(> div.w-16)::after {
+  content: '฿';
+  position: absolute;
+  top: 0.35rem;
+  right: 1.1rem;
+  color: rgb(176 42 28 / 0.16);
+  font-family: var(--op-serif);
+  font-size: 4.5rem;
+  font-weight: 900;
+  line-height: 1;
+  pointer-events: none;
+}
+html[data-kiwi-theme='grand-line'] div.flex.flex-col.items-center.justify-center.py-16.text-center:has(> div.w-16) > div.w-16 {
+  border-radius: 2px !important;
+  background-image: none !important;
+  background-color: var(--op-ink) !important;
+  color: var(--op-cream) !important;
+  box-shadow: 3px 3px 0 var(--op-red) !important;
+}
+
+html[data-kiwi-theme='grand-line'] .section-mark {
+  width: 8px;
+  height: 8px;
+  border-radius: 0 !important;
+  transform: rotate(45deg);
+  background: var(--op-red);
+}
+html[data-kiwi-theme='grand-line'] .accent-icon-strong {
+  border-radius: 2px !important;
+  background-image: none !important;
+  background-color: var(--op-red) !important;
+  color: var(--op-cream) !important;
+  box-shadow: 2px 2px 0 var(--op-ink);
+}
+html[data-kiwi-theme='grand-line'] .accent-icon {
+  border-radius: 2px !important;
+  background-image: none !important;
+  background-color: rgb(242 193 78 / 0.28) !important;
+  color: var(--op-red) !important;
+  box-shadow: inset 0 0 0 1px rgb(23 19 15 / 0.24);
+}
+html[data-kiwi-theme='grand-line'] .accent-chip {
+  border-radius: 1px !important;
+}
+html[data-kiwi-theme='grand-line'] .accent-blob {
+  background-color: rgb(176 42 28 / 0.1) !important;
+}
+html[data-kiwi-theme='grand-line'] .view-switch {
+  border-radius: 2px !important;
+}
+html[data-kiwi-theme='grand-line'] .view-switch-btn {
+  border-radius: 1px !important;
+}
+html[data-kiwi-theme='grand-line'] .view-switch-btn.is-active {
+  background-color: var(--op-yellow) !important;
+  color: var(--op-ink) !important;
+  box-shadow: inset 0 0 0 1px rgb(23 19 15 / 0.55) !important;
+}
+html[data-kiwi-theme='grand-line'] .row-icon {
+  border-radius: 2px !important;
+}
+
+/* 登录页的紫 / 蓝光斑改成朱红与旧金，避免跑出主题色板。 */
+html[data-kiwi-theme='grand-line'] [class*='bg-kiwi-300/'] {
+  background-color: rgb(176 42 28 / 0.14) !important;
+}
+html[data-kiwi-theme='grand-line'] [class*='bg-sky-300/'],
+html[data-kiwi-theme='grand-line'] [class*='bg-fuchsia-200/'] {
+  background-color: rgb(242 193 78 / 0.16) !important;
+}
+
+/* 登录卡：草帽缎带压顶 + 右下角草帽骷髅旗水印。 */
+html[data-kiwi-theme='grand-line'] .glass-strong.max-w-sm {
+  background-image:
+    linear-gradient(var(--op-red), var(--op-red)),
+    linear-gradient(var(--op-yellow), var(--op-yellow)),
+    linear-gradient(rgb(250 244 228 / 0.86), rgb(250 244 228 / 0.86)),
+    url('assets/jolly-roger.svg'),
+    var(--op-halftone-soft);
+  background-repeat: no-repeat, no-repeat, no-repeat, no-repeat, repeat;
+  background-size: 100% 5px, 100% 2px, 100% 100%, 138px 138px, 11px 11px;
+  background-position: top left, top left, 0 0, right 6px bottom 2px, 0 0;
+}
+
+/* 便签窗：贴在报纸上的便条。 */
+html[data-kiwi-theme='grand-line'][data-kiwi-theme-custom='true'] .sticky-window {
+  border: 1px solid var(--op-ink) !important;
+  border-radius: 2px !important;
+  box-shadow: 4px 4px 0 rgb(23 19 15 / 0.55) !important;
+}
+html[data-kiwi-theme='grand-line'] .sticky-window > div:first-child {
+  font-family: var(--op-mono);
+  letter-spacing: 0.04em;
+}
+
+/* 主题画廊：预览图保持原样，只给卡片加墨线，方便辨认当前主题。 */
+html[data-kiwi-theme='grand-line'] .theme-card img,
+html[data-kiwi-theme='grand-line'] .theme-preview img {
+  border-radius: 1px;
+}
+
+/* 主题画廊分区标题：纸签底，筛选胶囊与计数不再浮在漫画上。 */
+html[data-kiwi-theme='grand-line'] .mb-2\.5.flex.flex-wrap.items-center.gap-2:has(> h2) {
+  padding: 0.5rem 0.7rem;
+  border: 1px solid var(--op-keyline);
+  border-radius: 2px;
+  background-color: rgb(250 244 228 / calc(0.88 * var(--theme-surface-opacity)));
+  box-shadow: 2px 2px 0 rgb(23 19 15 / 0.14);
+}
+
+/* ---------- 图谱与阅读浮层：夜海星图 / 墨色工具栏 ---------- */
+
+/* 图谱画布：把默认深空紫换成墨黑海图，星点是奶油纸屑与旧金。 */
+html[data-kiwi-theme='grand-line'] .graph-nebula {
+  background:
+    radial-gradient(52% 58% at 16% 18%, rgb(46 111 142 / 0.4), transparent 72%),
+    radial-gradient(44% 48% at 84% 22%, rgb(176 42 28 / 0.24), transparent 72%),
+    radial-gradient(58% 58% at 58% 92%, rgb(242 193 78 / 0.16), transparent 74%),
+    linear-gradient(158deg, #17130f 0%, #241c15 46%, #100d0a 100%);
+}
+html[data-kiwi-theme='grand-line'] .graph-starfield {
+  background-image:
+    radial-gradient(1.2px 1.2px at 20px 30px, rgb(255 248 232 / 0.95), transparent 62%),
+    radial-gradient(1px 1px at 132px 96px, rgb(242 193 78 / 0.8), transparent 62%),
+    radial-gradient(1.4px 1.4px at 232px 44px, rgb(255 248 232 / 0.7), transparent 62%),
+    radial-gradient(0.9px 0.9px at 72px 168px, rgb(111 166 192 / 0.8), transparent 62%),
+    radial-gradient(1.1px 1.1px at 184px 214px, rgb(255 248 232 / 0.55), transparent 62%);
+}
+
+/* 图谱悬浮卡：G6 默认的深空蓝改成墨色悬赏笺。 */
+html[data-kiwi-theme='grand-line'] .tooltip {
+  background-color: rgb(23 19 15 / 0.96) !important;
+  border-color: rgb(242 193 78 / 0.35) !important;
+  color: var(--op-cream) !important;
+  box-shadow: 3px 3px 0 rgb(176 42 28 / 0.45) !important;
+}
+html[data-kiwi-theme='grand-line'] .tooltip .tooltip-title,
+html[data-kiwi-theme='grand-line'] .tooltip div {
+  color: var(--op-cream) !important;
+}
+
+/* 阅读工具条：墨色木牌 + 旧金边，压在纸页上不抢戏。 */
+html[data-kiwi-theme='grand-line'] .reading-toolbar {
+  border-color: rgb(242 193 78 / 0.35) !important;
+  border-radius: 2px !important;
+  background-color: rgb(23 19 15 / 0.82) !important;
+  box-shadow: 3px 3px 0 rgb(176 42 28 / 0.45) !important;
+}
+
+/* 学习「今日复习」：整块排队区铺半透明新闻纸，标题不再浮在漫画上。 */
+html[data-kiwi-theme='grand-line'] main > .max-w-2xl.mx-auto {
+  padding: 1.15rem 1.2rem 1.35rem;
+  border: 1px solid var(--op-keyline);
+  border-radius: 3px;
+  background-color: rgb(250 244 228 / calc(0.9 * var(--theme-surface-opacity)));
+  background-image: var(--op-halftone-soft);
+  background-size: 12px 12px;
+  box-shadow: var(--op-hard-sm);
+}
+
+/* 学习画像 / 训练 / 周报 / 提醒：整列也铺同一张半透明稿纸。 */
+html[data-kiwi-theme='grand-line'] main > .max-w-3xl.mx-auto {
+  padding: 1.15rem 1.2rem 1.35rem;
+  border: 1px solid var(--op-keyline);
+  border-radius: 3px;
+  background-color: rgb(250 244 228 / calc(0.9 * var(--theme-surface-opacity)));
+  background-image: var(--op-halftone-soft);
+  background-size: 12px 12px;
+  box-shadow: var(--op-hard-sm);
+}
+
+/* 学习子页（错题本 / 仿真考试 / 图谱 / 计划）：同样是整列稿纸。 */
+html[data-kiwi-theme='grand-line'] main > .space-y-3.animate-fade-up,
+html[data-kiwi-theme='grand-line'] main > .space-y-4.animate-fade-up:not([class*='max-w-']),
+html[data-kiwi-theme='grand-line'] main > .animate-fade-up:not([class*='space-y-']):not([class*='max-w-']) {
+  padding: 1.1rem 1.15rem 1.3rem;
+  border: 1px solid var(--op-keyline);
+  border-radius: 3px;
+  background-color: rgb(250 244 228 / calc(0.9 * var(--theme-surface-opacity)));
+  background-image: var(--op-halftone-soft);
+  background-size: 12px 12px;
+  box-shadow: var(--op-hard-sm);
+}
+
+/* ---------- 小屏：悬赏令报头收窄，避免挤压正文 ---------- */
+
+@media (max-width: 767px) {
+  html[data-kiwi-theme='grand-line'] .kiwi-editor:not(.kiwi-editor-docx) .editor-sheet {
+    padding-top: 4rem !important;
+  }
+  html[data-kiwi-theme='grand-line'] .kiwi-editor:not(.kiwi-editor-docx) .editor-sheet::before {
+    padding: 9px 0 1px;
+    font-size: 23px;
+    letter-spacing: 0.16em;
+    text-indent: 0.16em;
+  }
+  html[data-kiwi-theme='grand-line'] .kiwi-editor:not(.kiwi-editor-docx) .editor-sheet::after {
+    top: 2.55rem;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-indent: 0.3em;
+  }
+
+  /* 手机版面：页头只留一层纸签，装饰从「铺满」收成「点题」。 */
+  html[data-kiwi-theme='grand-line'] .page-wrap > div:first-child.mb-5,
+  html[data-kiwi-theme='grand-line'] .page-wrap > div:first-child.mb-8,
+  html[data-kiwi-theme='grand-line'] .page-wrap-slim > div:first-child.mb-5 {
+    padding: 0.7rem 0.75rem;
+    background-size: 10px 10px;
+    box-shadow: 2px 2px 0 rgb(23 19 15 / 0.22);
+  }
+
+  /* 学习页整列稿纸：手机屏窄，边框与内边距各收一半。 */
+  html[data-kiwi-theme='grand-line'] main > .max-w-2xl.mx-auto,
+  html[data-kiwi-theme='grand-line'] main > .max-w-3xl.mx-auto,
+  html[data-kiwi-theme='grand-line'] main > .space-y-3.animate-fade-up,
+  html[data-kiwi-theme='grand-line'] main > .space-y-4.animate-fade-up:not([class*='max-w-']),
+  html[data-kiwi-theme='grand-line'] main > .animate-fade-up:not([class*='space-y-']):not([class*='max-w-']) {
+    padding: 0.8rem 0.75rem 0.95rem;
+    background-size: 10px 10px;
+    box-shadow: 2px 2px 0 rgb(23 19 15 / 0.2);
+  }
+
+  /* 空状态：一张窄幅悬赏告示，贝里水印缩小到角落。 */
+  html[data-kiwi-theme='grand-line'] div.flex.flex-col.items-center.justify-center.py-16.text-center:has(> div.w-16) {
+    padding: 1.35rem 1rem 1.4rem;
+    background-size: 10px 10px;
+  }
+  html[data-kiwi-theme='grand-line'] div.flex.flex-col.items-center.justify-center.py-16.text-center:has(> div.w-16)::after {
+    top: 0.2rem;
+    right: 0.6rem;
+    font-size: 2.8rem;
+    opacity: 0.85;
+  }
+
+  /* 空状态操作：改成悬赏栏式整行条目，拇指可点，也不再挤成竖排。 */
+  html[data-kiwi-theme='grand-line'] .kiwi-empty-actions {
+    gap: 0.45rem;
+  }
+  html[data-kiwi-theme='grand-line'] .kiwi-empty-actions > * {
+    justify-content: flex-start;
+    min-height: 2.5rem;
+    border: 1px solid var(--op-keyline) !important;
+    border-radius: 2px !important;
+    background-color: rgb(250 244 228 / calc(0.94 * var(--theme-surface-opacity))) !important;
+    color: var(--op-ink) !important;
+    font-family: var(--op-serif);
+    box-shadow: 2px 2px 0 rgb(23 19 15 / 0.18);
+  }
+  html[data-kiwi-theme='grand-line'] .kiwi-empty-actions > .kiwi-btn-primary {
+    border-color: var(--op-ink) !important;
+    background-color: var(--op-red) !important;
+    color: var(--op-cream) !important;
+  }
+
+  /* 对话正文纸：手机上 1.75rem 的左右留白会把正文压到十几个字一行。 */
+  html[data-kiwi-theme='grand-line'] .chat-thread {
+    padding: 1rem 0.85rem 1.05rem;
+    background-size: 10px 10px;
+  }
+
+  /* 弹窗四角印章在手机上会压住关闭 / 底部按钮，直接裁掉。 */
+  html[data-kiwi-theme='grand-line'] .kiwi-modal-panel::before,
+  html[data-kiwi-theme='grand-line'] .kiwi-modal-panel::after {
+    display: none;
+  }
+
+  /* 设置分类：隐藏滚动条，靠自动定位把当前标签滚进视野。 */
+  html[data-kiwi-theme='grand-line'] nav[aria-label='设置分类'] {
+    scrollbar-width: none;
+  }
+  html[data-kiwi-theme='grand-line'] nav[aria-label='设置分类']::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* ---------- 减少动态效果 ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-kiwi-theme='grand-line'] *,
+  html[data-kiwi-theme='grand-line'] *::before,
+  html[data-kiwi-theme='grand-line'] *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}

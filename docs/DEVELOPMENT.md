@@ -24,7 +24,8 @@ plugins/pomodoro/
   README.md      # 用户安装说明
 plugins/countdown/  # 同上（支持时长 / 指定时刻与结束提示音）
 plugins/timeline/   # 竖向时间轴（嵌入正文，不置顶）
-scripts/package.mjs # 校验与打包（自动发现 plugins/ 下的新目录）
+themes/grand-line/  # 主题插件：plugin.json、theme.css、assets/
+scripts/package.mjs # 校验与打包（自动发现 plugins/ 与 themes/ 下的新目录）
 ```
 
 ## 3. manifest 契约
@@ -186,6 +187,8 @@ export function setup(host) {
 - `pinnable` 若声明必须是布尔值；当前 `pomodoro` / `countdown` 必须为 `true`
 - 必需文件存在；入口 ≤ 2 MB，样式 ≤ 512 KB
 - zip 内文件位于**根目录**，不嵌套目录
+- `themes/<key>/` 按 `kind === "theme"` 校验：`entry` / `blocks` 为空，颜色只允许
+  规范令牌，`theme.css` ≤ 512 KB，图片 / 字体单个 ≤ 4 MB、视频 ≤ 48 MB、资源合计 ≤ 60 MB
 
 `zip -X` 不写入额外属性，保证同一份源码可复现出内容一致的包。
 
@@ -205,3 +208,16 @@ export function setup(host) {
 - 只改必要的 manifest / 源码 / 文档，不提交 `dist/`。
 - 用户可见变更必须更新 `CHANGELOG.md`；行为或兼容性变化同步更新 README。
 - 版本发布流程见 [RELEASING.md](RELEASING.md)。
+
+## 10. 主题插件包
+
+主题插件位于 `themes/<key>/`，契约与组件插件不同：`kind: "theme"`，`entry` 与
+`blocks` 为空，界面由 `theme.colors`（规范令牌）与可选的 `theme.css` 驱动，不执行
+JavaScript。完整规范见 Kiwi 仓库的
+[`docs/THEME_SPEC.md`](https://github.com/LsWGG/Kiwi/blob/main/docs/THEME_SPEC.md)。
+
+- `theme.css` 每条规则必须限定在 `html[data-kiwi-theme="<key>"]` 下；
+- 背景图 / 预览图 / 字体 / 背景视频放在 `assets/`，视频同时提供 `theme.background.image` 封面；
+- 画廊预览图必须截自「欢迎使用 Kiwi」笔记页面（640×400，主题已生效）；
+- 打包命令与组件插件相同：`npm run validate` / `npm run package`，产物为
+  `dist/<key>-<version>.zip`，在 Kiwi「设置 → 主题 → 导入主题」验收。

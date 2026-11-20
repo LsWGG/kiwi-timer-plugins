@@ -1,8 +1,8 @@
-<h1 align="center">Kiwi 组件插件</h1>
+<h1 align="center">Kiwi 插件</h1>
 
 <p align="center">
-  面向 Kiwi 的组件插件集合。<br />
-  目前提供番茄钟、倒计时与竖向时间轴，后续持续扩展新插件。<br />
+  面向 Kiwi 的组件插件与主题插件集合。<br />
+  编辑器区块插件，以及覆盖整套界面的主题插件。<br />
   <strong>简体中文</strong> · <a href="README.md">English</a>
 </p>
 
@@ -12,18 +12,20 @@
 
 <p align="center">
   <img alt="Kiwi 组件插件" src="https://img.shields.io/badge/Kiwi-component%20plugin-6f72dc" />
-  <img alt="版本" src="https://img.shields.io/badge/version-1.6.0-0ea5e9" />
+  <img alt="版本" src="https://img.shields.io/badge/version-1.7.0-0ea5e9" />
   <img alt="可置顶" src="https://img.shields.io/badge/pinnable-global%20floating%20window-f59e0b" />
   <img alt="许可" src="https://img.shields.io/badge/license-all%20rights%20reserved-64748b" />
 </p>
 
 ---
 
-组件插件为 Kiwi 编辑器增加可交互区块。插件以 zip 交付，包内包含 manifest 与单文件
-浏览器 ESM；只有用户主动导入并启用后，Kiwi 才会在浏览器中加载执行。本仓库是这些
-组件插件的长期维护入口，统一提供校验、打包、版本、发布记录与文档。
+组件插件为 Kiwi 编辑器增加可交互区块，主题插件则用声明式 JSON + CSS 重绘整套界面。
+两类插件都以 zip 交付：组件包内含 manifest 与单文件浏览器 ESM，只有用户主动导入并
+启用后才会在浏览器中执行；主题包不执行 JavaScript。本仓库是这些插件与主题的长期
+维护入口，统一提供校验、打包、版本、发布记录与文档。
 
-当前提供**番茄钟**、**倒计时**与**时间轴**三个插件。两个计时区块声明了 `pinnable: true`，
+当前提供**番茄钟**、**倒计时**与**时间轴**三个插件，以及**伟大航路**、**墨霞**、
+**霓虹禁语**、**例会**、**晴野**五个主题。两个计时区块声明了 `pinnable: true`，
 因此可以从插件卡片、预览弹窗、编辑器区块工具条或 `Ctrl / ⌘ + K` 命令面板直接置顶为
 全局浮窗，**不需要先创建或插入笔记**；切换路由、刷新页面后计时继续。时间轴是嵌入正文的
 区块，不参与置顶。
@@ -43,6 +45,24 @@
 只在开始、暂停、重置、结束等状态变化时写入 props，不会每秒触发自动保存。时间轴把
 时间点保存在 `props.points` 中，展开 / 收起是组件本地状态，仅在编辑内容时写入 props。
 时间点正文以 Markdown 存储，并复用宿主提供的 `host.components.NoteEditor` 富文本编辑器。
+
+## 主题
+
+主题插件用声明式 JSON + CSS 重绘整套 Kiwi 界面：颜色、背景图 / 视频、面板透明度与
+毛玻璃、字体，以及限定在主题 key 下的装饰样式。主题不执行 JavaScript，从
+「设置 → 主题 → 导入主题」安装并启用。
+
+| 主题 | Key | 明暗 | 说明 | 版本 |
+|---|---|---|---|---|
+| 伟大航路 | `grand-line` | 亮色 | 海贼王 WANTED 悬赏令：循环背景视频、随包 Bangers / Pirata One 字体、草帽骷髅旗、航海罗盘水印，全组件覆盖 | 1.0.4 |
+| 墨霞 | `ink-dusk` | 亮色 | 墨画夕阳壁纸，宣纸暖白面板，朱砂点睛，鎏金细线与宋体排版 | 1.0.0 |
+| 霓虹禁语 | `neon-hush` | 暗色 | 赛博终端：2560×1440 循环背景视频，洋红 / 电光青霓虹与深色玻璃面板 | 1.1.0 |
+| 例会 | `pixel-huddle` | 亮色 | 像素卡通会议室：奶油网格纸、炭墨描边与橙红强调色 | 1.0.4 |
+| 晴野 | `sunny-meadow` | 亮色 | 日系治愈风景：晴空、花野与雪山，柔光玻璃面板 | 1.0.3 |
+
+主题源码位于 `themes/<key>/`（`plugin.json` + `theme.css` + `assets/`），与组件插件
+共用同一套校验与打包脚本，产物为 `dist/<key>-<version>.zip`。完整规范见
+[Kiwi `docs/THEME_SPEC.md`](https://github.com/LsWGG/Kiwi/blob/main/docs/THEME_SPEC.md)。
 
 ## 界面
 
@@ -76,6 +96,9 @@
 
 同 key 再次导入会原地更新并保留启用状态。
 
+主题走独立入口：在「设置 → 主题 → 导入主题」选择 zip，再启用主题卡片。例如
+`dist/grand-line-1.0.4.zip`、`dist/ink-dusk-1.0.0.zip`。
+
 ## 目录结构
 
 ```
@@ -83,6 +106,9 @@ kiwi-timer-plugins/
 ├── plugins/
 │   ├── pomodoro/          # plugin.json、index.js、style.css、README.md
 │   └── countdown/
+├── themes/
+│   ├── grand-line/        # plugin.json、theme.css、assets/、README.md
+│   └── ink-dusk/
 ├── docs/
 │   ├── assets/screenshots/
 │   ├── DEVELOPMENT.md     # 运行时契约与实现说明
@@ -99,11 +125,12 @@ kiwi-timer-plugins/
 
 ```bash
 npm run validate   # 校验 manifest 与文件大小限制
-npm run package    # 生成 pomodoro / countdown / timeline 三个安装包
+npm run package    # 为每个组件插件与主题生成 dist/<key>-<version>.zip
 ```
 
-打包脚本会自动发现 `plugins/` 下的每个目录，新增插件只需添加 `plugin.json` 与
-`index.js`（可选 `style.css` / `README.md`）。打包约束：
+打包脚本会自动发现 `plugins/` 与 `themes/` 下的每个目录：新增插件只需添加
+`plugin.json` 与 `index.js`（可选 `style.css` / `README.md`），新增主题只需添加
+`plugin.json`、`theme.css` 与 `assets/`。打包约束：
 
 - `plugin.json`、`index.js`、`style.css`、`README.md` 位于 zip 根目录。
 - 入口脚本 ≤ 2 MB，样式 ≤ 512 KB，整包 ≤ 5 MB。

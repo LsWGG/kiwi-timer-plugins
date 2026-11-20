@@ -1,8 +1,8 @@
-<h1 align="center">Kiwi Component Plugins</h1>
+<h1 align="center">Kiwi Plugins</h1>
 
 <p align="center">
-  A maintained collection of component plugins for Kiwi.<br />
-  Currently two focus timers plus a vertical timeline — more plugins are on the way.<br />
+  A maintained collection of plugins and themes for Kiwi.<br />
+  Component plugins for the editor plus full-interface theme plugins.<br />
   <a href="README.zh-CN.md">简体中文</a> · <strong>English</strong>
 </p>
 
@@ -12,7 +12,7 @@
 
 <p align="center">
   <img alt="Kiwi component plugin" src="https://img.shields.io/badge/Kiwi-component%20plugin-6f72dc" />
-  <img alt="Version" src="https://img.shields.io/badge/version-1.6.0-0ea5e9" />
+  <img alt="Version" src="https://img.shields.io/badge/version-1.7.0-0ea5e9" />
   <img alt="Pinnable" src="https://img.shields.io/badge/pinnable-global%20floating%20window-f59e0b" />
   <img alt="License" src="https://img.shields.io/badge/license-all%20rights%20reserved-64748b" />
 </p>
@@ -21,11 +21,12 @@
 
 Kiwi component plugins add interactive blocks to Kiwi's editor. A plugin is a zip
 containing a manifest and a single-file browser ESM; Kiwi loads it only after the user
-imports and enables it. This repository is the long-term home for component plugins
-maintained outside the main Kiwi repository, with shared validation, packaging,
-versioning, release notes, and documentation.
+imports and enables it. This repository is the long-term home for component plugins and
+theme plugins maintained outside the main Kiwi repository, with shared validation,
+packaging, versioning, release notes, and documentation.
 
-It currently ships **Pomodoro**, **Countdown**, and **Timeline**. The two timer blocks
+It currently ships **Pomodoro**, **Countdown**, and **Timeline**, plus the **Grand Line**,
+**Ink Dusk**, **Neon Hush**, **Pixel Huddle**, and **Sunny Meadow** themes. The two timer blocks
 declare `pinnable: true`, so they can be placed in a global floating window from the
 plugin card, the preview dialog, the editor toolbar, or the `Ctrl / ⌘ + K` command
 palette — **without creating or inserting a note first**. The timer keeps running across
@@ -50,6 +51,25 @@ changes (start / pause / reset / finish), not every second, so Kiwi's autosave i
 flooded. Timeline keeps its points in `props.points` and only writes on edits,
 expand / collapse is local UI state. Point content is stored as Markdown and uses the
 host-provided `host.components.NoteEditor` rich-text editor.
+
+## Themes
+
+Theme plugins are declarative JSON + CSS packages that reskin the whole Kiwi interface:
+colors, background image / video, surface opacity and blur, typography, and scoped
+decorations. They never execute JavaScript. Install one from **Settings → Themes →
+Import theme**.
+
+| Theme | Key | Mode | What it does | Version |
+|---|---|---|---|---|
+| 伟大航路 Grand Line | `grand-line` | Light | One Piece "WANTED" newspaper: looping background video, bundled Bangers / Pirata One fonts, Straw Hat Jolly Roger, compass-rose watermarks, full component coverage | 1.0.4 |
+| 墨霞 Ink Dusk | `ink-dusk` | Light | Ink-wash sunset wallpaper with rice-paper surfaces, cinnabar accent, gilded hairlines, and serif typography | 1.0.0 |
+| 霓虹禁语 Neon Hush | `neon-hush` | Dark | Cyberpunk terminal: 2560×1440 looping background video, magenta / cyan neon, deep-glass panels | 1.1.0 |
+| 例会 Pixel Huddle | `pixel-huddle` | Light | Pixel-art meeting room with cream grid paper, charcoal outlines, and an orange-red accent | 1.0.4 |
+| 晴野 Sunny Meadow | `sunny-meadow` | Light | Japanese healing landscape: clear sky, flower fields and snow peaks behind soft glass panels | 1.0.3 |
+
+Theme sources live under `themes/<key>/` (`plugin.json` + `theme.css` + `assets/`); the
+same packaging script validates and builds `dist/<key>-<version>.zip`. The complete
+specification is [Kiwi's `docs/THEME_SPEC.md`](https://github.com/LsWGG/Kiwi/blob/main/docs/THEME_SPEC.md).
 
 ## Interface
 
@@ -86,6 +106,9 @@ host-provided `host.components.NoteEditor` rich-text editor.
 Importing the same key again with the same or a newer version updates the plugin in
 place and preserves its enabled state.
 
+Themes use a separate entry: **Kiwi → Settings → Themes → Import theme**, then enable
+the theme card. For example, `dist/grand-line-1.0.4.zip` or `dist/ink-dusk-1.0.0.zip`.
+
 ## Project layout
 
 ```
@@ -93,6 +116,9 @@ kiwi-timer-plugins/
 ├── plugins/
 │   ├── pomodoro/          # plugin.json, index.js, style.css, README.md
 │   └── countdown/
+├── themes/
+│   ├── grand-line/        # plugin.json, theme.css, assets/, README.md
+│   └── ink-dusk/
 ├── docs/
 │   ├── assets/screenshots/
 │   ├── DEVELOPMENT.md     # runtime contract and implementation notes
@@ -109,12 +135,13 @@ There is no bundler step: `index.js` is a single-file browser ESM that exports
 
 ```bash
 npm run validate   # check manifest fields and file limits
-npm run package    # build dist/pomodoro-1.2.0.zip, dist/countdown-1.4.1.zip and dist/timeline-1.2.0.zip
+npm run package    # build dist/<key>-<version>.zip for every plugin and theme
 ```
 
-The packaging script discovers every directory under `plugins/`, so a new plugin is
-just a new `plugin.json` + `index.js` (plus optional `style.css` / `README.md`). Package
-rules enforced by the script and by Kiwi:
+The packaging script discovers every directory under `plugins/` and `themes/`, so a new
+plugin is just a new `plugin.json` + `index.js` (plus optional `style.css` / `README.md`),
+and a new theme is a `plugin.json` + `theme.css` + `assets/`. Package rules enforced by
+the script and by Kiwi:
 
 - `plugin.json`, `index.js`, `style.css`, and `README.md` sit at the zip root.
 - Entry script ≤ 2 MB, style ≤ 512 KB, whole package ≤ 5 MB.

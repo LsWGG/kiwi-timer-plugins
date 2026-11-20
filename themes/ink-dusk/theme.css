@@ -1,0 +1,190 @@
+/* 墨霞（ink-dusk）：高定古风主题。
+ * 取意「墨画夕阳」：宣纸暖白为底，墨色行文，朱砂钤印点睛，鎏金细线收边。
+ * 颜色令牌在 plugin.json 中声明；这里只补装饰细节，
+ * 每条规则都限定在 html[data-kiwi-theme="ink-dusk"] 下。
+ */
+
+html[data-kiwi-theme='ink-dusk'] body {
+  background-color: #f3ead9;
+}
+
+/* 面板：宣纸表面 + 鎏金细描边与暖投影，窗纸透光的感觉。 */
+html[data-kiwi-theme='ink-dusk'] .glass,
+html[data-kiwi-theme='ink-dusk'] .glass-strong,
+html[data-kiwi-theme='ink-dusk'] .kiwi-card {
+  box-shadow:
+    inset 0 1px 0 rgb(255 253 246 / 0.8),
+    inset 0 0 0 1px rgb(191 168 127 / 0.14),
+    0 22px 48px -36px rgb(74 52 30 / 0.55);
+}
+
+html[data-kiwi-theme='ink-dusk'] .sidebar-glass {
+  box-shadow: inset -1px 0 0 rgb(156 61 46 / 0.1);
+}
+
+html[data-kiwi-theme='ink-dusk'] .bg-white,
+html[data-kiwi-theme='ink-dusk'] .bg-white\/70,
+html[data-kiwi-theme='ink-dusk'] .bg-white\/80,
+html[data-kiwi-theme='ink-dusk'] .bg-white\/95 {
+  box-shadow:
+    inset 0 0 0 1px rgb(191 168 127 / 0.12),
+    0 18px 44px -36px rgb(74 52 30 / 0.45);
+}
+
+/* 主按钮：朱砂渐层，如一方钤印压在纸上。 */
+html[data-kiwi-theme='ink-dusk'] .kiwi-btn-primary {
+  background-image: linear-gradient(135deg, #a8432f 0%, #8a3226 58%, #74271d 100%);
+  color: #fdf7ec;
+  letter-spacing: 0.06em;
+  box-shadow:
+    0 10px 24px -12px rgb(156 61 46 / 0.6),
+    inset 0 1px 0 rgb(255 240 220 / 0.24);
+}
+
+html[data-kiwi-theme='ink-dusk'] .kiwi-btn-primary:hover {
+  filter: brightness(1.06);
+}
+
+html[data-kiwi-theme='ink-dusk'] .kiwi-btn-secondary:hover {
+  border-color: rgb(156 61 46 / 0.35);
+  color: #7c2f24;
+}
+
+html[data-kiwi-theme='ink-dusk'] .kiwi-input:focus {
+  border-color: rgb(156 61 46 / 0.5);
+  box-shadow: 0 0 0 3px rgb(156 61 46 / 0.11);
+}
+
+/* 正文标题：宋体骨相、字距舒展，饰线改为朱砂。 */
+html[data-kiwi-theme='ink-dusk'] .ProseMirror h1,
+html[data-kiwi-theme='ink-dusk'] .ProseMirror h2,
+html[data-kiwi-theme='ink-dusk'] .ProseMirror h3 {
+  letter-spacing: 0.04em;
+  text-shadow: 0 1px 0 rgb(255 252 244 / 0.7);
+}
+
+html[data-kiwi-theme='ink-dusk'] .ProseMirror h2::after {
+  background: linear-gradient(180deg, #a8432f, #c98b5a);
+}
+
+/* 引用块：朱砂边 + 宣纸暖色衬底。 */
+html[data-kiwi-theme='ink-dusk'] .ProseMirror blockquote {
+  border-left-color: rgb(156 61 46 / 0.55);
+  background: linear-gradient(
+    90deg,
+    rgb(244 236 220 / 0.8),
+    rgb(251 246 234 / 0.35)
+  );
+}
+
+html[data-kiwi-theme='ink-dusk'] .ProseMirror a {
+  color: #8f3627;
+  text-decoration-color: rgb(156 61 46 / 0.35);
+}
+
+html[data-kiwi-theme='ink-dusk'] .ProseMirror pre {
+  border: 1px solid rgb(191 168 127 / 0.28);
+  box-shadow: inset 0 0 36px rgb(74 52 30 / 0.08);
+}
+
+html[data-kiwi-theme='ink-dusk'] .ProseMirror table th {
+  background: rgb(244 236 220 / 0.85);
+}
+
+/* 编辑器纸张：宣纸纤维 + 夕照暖光；需要覆盖引擎写入的行内底色。 */
+html[data-kiwi-theme='ink-dusk'] body .editor-sheet {
+  background-color: #fbf6ea !important;
+  background-image:
+    radial-gradient(120% 80% at 50% -12%, rgb(255 249 235 / 0.9), transparent 60%),
+    radial-gradient(90% 60% at 106% 108%, rgb(156 61 46 / 0.035), transparent 62%),
+    repeating-linear-gradient(
+      0deg,
+      rgb(120 90 50 / 0.018) 0 1px,
+      transparent 1px 3px
+    ),
+    linear-gradient(180deg, #fdf9f0, #f7efdf) !important;
+  box-shadow:
+    0 0 0 1px rgb(156 61 46 / 0.08),
+    0 0 0 6px rgb(255 252 244 / 0.3),
+    0 44px 90px -62px rgb(70 48 26 / 0.5);
+}
+
+/* 表格笔记：选中单元格用朱砂淡染。 */
+html[data-kiwi-theme='ink-dusk'] body .sheet-toolbar {
+  border-color: rgb(191 168 127 / 0.32);
+  box-shadow: 0 14px 36px -28px rgb(70 48 26 / 0.4);
+}
+
+html[data-kiwi-theme='ink-dusk'] body .sheet-cell.is-selected {
+  background-image: linear-gradient(
+    rgb(156 61 46 / 0.08),
+    rgb(201 139 90 / 0.06)
+  );
+}
+
+html[data-kiwi-theme='ink-dusk'] body .sheet-cell.is-active {
+  outline-color: #9c3d2e;
+  box-shadow: inset 0 0 16px rgb(156 61 46 / 0.08);
+}
+
+html[data-kiwi-theme='ink-dusk'] body .sheet-tab.is-active {
+  background: linear-gradient(
+    135deg,
+    rgb(156 61 46 / 0.12),
+    rgb(201 139 90 / 0.1)
+  );
+  border-color: rgb(156 61 46 / 0.32);
+  color: #7c2f24;
+}
+
+/* Notebook：聚焦代码格与输出区。 */
+html[data-kiwi-theme='ink-dusk'] body .nb-cm-host .cm-editor.cm-focused {
+  border-color: rgb(156 61 46 / 0.38);
+  box-shadow: 0 0 0 3px rgb(156 61 46 / 0.07);
+}
+
+html[data-kiwi-theme='ink-dusk'] body .nb-output {
+  border-color: rgb(191 168 127 / 0.28);
+  background: rgb(244 236 220 / 0.55);
+}
+
+/* 画布：工具栏与魔法棒面板。 */
+html[data-kiwi-theme='ink-dusk'] body .jvs-draw-container .toolbar {
+  border-color: rgb(191 168 127 / 0.32);
+  box-shadow:
+    0 16px 44px -26px rgb(70 48 26 / 0.45),
+    inset 0 1px 0 rgb(255 253 246 / 0.6);
+}
+
+html[data-kiwi-theme='ink-dusk'] body .kiwi-draw-wand-panel {
+  border-color: rgb(156 61 46 / 0.16);
+  box-shadow: 0 28px 68px -32px rgb(70 48 26 / 0.45);
+}
+
+/* 学习模式：暮色回照的暖光，与编辑模式共用一套古风。 */
+html[data-kiwi-theme='ink-dusk'] body.theme-learn {
+  background-image:
+    radial-gradient(52rem 32rem at 10% -8%, rgb(246 122 92 / 0.12), transparent 62%),
+    radial-gradient(44rem 30rem at 106% 116%, rgb(60 74 88 / 0.08), transparent 62%);
+}
+
+/* 选区与滚动条：朱砂淡染、墨色滚轴。 */
+html[data-kiwi-theme='ink-dusk'] ::selection {
+  background: rgb(156 61 46 / 0.16);
+  color: #1e1a16;
+}
+
+html[data-kiwi-theme='ink-dusk'] ::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+html[data-kiwi-theme='ink-dusk'] ::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: linear-gradient(180deg, #4a423a, #8a3226);
+  border: 2px solid rgb(251 246 234 / 0.85);
+}
+
+html[data-kiwi-theme='ink-dusk'] ::-webkit-scrollbar-track {
+  background: rgb(243 234 217 / 0.5);
+}
