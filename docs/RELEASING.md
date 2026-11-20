@@ -93,12 +93,12 @@ CHANGELOG 对应小节粘贴到说明中。
 
 发布后再次下载附件，核对 `sha256sum` 与本地产物一致。
 
-`dist/` 只保留每个 `key` 的最新版本；历史版本由 GitHub Release 与生产
-「插件包归档」保存，不要覆盖已发布的同名 zip。
+`dist/` 只保留每个 `key` 的最新版本；历史版本可按需从 Git 历史重新打包，
+对外发布过的版本应保留在 GitHub Release 或生产「插件包归档」，不要覆盖已发布的同名 zip。
 
 ## 7. 回滚
 
-1. 从 GitHub Release 或生产「插件包归档」取回上一版本的 zip，不要覆盖同名 zip。
+1. 从 Git 历史重新打包上一版本，或从 GitHub Release / 生产「插件包归档」取回 zip。
 2. 在 Kiwi 中重新导入上一版本的 zip 即可回退；`key` 不变，启用状态保留。
 3. 若新版本引入了新 props 字段，回退后这些字段会被旧代码忽略，不会破坏已有数据。
 4. 在 GitHub 上将问题版本标记为 pre-release 或删除 Release，并发布修订版本说明。
